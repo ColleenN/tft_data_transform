@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='match_id'
+    )
+}}
+
 WITH all_tables AS
 (
 	SELECT metadata->>'match_id' as match_id, metadata, info
@@ -10,4 +17,4 @@ WITH all_tables AS
 	FROM tap_riotapi.normal_ranked_ladder_match_detail
 )
 
-SELECT DISTINCT ON(match_id) metadata, info FROM all_tables
+SELECT DISTINCT ON(match_id) match_id, metadata, info FROM all_tables

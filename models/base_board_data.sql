@@ -12,4 +12,4 @@ SELECT
 	jsonb_array_elements(info['participants'])->'units' as unit_list,
 	jsonb_array_elements(info['participants'])->'traits' as trait_list,
 	jsonb_array_elements(info['participants']) as raw_board_record
-FROM dbt.unique_raw_match_detail
+FROM {{ ref('unique_raw_match_detail') }}

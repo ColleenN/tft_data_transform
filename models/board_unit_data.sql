@@ -6,4 +6,4 @@ SELECT
 	jsonb_array_elements(unit_list)->>'rarity' as unit_cost,
 	jsonb_array_elements(unit_list)->'itemNames' as item_json,
 	jsonb_array_elements(unit_list) as raw_unit_json
-FROM dbt.base_board_data
+FROM {{ ref('base_board_data') }}

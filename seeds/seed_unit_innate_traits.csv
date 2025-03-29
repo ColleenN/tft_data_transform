@@ -1,128 +1,128 @@
-name,api_name,trait
-Brand,TFT14_Brand,Street Demon
-Brand,TFT14_Brand,Techie
-Darius,TFT14_Darius,Syndicate
-Darius,TFT14_Darius,Bruiser
-Dr. Mundo,TFT14_DrMundo,Street Demon
-Dr. Mundo,TFT14_DrMundo,Bruiser
-Dr. Mundo,TFT14_DrMundo,Slayer
-Elise,TFT14_Elise,Nitro
-Elise,TFT14_Elise,Dynamo
-Fiddlesticks,TFT14_Fiddlesticks,BoomBot
-Fiddlesticks,TFT14_Fiddlesticks,Techie
-Galio,TFT14_Galio,Cypher
-Galio,TFT14_Galio,Bastion
-Garen,TFT14_Garen,God of the Net
-LeBlanc,TFT14_LeBlanc,Cypher
-LeBlanc,TFT14_LeBlanc,Strategist
-Miss Fortune,TFT14_MissFortune,Syndicate
-Miss Fortune,TFT14_MissFortune,Dynamo
-Morgana,TFT14_Morgana,Divinicorp
-Morgana,TFT14_Morgana,Dynamo
-Neeko,TFT14_Neeko,Street Demon
-Neeko,TFT14_Neeko,Strategist
-Renekton,TFT14_Renekton,Overlord
-Renekton,TFT14_Renekton,Divinicorp
-Renekton,TFT14_Renekton,Bastion
-Rengar,TFT14_Rengar,Street Demon
-Rengar,TFT14_Rengar,Executioner
-Samira,TFT14_Samira,Street Demon
-Samira,TFT14_Samira,A.M.P.
-Senna,TFT14_Senna,Divinicorp
-Senna,TFT14_Senna,Slayer
-Shaco,TFT14_Shaco,Syndicate
-Shaco,TFT14_Shaco,Slayer
-Twisted Fate,TFT14_TwistedFate,Syndicate
-Twisted Fate,TFT14_TwistedFate,Rapidfire
-Varus,TFT14_Varus,Exotech
-Varus,TFT14_Varus,Executioner
-Veigar,TFT14_Veigar,Cyberboss
-Veigar,TFT14_Veigar,Techie
-Vex,TFT14_Vex,Divinicorp
-Vex,TFT14_Vex,Executioner
-Zed,TFT14_Zed,Cypher
-Zed,TFT14_Zed,Slayer
-Zeri,TFT14_Zeri,Exotech
-Zeri,TFT14_Zeri,Rapidfire
-Zyra,TFT14_Zyra,Street Demon
-Zyra,TFT14_Zyra,Techie
-Braum,TFT14_Braum,Syndicate
-Braum,TFT14_Braum,Vanguard
-Nidalee,TFT14_NidaleeCougar,Nitro
-Nidalee,TFT14_NidaleeCougar,A.M.P.
-Shyvana,TFT14_Shyvana,Nitro
-Shyvana,TFT14_Shyvana,Bastion
-Shyvana,TFT14_Shyvana,Techie
-Kindred,TFT14_Kindred,Nitro
-Kindred,TFT14_Kindred,Rapidfire
-Kindred,TFT14_Kindred,Marksman
-Yuumi,TFT14_Yuumi,Anima Squad
-Yuumi,TFT14_Yuumi,A.M.P.
-Yuumi,TFT14_Yuumi,Strategist
-Illaoi,TFT14_Illaoi,Anima Squad
-Illaoi,TFT14_Illaoi,Bastion
-Seraphine,TFT14_Seraphine,Anima Squad
-Seraphine,TFT14_Seraphine,Techie
-Xayah,TFT14_Xayah,Anima Squad
-Xayah,TFT14_Xayah,Marksman
-Jhin,TFT14_Jhin,Exotech
-Jhin,TFT14_Jhin,Marksman
-Jhin,TFT14_Jhin,Dynamo
-Naafiri,TFT14_Naafiri,Exotech
-Naafiri,TFT14_Naafiri,A.M.P.
-Gragas,TFT14_Gragas,Divinicorp
-Gragas,TFT14_Gragas,Bruiser
-Kog'Maw,TFT14_KogMaw,BoomBot
-Kog'Maw,TFT14_KogMaw,Rapidfire
-Skarner,TFT14_Skarner,BoomBot
-Skarner,TFT14_Skarner,Vanguard
-Jax,TFT14_Jax,Exotech
-Jax,TFT14_Jax,Bastion
-Kobuko,TFT14_Kobuko,Cyberboss
-Kobuko,TFT14_Kobuko,Bruiser
-Sejuani,TFT14_Sejuani,Exotech
-Sejuani,TFT14_Sejuani,Bastion
-Poppy,TFT14_Poppy,Cyberboss
-Poppy,TFT14_Poppy,Bastion
-Ziggs,TFT14_Ziggs,Cyberboss
-Ziggs,TFT14_Ziggs,Strategist
-Cho'Gath,TFT14_Chogath,BoomBot
-Cho'Gath,TFT14_Chogath,Bruiser
-Urgot,TFT14_Urgot,BoomBot
-Urgot,TFT14_Urgot,Executioner
-Sylas,TFT14_Sylas,Anima Squad
-Sylas,TFT14_Sylas,Vanguard
-Aurora,TFT14_Aurora,Anima Squad
-Aurora,TFT14_Aurora,Dynamo
-Vayne,TFT14_Vayne,Anima Squad
-Vayne,TFT14_Vayne,Slayer
-Leona,TFT14_Leona,Anima Squad
-Leona,TFT14_Leona,Vanguard
-Vi,TFT14_Vi,Cypher
-Vi,TFT14_Vi,Vanguard
-Mordekaiser,TFT14_Mordekaiser,Exotech
-Mordekaiser,TFT14_Mordekaiser,Bruiser
-Mordekaiser,TFT14_Mordekaiser,Techie
-Alistar,TFT14_Alistar,Golden Ox
-Alistar,TFT14_Alistar,Bruiser
-Viego,TFT14_Viego,Soul Killer
-Viego,TFT14_Viego,Golden Ox
-Viego,TFT14_Viego,Techie
-Jarvan IV,TFT14_Jarvan,Golden Ox
-Jarvan IV,TFT14_Jarvan,Vanguard
-Jarvan IV,TFT14_Jarvan,Slayer
-Graves,TFT14_Graves,Golden Ox
-Graves,TFT14_Graves,Executioner
-Annie,TFT14_Annie,Golden Ox
-Annie,TFT14_Annie,A.M.P.
-Rhaast,TFT14_Rhaast,Divinicorp
-Rhaast,TFT14_Rhaast,Vanguard
-Draven,TFT14_Draven,Cypher
-Draven,TFT14_Draven,Rapidfire
-Zac,TFT14_Zac,Virus
-Jinx,TFT14_Jinx,Street Demon
-Jinx,TFT14_Jinx,Marksman
-Ekko,TFT14_Ekko,Street Demon
-Ekko,TFT14_Ekko,Strategist
-Aphelios,TFT14_Aphelios,Golden Ox
-Aphelios,TFT14_Aphelios,Marksman
+name,api_name,trait_name,trait_api_name
+Brand,TFT14_Brand,Street Demon,TFT14_StreetDemon
+Brand,TFT14_Brand,Techie,TFT14_Techie
+Darius,TFT14_Darius,Syndicate,TFT14_Mob
+Darius,TFT14_Darius,Bruiser,TFT14_Bruiser
+Dr. Mundo,TFT14_DrMundo,Street Demon,TFT14_StreetDemon
+Dr. Mundo,TFT14_DrMundo,Bruiser,TFT14_Bruiser
+Dr. Mundo,TFT14_DrMundo,Slayer,TFT14_Strong
+Elise,TFT14_Elise,Nitro,TFT14_HotRod
+Elise,TFT14_Elise,Dynamo,TFT14_Thirsty
+Fiddlesticks,TFT14_Fiddlesticks,BoomBot,TFT14_BallisTek
+Fiddlesticks,TFT14_Fiddlesticks,Techie,TFT14_Techie
+Galio,TFT14_Galio,Cypher,TFT14_Suits
+Galio,TFT14_Galio,Bastion,TFT14_Armorclad
+Garen,TFT14_Garen,God of the Net,TFT14_Netgod
+LeBlanc,TFT14_LeBlanc,Cypher,TFT14_Suits
+LeBlanc,TFT14_LeBlanc,Strategist,TFT14_Controller
+Miss Fortune,TFT14_MissFortune,Syndicate,TFT14_Mob
+Miss Fortune,TFT14_MissFortune,Dynamo,TFT14_Thirsty
+Morgana,TFT14_Morgana,Divinicorp,TFT14_Divinicorp
+Morgana,TFT14_Morgana,Dynamo,TFT14_Thirsty
+Neeko,TFT14_Neeko,Street Demon,TFT14_StreetDemon
+Neeko,TFT14_Neeko,Strategist,TFT14_Controller
+Renekton,TFT14_Renekton,Overlord,TFT14_Overlord
+Renekton,TFT14_Renekton,Divinicorp,TFT14_Divinicorp
+Renekton,TFT14_Renekton,Bastion,TFT14_Armorclad
+Rengar,TFT14_Rengar,Street Demon,TFT14_StreetDemon
+Rengar,TFT14_Rengar,Executioner,TFT14_Cutter
+Samira,TFT14_Samira,Street Demon,TFT14_StreetDemon
+Samira,TFT14_Samira,A.M.P.,TFT14_Supercharge
+Senna,TFT14_Senna,Divinicorp,TFT14_Divinicorp
+Senna,TFT14_Senna,Slayer,TFT14_Strong
+Shaco,TFT14_Shaco,Syndicate,TFT14_Mob
+Shaco,TFT14_Shaco,Slayer,TFT14_Strong
+Twisted Fate,TFT14_TwistedFate,Syndicate,TFT14_Mob
+Twisted Fate,TFT14_TwistedFate,Rapidfire,TFT14_Swift
+Varus,TFT14_Varus,Exotech,TFT14_EdgeRunner
+Varus,TFT14_Varus,Executioner,TFT14_Cutter
+Veigar,TFT14_Veigar,Cyberboss,TFT14_Cyberboss
+Veigar,TFT14_Veigar,Techie,TFT14_Techie
+Vex,TFT14_Vex,Divinicorp,TFT14_Divinicorp
+Vex,TFT14_Vex,Executioner,TFT14_Cutter
+Zed,TFT14_Zed,Cypher,TFT14_Suits
+Zed,TFT14_Zed,Slayer,TFT14_Strong
+Zeri,TFT14_Zeri,Exotech,TFT14_EdgeRunner
+Zeri,TFT14_Zeri,Rapidfire,TFT14_Swift
+Zyra,TFT14_Zyra,Street Demon,TFT14_StreetDemon
+Zyra,TFT14_Zyra,Techie,TFT14_Techie
+Braum,TFT14_Braum,Syndicate,TFT14_Mob
+Braum,TFT14_Braum,Vanguard,TFT14_Vanguard
+Nidalee,TFT14_NidaleeCougar,Nitro,TFT14_HotRod
+Nidalee,TFT14_NidaleeCougar,A.M.P.,TFT14_Supercharge
+Shyvana,TFT14_Shyvana,Nitro,TFT14_HotRod
+Shyvana,TFT14_Shyvana,Bastion,TFT14_Armorclad
+Shyvana,TFT14_Shyvana,Techie,TFT14_Techie
+Kindred,TFT14_Kindred,Nitro,TFT14_HotRod
+Kindred,TFT14_Kindred,Rapidfire,TFT14_Swift
+Kindred,TFT14_Kindred,Marksman,TFT14_Marksman
+Yuumi,TFT14_Yuumi,Anima Squad,TFT14_AnimaSquad
+Yuumi,TFT14_Yuumi,A.M.P.,TFT14_Supercharge
+Yuumi,TFT14_Yuumi,Strategist,TFT14_Controller
+Illaoi,TFT14_Illaoi,Anima Squad,TFT14_AnimaSquad
+Illaoi,TFT14_Illaoi,Bastion,TFT14_Armorclad
+Seraphine,TFT14_Seraphine,Anima Squad,TFT14_AnimaSquad
+Seraphine,TFT14_Seraphine,Techie,TFT14_Techie
+Xayah,TFT14_Xayah,Anima Squad,TFT14_AnimaSquad
+Xayah,TFT14_Xayah,Marksman,TFT14_Marksman
+Jhin,TFT14_Jhin,Exotech,TFT14_EdgeRunner
+Jhin,TFT14_Jhin,Marksman,TFT14_Marksman
+Jhin,TFT14_Jhin,Dynamo,TFT14_Thirsty
+Naafiri,TFT14_Naafiri,Exotech,TFT14_EdgeRunner
+Naafiri,TFT14_Naafiri,A.M.P.,TFT14_Supercharge
+Gragas,TFT14_Gragas,Divinicorp,TFT14_Divinicorp
+Gragas,TFT14_Gragas,Bruiser,TFT14_Bruiser
+Kog'Maw,TFT14_KogMaw,BoomBot,TFT14_BallisTek
+Kog'Maw,TFT14_KogMaw,Rapidfire,TFT14_Swift
+Skarner,TFT14_Skarner,BoomBot,TFT14_BallisTek
+Skarner,TFT14_Skarner,Vanguard,TFT14_Vanguard
+Jax,TFT14_Jax,Exotech,TFT14_EdgeRunner
+Jax,TFT14_Jax,Bastion,TFT14_Armorclad
+Kobuko,TFT14_Kobuko,Cyberboss,TFT14_Cyberboss
+Kobuko,TFT14_Kobuko,Bruiser,TFT14_Bruiser
+Sejuani,TFT14_Sejuani,Exotech,TFT14_EdgeRunner
+Sejuani,TFT14_Sejuani,Bastion,TFT14_Armorclad
+Poppy,TFT14_Poppy,Cyberboss,TFT14_Cyberboss
+Poppy,TFT14_Poppy,Bastion,TFT14_Armorclad
+Ziggs,TFT14_Ziggs,Cyberboss,TFT14_Cyberboss
+Ziggs,TFT14_Ziggs,Strategist,TFT14_Controller
+Cho'Gath,TFT14_Chogath,BoomBot,TFT14_BallisTek
+Cho'Gath,TFT14_Chogath,Bruiser,TFT14_Bruiser
+Urgot,TFT14_Urgot,BoomBot,TFT14_BallisTek
+Urgot,TFT14_Urgot,Executioner,TFT14_Cutter
+Sylas,TFT14_Sylas,Anima Squad,TFT14_AnimaSquad
+Sylas,TFT14_Sylas,Vanguard,TFT14_Vanguard
+Aurora,TFT14_Aurora,Anima Squad,TFT14_AnimaSquad
+Aurora,TFT14_Aurora,Dynamo,TFT14_Thirsty
+Vayne,TFT14_Vayne,Anima Squad,TFT14_AnimaSquad
+Vayne,TFT14_Vayne,Slayer,TFT14_Strong
+Leona,TFT14_Leona,Anima Squad,TFT14_AnimaSquad
+Leona,TFT14_Leona,Vanguard,TFT14_Vanguard
+Vi,TFT14_Vi,Cypher,TFT14_Suits
+Vi,TFT14_Vi,Vanguard,TFT14_Vanguard
+Mordekaiser,TFT14_Mordekaiser,Exotech,TFT14_EdgeRunner
+Mordekaiser,TFT14_Mordekaiser,Bruiser,TFT14_Bruiser
+Mordekaiser,TFT14_Mordekaiser,Techie,TFT14_Techie
+Alistar,TFT14_Alistar,Golden Ox,TFT14_Immortal
+Alistar,TFT14_Alistar,Bruiser,TFT14_Bruiser
+Viego,TFT14_Viego,Soul Killer,TFT14_ViegoUniqueTrait
+Viego,TFT14_Viego,Golden Ox,TFT14_Immortal
+Viego,TFT14_Viego,Techie,TFT14_Techie
+Jarvan IV,TFT14_Jarvan,Golden Ox,TFT14_Immortal
+Jarvan IV,TFT14_Jarvan,Vanguard,TFT14_Vanguard
+Jarvan IV,TFT14_Jarvan,Slayer,TFT14_Strong
+Graves,TFT14_Graves,Golden Ox,TFT14_Immortal
+Graves,TFT14_Graves,Executioner,TFT14_Cutter
+Annie,TFT14_Annie,Golden Ox,TFT14_Immortal
+Annie,TFT14_Annie,A.M.P.,TFT14_Supercharge
+Rhaast,TFT14_Rhaast,Divinicorp,TFT14_Divinicorp
+Rhaast,TFT14_Rhaast,Vanguard,TFT14_Vanguard
+Draven,TFT14_Draven,Cypher,TFT14_Suits
+Draven,TFT14_Draven,Rapidfire,TFT14_Swift
+Zac,TFT14_Zac,Virus,TFT14_Virus
+Jinx,TFT14_Jinx,Street Demon,TFT14_StreetDemon
+Jinx,TFT14_Jinx,Marksman,TFT14_Marksman
+Ekko,TFT14_Ekko,Street Demon,TFT14_StreetDemon
+Ekko,TFT14_Ekko,Strategist,TFT14_Controller
+Aphelios,TFT14_Aphelios,Golden Ox,TFT14_Immortal
+Aphelios,TFT14_Aphelios,Marksman,TFT14_Marksman

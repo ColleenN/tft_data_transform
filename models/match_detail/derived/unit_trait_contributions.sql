@@ -6,14 +6,13 @@ WITH from_emblem AS
 ),
 innate AS
 (
-	SELECT match_id, puuid, character_id, trait
+	SELECT match_id, puuid, character_id, trait_api_name as trait
 	FROM
 		            {{ ref('board_unit_data') }} unit
 		LEFT JOIN   {{ ref('seed_unit_innate_traits') }} trait
 	                ON unit.character_id = trait.api_name
 	WHERE trait IS NOT NULL
 )
-
 SELECT DISTINCT *
 FROM from_emblem
 UNION

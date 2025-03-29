@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized='incremental'
-    )
-}}
-
 WITH from_emblem AS
 (
 	SELECT match_id, puuid, character_id, trait_granted as trait

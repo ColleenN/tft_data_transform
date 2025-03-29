@@ -10,6 +10,7 @@ SELECT
 	character_id,
 	tier,
 	unit_instance_index,
+	item_instance_index,
 	seed_items.*
 FROM
 				{{ ref('board_unit_item_data') }}

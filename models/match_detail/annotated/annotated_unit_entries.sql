@@ -19,7 +19,7 @@ WITH initial_pass as
 	FROM {{ ref('board_unit_data') }}
 )
 SELECT
-    match_id, puuid, character_id, tier, raw_unit_rarity, item_json,
+    match_id, puuid, character_id, tier, unit_instance_index, raw_unit_rarity, item_json,
     true_unit_cost, shop_unit,
 	CASE
 		WHEN shop_unit = 1 THEN true_unit_cost * (3 ^ (tier-1))

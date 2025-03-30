@@ -28,4 +28,5 @@ SELECT
 	jsonb_array_length(item_json) as num_items
 FROM initial_pass
 
+-- TODO: remove ghost units from calculations
 

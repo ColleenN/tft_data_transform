@@ -30,4 +30,7 @@ SELECT 	board.match_id, board.puuid,
 
 FROM 			{{ ref('base_board_data') }} board
 	LEFT JOIN 	unit_aggregations
-		ON board.match_id = unit_aggregations.match_id AND board.puuid = unit_aggregations.puuid
+		ON board.match_id = unit_aggregations.match_id
+		       AND board.puuid = unit_aggregations.puuid
+
+-- TODO: remove ghost units from calculations

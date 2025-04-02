@@ -1,6 +1,5 @@
-SELECT 	units.match_id, units.puuid, units.character_id, units.tier, units.unit_instance_index, units.true_unit_cost,
+SELECT 	units.match_id, units.puuid, units.character_id, units.tier, units.unit_instance_index,
 		CASE WHEN items.tg_item IS NULL THEN False ELSE items.tg_item END AS tg_item,
-		units.num_items,
 		SUM(CASE WHEN craftable = True THEN 1 ELSE 0 END) AS num_craftables,
 		SUM(CASE WHEN artifact = True THEN 1 ELSE 0 END) AS num_artifacts,
 		SUM(CASE WHEN radiant = True THEN 1 ELSE 0 END) AS num_radiants,
@@ -19,7 +18,7 @@ SELECT 	units.match_id, units.puuid, units.character_id, units.tier, units.unit_
 		SUM(CASE WHEN spats IS NULL THEN 0 ELSE spats END) AS num_spats,
 		SUM(CASE WHEN pans IS NULL THEN 0 ELSE pans END) AS num_pans
 FROM
-				{{ ref('annotated_unit_entries') }} units
+				{{ ref('board_unit_data') }} units
 	LEFT JOIN 	{{ ref('annotated_unit_item_entries') }} items
 		ON
 			units.match_id = items.match_id AND
@@ -27,6 +26,9 @@ FROM
 			units.character_id = items.character_id AND
 			units.tier = items.tier AND
 			units.unit_instance_index = items.unit_instance_index
-WHERE shop_unit = 1
-GROUP BY units.match_id, units.puuid, units.character_id, units.tier, units.unit_instance_index,
-		units.true_unit_cost, units.num_items, items.tg_item
+GROUP BY units.match_id,
+         units.puuid,
+         units.character_id,
+         units.tier,
+         units.unit_instance_index,
+         items.tg_item

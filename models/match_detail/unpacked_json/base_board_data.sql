@@ -4,7 +4,7 @@ SELECT
 	(jsonb_array_elements(info['participants'])->>'placement')::int as placement,
 	(jsonb_array_elements(info['participants'])->>'level')::int as level,
 	(jsonb_array_elements(info['participants'])->>'gold_left')::int as gold_left,
-	(left(jsonb_array_elements(info['participants'])->>'last_round', 1))::int as stage_eliminated,
+	(left(jsonb_array_elements(info['participants'])->>'last_round', 1))::int as stage_eliminated,-- TODO, check over this, how is someone L9 on 3-5????
 	(right(jsonb_array_elements(info['participants'])->>'last_round', 1))::int as round_eliminated,
 	(jsonb_array_elements(info['participants'])->>'time_eliminated')::decimal as time_eliminated,
 	(jsonb_array_elements(info['participants'])->>'players_eliminated')::int as players_eliminated,

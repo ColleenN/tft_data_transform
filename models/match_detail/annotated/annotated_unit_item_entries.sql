@@ -11,12 +11,13 @@ WITH initial AS
 		puuid,
 		character_id,
 		tier,
-		bool_or(tg_item) OVER (
+		CASE WHEN SUM(num_tg_items
+		) OVER (
 			PARTITION BY match_id,
 			puuid,
 			character_id,
 			tier, unit_instance_index
-		)
+		) > 0 THEN True ELSE False END
 		AS has_generated_items,
 		unit_instance_index,
 		item_instance_index,
@@ -31,4 +32,4 @@ SELECT *
 FROM initial
 WHERE
     has_generated_items = False
-   OR (has_generated_items = True AND tg_item = True)
+    OR (has_generated_items = True AND num_tg_items = 1)

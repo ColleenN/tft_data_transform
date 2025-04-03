@@ -34,7 +34,8 @@ by_unit_name AS
 	WHERE poss_trait.character_id IS NOT NULL
 
 )
-SELECT *
+SELECT by_unit_name.match_id, by_unit_name.puuid, by_unit_name.character_id,
+       units.tier, units.unit_instance_index
 FROM 			by_unit_name
 	LEFT JOIN 	{{ ref('unit_item_aggregations') }} units
 		ON by_unit_name.match_id = units.match_id

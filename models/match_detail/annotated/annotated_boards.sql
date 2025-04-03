@@ -8,7 +8,9 @@ WITH unit_aggregations as
 (
 	SELECT 	board.match_id, board.puuid,
 			SUM(gold_value) AS total_board_gold_value,
-			SUM(num_items) AS total_num_items
+			SUM(num_items) AS total_num_items,
+	        {{ select_item_category_sums() }},
+            {{ select_item_component_sums() }}
 	FROM 			{{ ref('base_board_data') }} board
 		LEFT JOIN 	{{ ref('annotated_unit_entries') }} unit
 			ON board.match_id = unit.match_id AND board.puuid = unit.puuid

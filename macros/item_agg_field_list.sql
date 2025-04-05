@@ -1,14 +1,14 @@
 {% macro select_item_component_counts() %}
-    num_swords,
-	num_rods,
-	num_bows,
-	num_gloves,
-	num_tears,
-	num_vests,
-	num_cloaks,
-	num_belts,
-	num_spats,
-	num_pans
+    CASE WHEN num_swords IS NULL THEN 0 ELSE num_swords END,
+	CASE WHEN num_rods IS NULL THEN 0 ELSE num_rods END,
+	CASE WHEN num_bows IS NULL THEN 0 ELSE num_bows END,
+	CASE WHEN num_gloves IS NULL THEN 0 ELSE num_gloves END,
+	CASE WHEN num_tears IS NULL THEN 0 ELSE num_tears END,
+	CASE WHEN num_vests IS NULL THEN 0 ELSE num_vests END,
+	CASE WHEN num_cloaks IS NULL THEN 0 ELSE num_cloaks END,
+	CASE WHEN num_belts IS NULL THEN 0 ELSE num_belts END,
+	CASE WHEN num_spats IS NULL THEN 0 ELSE num_spats END,
+	CASE WHEN num_pans IS NULL THEN 0 ELSE num_pans END
 {% endmacro %}
 
 {% macro select_item_component_sums() %}
@@ -25,12 +25,12 @@
 {% endmacro %}
 
 {% macro select_item_category_counts() %}
-    num_craftables,
-    num_artifacts,
-    num_radiants,
-    num_supports,
-    num_emblems,
-    num_tac_items
+    CASE WHEN num_craftables IS NULL THEN 0 ELSE num_craftables END,
+    CASE WHEN num_artifacts IS NULL THEN 0 ELSE num_artifacts END,
+    CASE WHEN num_radiants IS NULL THEN 0 ELSE num_radiants END,
+    CASE WHEN num_supports IS NULL THEN 0 ELSE num_supports END,
+    CASE WHEN num_emblems IS NULL THEN 0 ELSE num_emblems END,
+    CASE WHEN num_tac_items IS NULL THEN 0 ELSE num_tac_items END
 {% endmacro %}
 
 {% macro select_item_category_sums() %}

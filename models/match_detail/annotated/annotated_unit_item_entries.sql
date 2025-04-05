@@ -1,6 +1,15 @@
 {{
     config(
-        materialized='incremental'
+        materialized='incremental',
+        unique_key=[
+            'match_id',
+            'puuid',
+            'character_id',
+            'tier',
+            'unit_instance_index',
+            'api_name',
+            'item_instance_index'
+        ]
     )
 }}
 

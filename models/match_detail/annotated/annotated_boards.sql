@@ -1,6 +1,10 @@
 {{
     config(
-        materialized='incremental'
+        materialized='incremental',
+        unique_key=[
+            'match_id',
+            'puuid'
+        ]
     )
 }}
 
@@ -14,25 +18,15 @@ WITH unit_aggregations as
 	FROM 			{{ ref('base_board_data') }} board
 		LEFT JOIN 	{{ ref('annotated_unit_entries') }} unit
 			ON board.match_id = unit.match_id AND board.puuid = unit.puuid
+	WHERE is_ghost = False
 	GROUP BY board.match_id, board.puuid
 )
 
 SELECT 	board.match_id, board.puuid,
 		placement, level, gold_left,
-		stage_eliminated, round_eliminated, time_eliminated,
-		players_eliminated, total_damage_to_players,
-
-		CASE
-			WHEN stage_eliminated > 1 AND round_eliminated < 4 THEN ((stage_eliminated-2) * 5) + round_eliminated
-			WHEN stage_eliminated > 1 AND round_eliminated > 3 AND round_eliminated < 7 THEN ((stage_eliminated-2) * 5) + round_eliminated - 1
-			WHEN stage_eliminated > 1 AND round_eliminated > 6 THEN (stage_eliminated-1) * 5
-			ELSE 0
-		END as player_rounds_fought,
-		total_board_gold_value, total_num_items
-
-FROM 			{{ ref('base_board_data') }} board
-	LEFT JOIN 	unit_aggregations
-		ON board.match_id = unit_aggregations.match_id
-		       AND board.puuid = unit_aggregations.puuid
-
--- TODO: remove ghost units from calculations
+		time_eliminated, players_eliminated, total_damage_to_players, rounds_played,
+		total_board_gold_value, total_num_items,
+        {{ select_item_category_counts() }},
+        {{ select_item_component_counts() }}
+FROM 	{{ ref('base_board_data') }} board
+        {{ join_on_board_id('board', 'unit_aggregations') }}

@@ -38,15 +38,11 @@ SELECT
     CASE WHEN ghosts.unit_instance_index IS NULL THEN False ELSE TRUE END AS is_ghost,
     {{ select_item_category_counts() }},
     {{ select_item_component_counts() }}
-FROM        initial_pass
-    LEFT JOIN {{ ref('ghost_unit_certain') }} ghosts
-        ON initial_pass.match_id = ghosts.match_id
-        AND initial_pass.puuid = ghosts.puuid
+FROM    initial_pass
+        {{ join_on_board_id('initial_pass', ref('ghost_unit_certain'), 'ghosts') }}
         AND initial_pass.character_id = ghosts.character_id
         AND initial_pass.unit_instance_index = ghosts.unit_instance_index
-    LEFT JOIN {{ ref('unit_item_aggregations') }} item_info
-        ON initial_pass.match_id = item_info.match_id
-        AND initial_pass.puuid = item_info.puuid
+        {{ join_on_board_id('initial_pass', ref('unit_item_aggregations'), 'item_info') }}
         AND initial_pass.character_id = item_info.character_id
         AND initial_pass.unit_instance_index = item_info.unit_instance_index
 

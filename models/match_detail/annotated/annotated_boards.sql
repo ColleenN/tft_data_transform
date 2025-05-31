@@ -15,9 +15,8 @@ WITH unit_aggregations as
 			SUM(num_items) AS total_num_items,
 	        {{ select_item_category_sums() }},
             {{ select_item_component_sums() }}
-	FROM 			{{ ref('base_board_data') }} board
-		LEFT JOIN 	{{ ref('annotated_unit_entries') }} unit
-			ON board.match_id = unit.match_id AND board.puuid = unit.puuid
+	FROM 	{{ ref('base_board_data') }} board
+	        {{ join_on_board_id('board', ref('annotated_unit_entries')) }}
 	WHERE is_ghost = False
 	GROUP BY board.match_id, board.puuid
 )

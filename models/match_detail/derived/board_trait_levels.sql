@@ -11,10 +11,8 @@ matched_to_active AS
 		CASE WHEN active.num_units  IS NULL THEN 0 ELSE active.num_units END active_count,
 		counted.num_units_in_record on_board_count
 	FROM
-				unit_traits counted
-	LEFT JOIN 	{{ ref('board_active_trait_data') }} active
-		ON active.match_id = counted.match_id
-		AND active.puuid = counted.puuid
+		unit_traits counted
+        {{ join_on_board_id('counted', ref('board_active_trait_data'), 'active') }}
 		AND active.name = counted.trait
 )
 SELECT

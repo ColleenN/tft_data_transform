@@ -3,14 +3,11 @@ SELECT 	units.match_id, units.puuid, units.character_id, units.tier, units.unit_
         {{ select_item_category_sums() }},
         {{ select_item_component_sums() }}
 FROM
-				{{ ref('board_unit_data') }} units
-	LEFT JOIN 	{{ ref('annotated_unit_item_entries') }} items
-		ON
-			units.match_id = items.match_id AND
-			units.puuid = items.puuid AND
-			units.character_id = items.character_id AND
-			units.tier = items.tier AND
-			units.unit_instance_index = items.unit_instance_index
+        {{ ref('board_unit_data') }} units
+		{{ join_on_board_id('units', ref('annotated_unit_item_entries'), 'items') }}
+        AND units.character_id = items.character_id
+        AND units.tier = items.tier
+        AND units.unit_instance_index = items.unit_instance_index
 GROUP BY units.match_id,
          units.puuid,
          units.character_id,

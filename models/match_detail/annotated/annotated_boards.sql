@@ -11,7 +11,7 @@
 WITH unit_aggregations as
 (
 	SELECT 	board.match_id, board.puuid,
-			SUM(gold_value) AS total_board_gold_value,
+			SUM(gold_value) AS board_units_gold_value,
 			SUM(num_items) AS total_num_items,
 	        {{ select_item_category_sums() }},
             {{ select_item_component_sums() }}
@@ -24,8 +24,14 @@ WITH unit_aggregations as
 SELECT 	board.match_id, board.puuid,
 		placement, level, gold_left,
 		time_eliminated, players_eliminated, total_damage_to_players, rounds_played,
-		total_board_gold_value, total_num_items,
+		board_units_gold_value, level_costs.total_cost AS experience_gold_value, 
+        board_units_gold_value + level_costs.total_cost AS total_gold_value,
+        total_num_items,
+
         {{ select_item_category_counts() }},
         {{ select_item_component_counts() }}
+        
 FROM 	{{ ref('base_board_data') }} board
         {{ join_on_board_id('board', 'unit_aggregations') }}
+        LEFT JOIN {{ ref('seed_level_costs') }} level_costs
+            ON level_costs.level = board.level

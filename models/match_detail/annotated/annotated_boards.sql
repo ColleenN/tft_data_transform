@@ -22,7 +22,7 @@ WITH unit_aggregations as
 )
 
 SELECT 	board.match_id, board.puuid,
-		placement, level, gold_left,
+		board.placement, board.level, gold_left,
 		time_eliminated, players_eliminated, total_damage_to_players, rounds_played,
 		board_units_gold_value, level_costs.total_cost AS experience_gold_value, 
         board_units_gold_value + level_costs.total_cost AS total_gold_value,

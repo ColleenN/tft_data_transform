@@ -17,4 +17,4 @@ SELECT DISTINCT *
 FROM from_emblem
 UNION
 SELECT DISTINCT *
-FROM innate
+FROM innate10

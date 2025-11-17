@@ -8,5 +8,5 @@ SELECT
     CAST(JSON_VALUE(players, '$.players_eliminated') AS INT64) AS players_eliminated,
     JSON_QUERY(players, '$.units') AS unit_list,
     JSON_QUERY(players, '$.traits') AS trait_list
-FROM {{ ref('unique_matches') }} AS matches,
+FROM ({{ latest_raw_match_detail() }}) AS matches,
     UNNEST(JSON_EXTRACT_ARRAY(matches.info, "$.participants")) AS players

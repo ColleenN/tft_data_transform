@@ -1,0 +1,1 @@
+{{ latest_raw_match_detail(16) }}

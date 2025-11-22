@@ -1,133 +1,209 @@
 name,api_name,trait_name,trait_api_name
-Aatrox,TFT15_Aatrox,Mighty Mech,TFT15_SentaiRanger
-Aatrox,TFT15_Aatrox,Juggernaut,TFT15_Juggernaut
-Aatrox,TFT15_Aatrox,Heavyweight,TFT15_Heavyweight
-Ahri,TFT15_Ahri,Star Guardian,TFT15_StarGuardian
-Ahri,TFT15_Ahri,Sorcerer,TFT15_Spellslinger
-Akali,TFT15_Akali,Supreme Cells,TFT15_SupremeCells
-Akali,TFT15_Akali,Executioner,TFT15_Destroyer
-Ashe,TFT15_Ashe,Crystal Gambit,TFT15_GemForce
-Ashe,TFT15_Ashe,Duelist,TFT15_Duelist
-Braum,TFT15_Braum,The Champ,TFT15_ElTigre
-Braum,TFT15_Braum,Luchador,TFT15_Luchador
-Braum,TFT15_Braum,Bastion,TFT15_Bastion
-Caitlyn,TFT15_Caitlyn,Battle Academia,TFT15_BattleAcademia
-Caitlyn,TFT15_Caitlyn,Sniper,TFT15_Sniper
-Darius,TFT15_Darius,Supreme Cells,TFT15_SupremeCells
-Darius,TFT15_Darius,Heavyweight,TFT15_Heavyweight
-Ezreal,TFT15_Ezreal,Battle Academia,TFT15_BattleAcademia
-Ezreal,TFT15_Ezreal,Prodigy,TFT15_Prodigy
-Garen,TFT15_Garen,Battle Academia,TFT15_BattleAcademia
-Garen,TFT15_Garen,Bastion,TFT15_Bastion
-Gwen,TFT15_Gwen,Soul Fighter,TFT15_SoulFighter
-Gwen,TFT15_Gwen,Sorcerer,TFT15_Spellslinger
-Janna,TFT15_Janna,Crystal Gambit,TFT15_GemForce
-Janna,TFT15_Janna,Protector,TFT15_Protector
-Janna,TFT15_Janna,Strategist,TFT15_Strategist
-Jarvan IV,TFT15_JarvanIV,Mighty Mech,TFT15_SentaiRanger
-Jarvan IV,TFT15_JarvanIV,Strategist,TFT15_Strategist
-Jayce,TFT15_Jayce,Battle Academia,TFT15_BattleAcademia
-Jayce,TFT15_Jayce,Heavyweight,TFT15_Heavyweight
-Jhin,TFT15_Jhin,Wraith,TFT15_Empyrean
-Jhin,TFT15_Jhin,Sniper,TFT15_Sniper
-Jinx,TFT15_Jinx,Star Guardian,TFT15_StarGuardian
-Jinx,TFT15_Jinx,Sniper,TFT15_Sniper
-K'Sante,TFT15_KSante,Wraith,TFT15_Empyrean
-K'Sante,TFT15_KSante,Protector,TFT15_Protector
-Kai'Sa,TFT15_KaiSa,Supreme Cells,TFT15_SupremeCells
-Kai'Sa,TFT15_KaiSa,Duelist,TFT15_Duelist
-Kalista,TFT15_Kalista,Soul Fighter,TFT15_SoulFighter
-Kalista,TFT15_Kalista,Executioner,TFT15_Destroyer
-Katarina,TFT15_Katarina,Battle Academia,TFT15_BattleAcademia
-Katarina,TFT15_Katarina,Executioner,TFT15_Destroyer
-Kayle,TFT15_Kayle,Wraith,TFT15_Empyrean
-Kayle,TFT15_Kayle,Duelist,TFT15_Duelist
-Kennen,TFT15_Kennen,Supreme Cells,TFT15_SupremeCells
-Kennen,TFT15_Kennen,Protector,TFT15_Protector
-Kennen,TFT15_Kennen,Sorcerer,TFT15_Spellslinger
-Kobuko,TFT15_Kobuko,Mentor,TFT15_OldMentor
-Kobuko,TFT15_Kobuko,Heavyweight,TFT15_Heavyweight
-Lee Sin,TFT15_LeeSin,Stance Master,TFT15_DragonFist
-Leona,TFT15_Leona,Battle Academia,TFT15_BattleAcademia
-Leona,TFT15_Leona,Bastion,TFT15_Bastion
-Lulu,TFT15_Lulu,Monster Trainer,TFT15_MonsterTrainer
-Lux,TFT15_Lux,Soul Fighter,TFT15_SoulFighter
-Lux,TFT15_Lux,Sorcerer,TFT15_Spellslinger
-Malphite,TFT15_Malphite,The Crew,TFT15_TheCrew
-Malphite,TFT15_Malphite,Protector,TFT15_Protector
-Malzahar,TFT15_Malzahar,Wraith,TFT15_Empyrean
-Malzahar,TFT15_Malzahar,Prodigy,TFT15_Prodigy
-Naafiri,TFT15_Naafiri,Soul Fighter,TFT15_SoulFighter
-Naafiri,TFT15_Naafiri,Juggernaut,TFT15_Juggernaut
-Poppy,TFT15_Poppy,Star Guardian,TFT15_StarGuardian
-Poppy,TFT15_Poppy,Heavyweight,TFT15_Heavyweight
-Rakan,TFT15_Rakan,Battle Academia,TFT15_BattleAcademia
-Rakan,TFT15_Rakan,Protector,TFT15_Protector
-Rell,TFT15_Rell,Star Guardian,TFT15_StarGuardian
-Rell,TFT15_Rell,Bastion,TFT15_Bastion
-Ryze,TFT15_Ryze,Mentor,TFT15_OldMentor
-Ryze,TFT15_Ryze,Executioner,TFT15_Destroyer
-Ryze,TFT15_Ryze,Strategist,TFT15_Strategist
-Samira,TFT15_Samira,Soul Fighter,TFT15_SoulFighter
-Samira,TFT15_Samira,Edgelord,TFT15_Edgelord
-Seraphine,TFT15_Seraphine,Star Guardian,TFT15_StarGuardian
-Seraphine,TFT15_Seraphine,Prodigy,TFT15_Prodigy
-Sett,TFT15_Sett,Soul Fighter,TFT15_SoulFighter
-Sett,TFT15_Sett,Juggernaut,TFT15_Juggernaut
-Swain,TFT15_Swain,Crystal Gambit,TFT15_GemForce
-Swain,TFT15_Swain,Bastion,TFT15_Bastion
-Swain,TFT15_Swain,Sorcerer,TFT15_Spellslinger
-Syndra,TFT15_Syndra,Crystal Gambit,TFT15_GemForce
-Syndra,TFT15_Syndra,Star Guardian,TFT15_StarGuardian
-Syndra,TFT15_Syndra,Prodigy,TFT15_Prodigy
-Udyr,TFT15_Udyr,Mentor,TFT15_OldMentor
-Udyr,TFT15_Udyr,Juggernaut,TFT15_Juggernaut
-Udyr,TFT15_Udyr,Duelist,TFT15_Duelist
-Varus,TFT15_Varus,Wraith,TFT15_Empyrean
-Varus,TFT15_Varus,Sniper,TFT15_Sniper
-Viego,TFT15_Viego,Soul Fighter,TFT15_SoulFighter
-Viego,TFT15_Viego,Duelist,TFT15_Duelist
-Xayah,TFT15_Xayah,Star Guardian,TFT15_StarGuardian
-Xayah,TFT15_Xayah,Edgelord,TFT15_Edgelord
-Xin Zhao,TFT15_XinZhao,Soul Fighter,TFT15_SoulFighter
-Xin Zhao,TFT15_XinZhao,Bastion,TFT15_Bastion
-Yasuo,TFT15_Yasuo,Mentor,TFT15_OldMentor
-Yasuo,TFT15_Yasuo,Edgelord,TFT15_Edgelord
-Yone,TFT15_Yone,Mighty Mech,TFT15_SentaiRanger
-Yone,TFT15_Yone,Edgelord,TFT15_Edgelord
-Yuumi,TFT15_Yuumi,Battle Academia,TFT15_BattleAcademia
-Yuumi,TFT15_Yuumi,Prodigy,TFT15_Prodigy
-Zac,TFT15_Zac,Wraith,TFT15_Empyrean
-Zac,TFT15_Zac,Heavyweight,TFT15_Heavyweight
-Ziggs,TFT15_Ziggs,The Crew,TFT15_TheCrew
-Ziggs,TFT15_Ziggs,Strategist,TFT15_Strategist
-Volibear,TFT15_Volibear,Luchador,TFT15_Luchador
-Volibear,TFT15_Volibear,Edgelord,TFT15_Edgelord
-Kog'Maw,TFT15_KogMaw,Monster Trainer,TFT15_MonsterTrainer
-Smolder,TFT15_Smolder,Monster Trainer,TFT15_MonsterTrainer
-Senna,TFT15_Senna,Mighty Mech,TFT15_SentaiRanger
-Senna,TFT15_Senna,Executioner,TFT15_Destroyer
-Lucian,TFT15_Lucian,Mighty Mech,TFT15_SentaiRanger
-Lucian,TFT15_Lucian,Sorcerer,TFT15_Spellslinger
-Gangplank,TFT15_Gangplank,Mighty Mech,TFT15_SentaiRanger
-Gangplank,TFT15_Gangplank,Duelist,TFT15_Duelist
-Dr. Mundo,TFT15_DrMundo,Luchador,TFT15_Luchador
-Dr. Mundo,TFT15_DrMundo,Juggernaut,TFT15_Juggernaut
-Gnar,TFT15_Gnar,Luchador,TFT15_Luchador
-Gnar,TFT15_Gnar,Sniper,TFT15_Sniper
-Karma,TFT15_Karma,Mighty Mech,TFT15_SentaiRanger
-Karma,TFT15_Karma,Sorcerer,TFT15_Spellslinger
-Vi,TFT15_Vi,Crystal Gambit,TFT15_GemForce
-Vi,TFT15_Vi,Juggernaut,TFT15_Juggernaut
-Sivir,TFT15_Sivir,The Crew,TFT15_TheCrew
-Sivir,TFT15_Sivir,Sniper,TFT15_Sniper
-Twisted Fate,TFT15_TwistedFate,Rogue Captain,TFT15_Captain
-Twisted Fate,TFT15_TwistedFate,The Crew,TFT15_TheCrew
-Shen,TFT15_Shen,The Crew,TFT15_TheCrew
-Shen,TFT15_Shen,Bastion,TFT15_Bastion
-Shen,TFT15_Shen,Edgelord,TFT15_Edgelord
-Rammus,TFT15_Rammus,Monster Trainer,TFT15_MonsterTrainer
-Zyra,TFT15_Zyra,Crystal Gambit,TFT15_GemForce
-Zyra,TFT15_Zyra,Rosemother,TFT15_Rosemother
-Neeko,TFT15_Neeko,Star Guardian,TFT15_StarGuardian
-Neeko,TFT15_Neeko,Protector,TFT15_Protector
+Tristana,TFT16_Tristana,Yordle,TFT16_Yordle
+Tristana,TFT16_Tristana,Gunslinger,TFT16_Gunslinger
+Lulu,TFT16_Lulu,Yordle,TFT16_Yordle
+Lulu,TFT16_Lulu,Arcanist,TFT16_Sorcerer
+Teemo,TFT16_Teemo,Yordle,TFT16_Yordle
+Teemo,TFT16_Teemo,Longshot,TFT16_Longshot
+Rumble,TFT16_Rumble,Yordle,TFT16_Yordle
+Rumble,TFT16_Rumble,Defender,TFT16_Defender
+Nautilus,TFT16_Nautilus,Bilgewater,TFT16_Bilgewater
+Nautilus,TFT16_Nautilus,Juggernaut,TFT16_Juggernaut
+Nautilus,TFT16_Nautilus,Warden,TFT16_Warden
+Twisted Fate,TFT16_TwistedFate,Bilgewater,TFT16_Bilgewater
+Twisted Fate,TFT16_TwistedFate,Quickstriker,TFT16_Rapidfire
+Gangplank,TFT16_Gangplank,Bilgewater,TFT16_Bilgewater
+Gangplank,TFT16_Gangplank,Slayer,TFT16_Slayer
+Gangplank,TFT16_Gangplank,Vanquisher,TFT16_Vanquisher
+Illaoi,TFT16_Illaoi,Bilgewater,TFT16_Bilgewater
+Illaoi,TFT16_Illaoi,Bruiser,TFT16_Brawler
+Miss Fortune,TFT16_MissFortune,Bilgewater,TFT16_Bilgewater
+Miss Fortune,TFT16_MissFortune,Gunslinger,TFT16_Gunslinger
+Sion,TFT16_Sion,Noxus,TFT16_Noxus
+Sion,TFT16_Sion,Bruiser,TFT16_Brawler
+Briar,TFT16_Briar,Noxus,TFT16_Noxus
+Briar,TFT16_Briar,Slayer,TFT16_Slayer
+Briar,TFT16_Briar,Juggernaut,TFT16_Juggernaut
+Draven,TFT16_Draven,Noxus,TFT16_Noxus
+Draven,TFT16_Draven,Quickstriker,TFT16_Rapidfire
+Ambessa,TFT16_Ambessa,Noxus,TFT16_Noxus
+Ambessa,TFT16_Ambessa,Vanquisher,TFT16_Vanquisher
+Zoe,TFT16_Zoe,Targon,TFT16_Targon
+Leona,TFT16_Leona,Targon,TFT16_Targon
+Aphelios,TFT16_Aphelios,Targon,TFT16_Targon
+Taric,TFT16_Taric,Targon,TFT16_Targon
+Jarvan IV,TFT16_JarvanIV,Demacia,TFT16_Demacia
+Jarvan IV,TFT16_JarvanIV,Defender,TFT16_Defender
+Sona,TFT16_Sona,Demacia,TFT16_Demacia
+Sona,TFT16_Sona,Invoker,TFT16_Invoker
+Garen,TFT16_Garen,Demacia,TFT16_Demacia
+Garen,TFT16_Garen,Defender,TFT16_Defender
+Lux,TFT16_Lux,Demacia,TFT16_Demacia
+Lux,TFT16_Lux,Arcanist,TFT16_Sorcerer
+Anivia,TFT16_Anivia,Freljord,TFT16_Freljord
+Anivia,TFT16_Anivia,Invoker,TFT16_Invoker
+Ashe,TFT16_Ashe,Freljord,TFT16_Freljord
+Ashe,TFT16_Ashe,Quickstriker,TFT16_Rapidfire
+Braum,TFT16_Braum,Freljord,TFT16_Freljord
+Braum,TFT16_Braum,Warden,TFT16_Warden
+Lissandra,TFT16_Lissandra,Freljord,TFT16_Freljord
+Lissandra,TFT16_Lissandra,Invoker,TFT16_Invoker
+Milio,TFT16_Milio,Ixtal,TFT16_Explorer
+Milio,TFT16_Milio,Invoker,TFT16_Invoker
+Neeko,TFT16_Neeko,Ixtal,TFT16_Explorer
+Neeko,TFT16_Neeko,Arcanist,TFT16_Sorcerer
+Neeko,TFT16_Neeko,Defender,TFT16_Defender
+Jinx,TFT16_Jinx,Zaun,TFT16_Zaun
+Jinx,TFT16_Jinx,Gunslinger,TFT16_Gunslinger
+Caitlyn,TFT16_Caitlyn,Piltover,TFT16_Piltover
+Caitlyn,TFT16_Caitlyn,Longshot,TFT16_Longshot
+Vi,TFT16_Vi,Piltover,TFT16_Piltover
+Vi,TFT16_Vi,Zaun,TFT16_Zaun
+Vi,TFT16_Vi,Defender,TFT16_Defender
+Seraphine,TFT16_Seraphine,Piltover,TFT16_Piltover
+Seraphine,TFT16_Seraphine,Disruptor,TFT16_Magus
+Yasuo,TFT16_Yasuo,Ionia,TFT16_Ionia
+Yasuo,TFT16_Yasuo,Slayer,TFT16_Slayer
+Ahri,TFT16_Ahri,Ionia,TFT16_Ionia
+Ahri,TFT16_Ahri,Arcanist,TFT16_Sorcerer
+Wukong,TFT16_Wukong,Ionia,TFT16_Ionia
+Wukong,TFT16_Wukong,Bruiser,TFT16_Brawler
+Shen,TFT16_Shen,Ionia,TFT16_Ionia
+Shen,TFT16_Shen,Bruiser,TFT16_Brawler
+Malzahar,TFT16_Malzahar,Void,TFT16_Void
+Malzahar,TFT16_Malzahar,Disruptor,TFT16_Magus
+Rek'Sai,TFT16_RekSai,Void,TFT16_Void
+Rek'Sai,TFT16_RekSai,Vanquisher,TFT16_Vanquisher
+Cho'Gath,TFT16_ChoGath,Void,TFT16_Void
+Cho'Gath,TFT16_ChoGath,Juggernaut,TFT16_Juggernaut
+Kog'Maw,TFT16_KogMaw,Void,TFT16_Void
+Kog'Maw,TFT16_KogMaw,Arcanist,TFT16_Sorcerer
+Kog'Maw,TFT16_KogMaw,Longshot,TFT16_Longshot
+Annie,TFT16_Annie,Dark Child,TFT16_DarkChild
+Annie,TFT16_Annie,Arcanist,TFT16_Sorcerer
+Ornn,TFT16_Ornn,Blacksmith,TFT16_Blacksmith
+Ornn,TFT16_Ornn,Warden,TFT16_Warden
+Kindred,TFT16_Kindred,Eternal,TFT16_KindredUnique
+Kindred,TFT16_Kindred,Quickstriker,TFT16_Rapidfire
+Azir,TFT16_Azir,Shurima,TFT16_Shurima
+Azir,TFT16_Azir,Emperor,TFT16_Emperor
+Azir,TFT16_Azir,Disruptor,TFT16_Magus
+Zilean,TFT16_Zilean,Chronokeeper,TFT16_Chronokeeper
+Zilean,TFT16_Zilean,Invoker,TFT16_Invoker
+Fiddlesticks,TFT16_Fiddlesticks,Harvester,TFT16_Harvester
+Fiddlesticks,TFT16_Fiddlesticks,Vanquisher,TFT16_Vanquisher
+Shyvana,TFT16_Shyvana,Dragonborn,TFT16_ShyvanaUnique
+Shyvana,TFT16_Shyvana,Juggernaut,TFT16_Juggernaut
+Galio,TFT16_Galio,Demacia,TFT16_Demacia
+Galio,TFT16_Galio,Heroic,TFT16_Heroic
+Tahm Kench,TFT16_TahmKench,Bilgewater,TFT16_Bilgewater
+Tahm Kench,TFT16_TahmKench,Glutton,TFT16_Glutton
+Tahm Kench,TFT16_TahmKench,Bruiser,TFT16_Brawler
+Sejuani,TFT16_Sejuani,Freljord,TFT16_Freljord
+Sejuani,TFT16_Sejuani,Defender,TFT16_Defender
+Sett,TFT16_Sett,Ionia,TFT16_Ionia
+Sett,TFT16_Sett,The Boss,TFT16_TheBoss
+Brock,TFT16_Brock,Ixtal,TFT16_Explorer
+T-Hex,TFT16_THex,HexMech,TFT16_HexMech
+T-Hex,TFT16_THex,Piltover,TFT16_Piltover
+T-Hex,TFT16_THex,Gunslinger,TFT16_Gunslinger
+Bel'Veth,TFT16_BelVeth,Void,TFT16_Void
+Bel'Veth,TFT16_BelVeth,Slayer,TFT16_Slayer
+Singed,TFT16_Singed,Zaun,TFT16_Zaun
+Singed,TFT16_Singed,Juggernaut,TFT16_Juggernaut
+Aurelion Sol,TFT16_AurelionSol,Star Forger,TFT16_AurelionSolUnique
+Aurelion Sol,TFT16_AurelionSol,Targon,TFT16_Targon
+Veigar,TFT16_Veigar,Yordle,TFT16_Yordle
+Veigar,TFT16_Veigar,Arcanist,TFT16_Sorcerer
+Baron Nashor,TFT16_BaronNashor,Void,TFT16_Void
+Baron Nashor,TFT16_BaronNashor,Riftscourge,TFT16_BaronUnique
+Darius,TFT16_Darius,Noxus,TFT16_Noxus
+Darius,TFT16_Darius,Defender,TFT16_Defender
+Yone,TFT16_Yone,Ionia,TFT16_Ionia
+Yone,TFT16_Yone,Slayer,TFT16_Slayer
+Warwick,TFT16_Warwick,Zaun,TFT16_Zaun
+Warwick,TFT16_Warwick,Quickstriker,TFT16_Rapidfire
+Fizz,TFT16_Fizz,Bilgewater,TFT16_Bilgewater
+Fizz,TFT16_Fizz,Yordle,TFT16_Yordle
+Poppy ,TFT16_Poppy,Demacia,TFT16_Demacia
+Poppy ,TFT16_Poppy,Yordle,TFT16_Yordle
+Poppy ,TFT16_Poppy,Juggernaut,TFT16_Juggernaut
+Kennen ,TFT16_Kennen,Ionia,TFT16_Ionia
+Kennen ,TFT16_Kennen,Yordle,TFT16_Yordle
+Kennen ,TFT16_Kennen,Defender,TFT16_Defender
+Ziggs ,TFT16_Ziggs,Zaun,TFT16_Zaun
+Ziggs ,TFT16_Ziggs,Yordle,TFT16_Yordle
+Ziggs ,TFT16_Ziggs,Longshot,TFT16_Longshot
+Aatrox ,TFT16_Aatrox,Darkin,TFT16_DarkinWeapon
+Aatrox ,TFT16_Aatrox,World Ender,TFT16_AatroxUnique
+Aatrox ,TFT16_Aatrox,Slayer,TFT16_Slayer
+Volibear ,TFT16_Volibear,Freljord,TFT16_Freljord
+Volibear ,TFT16_Volibear,Bruiser,TFT16_Brawler
+Jhin,TFT16_Jhin,Ionia,TFT16_Ionia
+Jhin,TFT16_Jhin,Gunslinger,TFT16_Gunslinger
+Sylas ,TFT16_Sylas,Chainbreaker,TFT16_SylasTrait
+Sylas ,TFT16_Sylas,Arcanist,TFT16_Sorcerer
+Sylas ,TFT16_Sylas,Defender,TFT16_Defender
+Ryze ,TFT16_Ryze,Rune Mage,TFT16_RuneMage
+Nidalee ,TFT16_Nidalee,Ixtal,TFT16_Explorer
+Nidalee ,TFT16_Nidalee,Huntress,TFT16_Huntress
+Tryndamere ,TFT16_Tryndamere,Freljord,TFT16_Freljord
+Tryndamere ,TFT16_Tryndamere,Slayer,TFT16_Slayer
+Rift Herald ,TFT16_RiftHerald,Void,TFT16_Void
+Rift Herald ,TFT16_RiftHerald,Bruiser,TFT16_Brawler
+Mel ,TFT16_Mel,Noxus,TFT16_Noxus
+Mel ,TFT16_Mel,Disruptor,TFT16_Magus
+Graves ,TFT16_Graves,Bilgewater,TFT16_Bilgewater
+Graves ,TFT16_Graves,Gunslinger,TFT16_Gunslinger
+Skarner ,TFT16_Skarner,Ixtal,TFT16_Explorer
+Diana ,TFT16_Diana,Targon,TFT16_Targon
+Kai'Sa ,TFT16_Kaisa,Assimilator,TFT16_KaisaUnique
+Kai'Sa ,TFT16_Kaisa,Void,TFT16_Void
+Kai'Sa ,TFT16_Kaisa,Longshot,TFT16_Longshot
+Renekton ,TFT16_Renekton,Shurima,TFT16_Shurima
+Nasus ,TFT16_Nasus,Shurima,TFT16_Shurima
+Xerath ,TFT16_Xerath,Shurima,TFT16_Shurima
+Xerath ,TFT16_Xerath,Ascendant,TFT16_XerathUnique
+Thresh ,TFT16_Thresh,Shadow Isles,TFT16_ShadowIsles
+Thresh ,TFT16_Thresh,Warden,TFT16_Warden
+Gwen ,TFT16_Gwen,Shadow Isles,TFT16_ShadowIsles
+Gwen ,TFT16_Gwen,Disruptor,TFT16_Magus
+Kalista ,TFT16_Kalista,Shadow Isles,TFT16_ShadowIsles
+Kalista ,TFT16_Kalista,Vanquisher,TFT16_Vanquisher
+LeBlanc ,TFT16_Leblanc,Noxus,TFT16_Noxus
+LeBlanc ,TFT16_Leblanc,Invoker,TFT16_Invoker
+Viego,TFT16_Viego,Shadow Isles,TFT16_ShadowIsles
+Viego,TFT16_Viego,Quickstriker,TFT16_Rapidfire
+Ekko,TFT16_Ekko,Zaun,TFT16_Zaun
+Ekko,TFT16_Ekko,Disruptor,TFT16_Magus
+Bard ,TFT16_Bard,Caretaker,TFT16_Caretaker
+Vayne,TFT16_Vayne,Demacia,TFT16_Demacia
+Vayne,TFT16_Vayne,Longshot,TFT16_Longshot
+Yunara,TFT16_Yunara,Ionia,TFT16_Ionia
+Yunara,TFT16_Yunara,Quickstriker,TFT16_Rapidfire
+Swain,TFT16_Swain,Noxus,TFT16_Noxus
+Swain,TFT16_Swain,Arcanist,TFT16_Sorcerer
+Swain,TFT16_Swain,Juggernaut,TFT16_Juggernaut
+Xin Zhao,TFT16_XinZhao,Demacia,TFT16_Demacia
+Xin Zhao,TFT16_XinZhao,Ionia,TFT16_Ionia
+Xin Zhao,TFT16_XinZhao,Warden,TFT16_Warden
+Yorick ,TFT16_Yorick,Shadow Isles,TFT16_ShadowIsles
+Yorick ,TFT16_Yorick,Warden,TFT16_Warden
+Orianna ,TFT16_Orianna,Piltover,TFT16_Piltover
+Orianna ,TFT16_Orianna,Invoker,TFT16_Invoker
+Qiyana,TFT16_Qiyana,Ixtal,TFT16_Explorer
+Qiyana,TFT16_Qiyana,Slayer,TFT16_Slayer
+Loris,TFT16_Loris,Piltover,TFT16_Piltover
+Loris,TFT16_Loris,Warden,TFT16_Warden
+Blitzcrank,TFT16_Blitzcrank,Zaun,TFT16_Zaun
+Blitzcrank,TFT16_Blitzcrank,Juggernaut,TFT16_Juggernaut
+Dr. Mundo,TFT16_DrMundo,Zaun,TFT16_Zaun
+Dr. Mundo,TFT16_DrMundo,Bruiser,TFT16_Brawler
+Zaahen,TFT16_Zaahen,Darkin,TFT16_DarkinWeapon
+Zaahen,TFT16_Zaahen,Immortal,TFT16_ZaahenTrait
+Tibbers,TFT16_AnnieTibbers,Arcanist,TFT16_Sorcerer
+Lucian & Senna,TFT16_Lucian,Soulbound,TFT16_Soulbound
+Lucian & Senna,TFT16_Lucian,Gunslinger,TFT16_Gunslinger
+Kobuko & Yuumi,TFT16_Kobuko,Yordle,TFT16_Yordle
+Kobuko & Yuumi,TFT16_Kobuko,Bruiser,TFT16_Brawler
+Kobuko & Yuumi,TFT16_Kobuko,Invoker,TFT16_Invoker

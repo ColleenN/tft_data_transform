@@ -11,7 +11,7 @@ profile: 'default'
 
 vars:
   use_pbe_data: True
-  current_set: 15
+  current_set: 16
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be

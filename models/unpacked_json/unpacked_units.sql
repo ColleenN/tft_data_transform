@@ -5,7 +5,7 @@ WITH initial AS
         CAST(JSON_VALUE(units, '$.tier') AS INT64) AS tier,
         CAST(JSON_VALUE(units, '$.rarity') AS INT64) AS raw_unit_rarity,
         JSON_QUERY(units, '$.itemNames') AS item_list
-    FROM    {{ ref('unpacked_board') }} AS boards, 
+    FROM    {{ ref('unpacked_boards') }} AS boards, 
             UNNEST(JSON_EXTRACT_ARRAY(unit_list, "$.")) AS units
 )
 SELECT

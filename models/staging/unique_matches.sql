@@ -34,5 +34,6 @@ SELECT  match_id, SPLIT(match_id, '_')[0] AS server_realm_code, queue_id, tft_se
         metadata, info, src_table, singer_id, last_client_update_datetime, game_client_version_id,
 ROW_NUMBER() OVER (PARTITION BY match_id ORDER BY singer_id DESC) AS instance
 FROM all_tables
-WHERE (SPLIT(match_id, '_')[0] = 'PBE1' and queue_id = '1090') OR (queue_id = '1100')
+WHERE ((SPLIT(match_id, '_')[0] = 'PBE1' and queue_id = '1090') OR (queue_id = '1100'))
+    AND JSON_VALUE(data, "$.info.endOfGameResult") = "GameComplete"
 QUALIFY instance = 1

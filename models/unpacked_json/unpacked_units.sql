@@ -1,7 +1,7 @@
 WITH initial AS
 (
     SELECT match_id, puuid,
-        JSON_VALUE(units, '$.character_id') AS character_id,
+        UPPER(JSON_VALUE(units, '$.character_id')) AS character_id,
         CAST(JSON_VALUE(units, '$.tier') AS INT64) AS tier,
         CAST(JSON_VALUE(units, '$.rarity') AS INT64) AS raw_unit_rarity,
         JSON_QUERY(units, '$.itemNames') AS item_list

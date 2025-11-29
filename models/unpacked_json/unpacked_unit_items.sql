@@ -5,7 +5,7 @@ WITH initial AS (
         character_id,
         tier,
         unit_instance_index,
-        JSON_EXTRACT_SCALAR(items, "$") AS item_api_name
+        UPPER(JSON_EXTRACT_SCALAR(items, "$")) AS item_api_name
     FROM {{ ref('unpacked_units') }},
     UNNEST(JSON_EXTRACT_ARRAY(item_list, "$.")) AS items
 )

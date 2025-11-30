@@ -1,32 +1,4 @@
-SELECT match_id, puuid,
-    MAX(CASE WHEN name = 'TFT16_DarkinWeapon' THEN tier_current ELSE 0 END) AS TFT16_DarkinWeapon,
-    MAX(CASE WHEN name = 'TFT16_Targon' THEN tier_current ELSE 0 END) AS TFT16_Targon,
-    MAX(CASE WHEN name = 'TFT16_Juggernaut' THEN tier_current ELSE 0 END) AS TFT16_Juggernaut,
-    MAX(CASE WHEN name = 'TFT16_Rapidfire' THEN tier_current ELSE 0 END) AS TFT16_Rapidfire,
-    MAX(CASE WHEN name = 'TFT16_Longshot' THEN tier_current ELSE 0 END) AS TFT16_Longshot,
-    MAX(CASE WHEN name = 'TFT16_Vanquisher' THEN tier_current ELSE 0 END) AS TFT16_Vanquisher,
-    MAX(CASE WHEN name = 'TFT16_Slayer' THEN tier_current ELSE 0 END) AS TFT16_Slayer,
-    MAX(CASE WHEN name = 'TFT16_Sorcerer' THEN tier_current ELSE 0 END) AS TFT16_Sorcerer,
-    MAX(CASE WHEN name = 'TFT16_Gunslinger' THEN tier_current ELSE 0 END) AS TFT16_Gunslinger,
-    MAX(CASE WHEN name = 'TFT16_Piltover' THEN tier_current ELSE 0 END) AS TFT16_Piltover,
-    MAX(CASE WHEN name = 'TFT16_Magus' THEN tier_current ELSE 0 END) AS TFT16_Magus,
-    MAX(CASE WHEN name = 'TFT16_Void' THEN tier_current ELSE 0 END) AS TFT16_Void,
-    MAX(CASE WHEN name = 'TFT16_Invoker' THEN tier_current ELSE 0 END) AS TFT16_Invoker,
-    MAX(CASE WHEN name = 'TFT16_Shurima' THEN tier_current ELSE 0 END) AS TFT16_Shurima,
-    MAX(CASE WHEN name = 'TFT16_ShadowIsles' THEN tier_current ELSE 0 END) AS TFT16_ShadowIsles,
-    MAX(CASE WHEN name = 'TFT16_Yordle' THEN tier_current ELSE 0 END) AS TFT16_Yordle,
-    MAX(CASE WHEN name = 'TFT16_Brawler' THEN tier_current ELSE 0 END) AS TFT16_Brawler,
-    MAX(CASE WHEN name = 'TFT16_Warden' THEN tier_current ELSE 0 END) AS TFT16_Warden,
-    MAX(CASE WHEN name = 'TFT16_Defender' THEN tier_current ELSE 0 END) AS TFT16_Defender,
-    MAX(CASE WHEN name = 'TFT16_Freljord' THEN tier_current ELSE 0 END) AS TFT16_Freljord,
-    MAX(CASE WHEN name = 'TFT16_Explorer' THEN tier_current ELSE 0 END) AS TFT16_Explorer,
-    MAX(CASE WHEN name = 'TFT16_Demacia' THEN tier_current ELSE 0 END) AS TFT16_Demacia,
-    MAX(CASE WHEN name = 'TFT16_Bilgewater' THEN tier_current ELSE 0 END) AS TFT16_Bilgewater,
-    MAX(CASE WHEN name = 'TFT16_Noxus' THEN tier_current ELSE 0 END) AS TFT16_Noxus,
-    MAX(CASE WHEN name = 'TFT16_Zaun' THEN tier_current ELSE 0 END) AS TFT16_Zaun,
-    MAX(CASE WHEN name = 'TFT16_Ionia' THEN tier_current ELSE 0 END) AS TFT16_Ionia,
-    --Need this to detect Galio
-    MAX(CASE WHEN name = 'TFT16_Heroic' THEN tier_current ELSE 0 END) AS TFT16_Heroic
+SELECT *
 
-FROM {{ ref('unpacked_traits') }}
-GROUP BY match_id, puuid
+FROM  {{ ref('aggregations_units') }} USING (match_id, puuid)
+WHERE match_id = 'PBE1_4520884744' AND puuid = 'zeBT3QXYiqxdevUo2M1sACsMRENy05VlJFmbPmFtxvXvGqe7AMhxzoVXeFApnwRmW08YUvn5qXdudw'

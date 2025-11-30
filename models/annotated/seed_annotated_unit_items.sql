@@ -18,9 +18,8 @@ WITH initial AS
 		seed_items.*
 	FROM
 				    {{ ref('unpacked_unified') }}
-	    LEFT JOIN 	{{ ref('seed_items') }}
-		    ON item_api_name = api_name
-	WHERE name IS NOT NULL
+	    LEFT JOIN 	{{ ref('seed_items') }} USING (item_api_name)
+	WHERE item_api_name IS NOT NULL
 )
 
 SELECT *

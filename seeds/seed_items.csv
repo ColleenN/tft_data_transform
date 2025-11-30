@@ -1,4 +1,4 @@
-name,api_name,effects,trait_granted,unique,num_craftables,num_artifacts,num_radiants,num_supports,num_emblems,num_components,num_tg_items,num_tac_items,num_swords,num_vests,num_pans,num_belts,num_rods,num_cloaks,num_bows,num_gloves,num_spats,num_tears
+item_name,item_api_name,effects,trait_granted,unique,num_craftables,num_artifacts,num_radiants,num_supports,num_emblems,num_components,num_tg_items,num_tac_items,num_swords,num_vests,num_pans,num_belts,num_rods,num_cloaks,num_bows,num_gloves,num_spats,num_tears
 Rabadon's Deathcap,TFT_ITEM_RABADONSDEATHCAP,"{""AP"": 50.0, ""BonusDamage"": 0.15000000596046448, ""{1543aa48}"": 0.15000000596046448}",,False,1,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0
 Infinity Edge,TFT_ITEM_INFINITYEDGE,"{""AD"": 0.3499999940395355, ""CritChance"": 35.0, ""CritDamageToGive"": 0.10000000149011612}",,False,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0
 Radiant Dragon's Claw,TFT5_ITEM_DRAGONSCLAWRADIANT,"{""HealthRegenInterval"": 2.0, ""ICD"": 0.5, ""MagicResist"": 150.0, ""MaxHealthRegen"": 2.0, ""PercentHealthDamage"": 5.0, ""PercentMaxHP"": 0.18000000715255737}",,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

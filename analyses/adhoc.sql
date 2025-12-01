@@ -1,4 +1,5 @@
-SELECT *
-
-FROM  {{ ref('aggregations_units') }} USING (match_id, puuid)
-WHERE match_id = 'PBE1_4520884744' AND puuid = 'zeBT3QXYiqxdevUo2M1sACsMRENy05VlJFmbPmFtxvXvGqe7AMhxzoVXeFApnwRmW08YUvn5qXdudw'
+SELECT * 
+FROM            {{ ref('aggregations_boards') }}
+    LEFT JOIN   {{  ref('traits_pivoted') }} USING (match_id, puuid)
+WHERE num_unit_slots < num_units AND TFT16_EXPLORER = 0
+AND match_id = 'PBE1_4520437160' AND puuid = 'lqeko_0ZLfrVm-MchgzAXhaR-d8EEhKis-Ksoa8mJSoQbpgVYxB2ZI7EZakrQpTod__VulpQodjoBA'

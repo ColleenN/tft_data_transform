@@ -58,3 +58,7 @@ seeds:
         stats_magic_resist: float64
         stats_mana: float64
         stats_range: float64
+    seed_patch_map:
+      +column_types:
+        datetime_min: datetime
+        datetime_max: datetime

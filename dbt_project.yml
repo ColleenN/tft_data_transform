@@ -10,7 +10,7 @@ config-version: 2
 profile: 'default'
 
 vars:
-  use_pbe_data: True
+  use_pbe_data: False
   current_set: 16
 
 # These configurations specify where dbt should look for different types of files.

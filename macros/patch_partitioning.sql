@@ -11,12 +11,12 @@
     {% set major, minor = run_query(query).rows[0].values() %}
     {% else %}
     {% set major, minor = "", "" %}
-    {% endif %}
+    {% endif %} 
 
     SELECT * FROM dbt_output_current_set_raw.with_patch
     WHERE 
             patch_major_id = {{ major }} 
-        AND patch_minor_id = CAST({{ minor }} AS STRING)
+        AND patch_minor_id = CAST("{{ minor }}" AS STRING)
         AND tft_set_number = {{ set_num }} 
         AND NOT server_realm_code = 'PBE1'
 {% endmacro %}

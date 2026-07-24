@@ -7,11 +7,11 @@ version: '1.0.0'
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'default'
+profile: 'tft_data_transform'
 
 vars:
   use_pbe_data: False
-  current_set: 16
+  current_set: 17
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be

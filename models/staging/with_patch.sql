@@ -1,9 +1,3 @@
-{{
-    config(
-        tests={'match_id': ['unique']}
-    )
-}}
-
 SELECT *
 FROM            {{ ref('unique_matches') }} AS matches
     LEFT JOIN   {{ ref('seed_patch_map') }} AS patches

@@ -9,8 +9,8 @@ SELECT DISTINCT
     END AS shop_unit,
     CASE
         WHEN character_id IS NULL THEN NULL
-        ELSE IFNULL(units.takes_board_slot, TRUE)
-    END AS takes_board_slot,
+        ELSE IFNULL(units.num_board_slots, 1)
+    END AS num_board_slots,
     CASE
         WHEN character_id IS NULL THEN NULL
         ELSE CAST(IFNULL(units.one_star_gold_value, 0) * POWER(3, tier - 1) AS INT64)

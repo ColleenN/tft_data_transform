@@ -5,7 +5,7 @@ WITH excluded_units AS (
 )
 
 SELECT  match_id, puuid, character_id, tier, unit_instance_index,
-        shop_unit, takes_board_slot, rarity, total_unit_cost,
+        shop_unit, num_board_slots, rarity, total_unit_cost,
         IFNULL(is_excluded, FALSE) AS excluded_from_board,
         CASE WHEN num_tg_items IS NULL THEN 0 ELSE num_tg_items END AS tg_item,
         COUNT(item_api_name) AS num_items,
@@ -16,5 +16,5 @@ FROM            {{ ref('seed_annotated_unified') }}
         USING (match_id, puuid, character_id, tier, unit_instance_index)
 GROUP BY    match_id, puuid,
             character_id, tier, unit_instance_index,
-            shop_unit, takes_board_slot, rarity, total_unit_cost,
+            shop_unit, num_board_slots, rarity, total_unit_cost,
             excluded_from_board, num_tg_items

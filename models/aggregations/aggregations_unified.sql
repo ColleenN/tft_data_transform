@@ -6,7 +6,7 @@ SELECT
     units.tier,
     units.unit_instance_index,
     units.shop_unit,
-    units.takes_board_slot,
+    units.num_board_slots,
     units.excluded_from_board,
     units.rarity,
     units.total_unit_cost,

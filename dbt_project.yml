@@ -67,5 +67,5 @@ seeds:
         set_num: int64
         api_name: string
         shop_gold_cost: int64
-        takes_board_slot: bool
+        num_board_slots: int64
         note: string

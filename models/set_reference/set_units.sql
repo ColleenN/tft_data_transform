@@ -35,7 +35,8 @@ SELECT
         overrides.shop_gold_cost,
         CASE WHEN generated.shop_unit THEN generated.cost ELSE 0 END
     ) AS one_star_gold_value,
-    COALESCE(overrides.takes_board_slot, TRUE) AS takes_board_slot
+    -- Board slots the unit occupies: 1 for most units, 0 or 2 for some.
+    COALESCE(overrides.num_board_slots, 1) AS num_board_slots
 FROM generated
     FULL OUTER JOIN overrides
         ON generated.set_num = overrides.set_num

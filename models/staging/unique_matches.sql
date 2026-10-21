@@ -17,7 +17,7 @@ WITH all_tables AS
         REGEXP_EXTRACT(JSON_VALUE(data, "$.info.game_version"), r'Linux Version (.*?) \(' ) AS game_client_version_id,
         CAST(JSON_VALUE(data, "$.info.tft_set_number") AS INT64) AS tft_set_number,
 	    'normal_ranked_ladder_match_detail' AS src_table, _sdc_sequence AS singer_id,
-	FROM match_data_landing_zone.normal_ranked_ladder_match_detail
+	FROM {{ source('riot_tap', 'normal_ranked_ladder_match_detail') }}
     UNION ALL
 	SELECT 
         JSON_VALUE(data, "$.metadata.match_id") AS match_id,
@@ -29,7 +29,7 @@ WITH all_tables AS
         REGEXP_EXTRACT(JSON_VALUE(data, "$.info.game_version"), r'Linux Version (.*?) \(' ) AS game_client_version_id,
         CAST(JSON_VALUE(data, "$.info.tft_set_number") AS INT64) AS tft_set_number,
 	    'apex_ranked_ladder_match_detail' AS src_table, _sdc_sequence AS singer_id,
-	FROM match_data_landing_zone.apex_ranked_ladder_match_detail
+	FROM {{ source('riot_tap', 'apex_ranked_ladder_match_detail') }}
     UNION ALL
     SELECT
         JSON_VALUE(data, "$.metadata.match_id") AS match_id,
@@ -41,7 +41,7 @@ WITH all_tables AS
         REGEXP_EXTRACT(JSON_VALUE(data, "$.info.game_version"), r'Linux Version (.*?) \(' ) AS game_client_version_id,
         CAST(JSON_VALUE(data, "$.info.tft_set_number") AS INT64) AS tft_set_number,
         'tft_player_match_detail' AS src_table, _sdc_sequence AS singer_id,
-	FROM match_data_landing_zone.tft_player_match_detail
+	FROM {{ source('riot_tap', 'tft_player_match_detail') }}
 )
 
 SELECT  match_id, SPLIT(match_id, '_')[0] AS server_realm_code, queue_id, server_side_game_start, tft_set_number,

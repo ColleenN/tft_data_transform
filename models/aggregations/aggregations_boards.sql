@@ -1,6 +1,7 @@
 SELECT  match_id, puuid, level,
         level + SUM(num_tac_items) AS num_unit_slots,
-        SUM(CASE WHEN shop_unit THEN num_board_slots ELSE 0 END) AS num_units,
+        SUM(CASE WHEN shop_unit THEN 1 ELSE 0 END) AS num_units,
+        SUM(CASE WHEN shop_unit THEN num_board_slots ELSE 0 END) AS num_unit_slots_used,
         IFNULL(SUM(total_unit_cost), 0) AS total_board_unit_cost,
         IFNULL(SUM(total_unit_cost), 0) + cumulative_level_cost + gold_left AS overall_gold_value,
         SUM(num_items) AS num_items,

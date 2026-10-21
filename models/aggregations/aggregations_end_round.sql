@@ -7,6 +7,7 @@ SELECT
     AVG(annotated.cumulative_level_cost) AS avg_cumulative_level_cost,
     AVG(num_unit_slots) AS avg_num_unit_slots,
     AVG(num_units) AS avg_num_units,
+    AVG(num_unit_slots_used) AS avg_num_unit_slots_used,
     AVG(total_board_unit_cost) AS avg_total_board_unit_cost,
     AVG(overall_gold_value) AS avg_overall_gold_value,
 

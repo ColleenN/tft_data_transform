@@ -3,9 +3,9 @@ version: 2
 models:
   - name: unit_adjustments
     description: >
-      Union of every set mechanic's output. Each row marks one unit instance
+      Union of every set exception's output. Each row marks one unit instance
       that must be treated specially when aggregating, and why. Aggregation
-      models join this table instead of knowing about individual mechanics.
+      models join this table instead of knowing about individual exceptions.
     config:
       contract:
         enforced: true
@@ -35,7 +35,7 @@ models:
               arguments:
                 values: ['exclude_from_board']
       - name: reason
-        description: Which mechanic produced the row, e.g. set14_viego_ghost.
+        description: Which exception produced the row, e.g. set14_viego_ghost.
         data_type: string
         data_tests: [not_null]
     data_tests:
@@ -48,7 +48,7 @@ models:
     description: >
       Set 14 Viego ghost units: copies of units that appear in the match
       payload but were not on the board. Output of the set14_viego_ghosts
-      mechanic, in the shared adjustment contract.
+      exception, in the shared adjustment contract.
     config:
       contract:
         enforced: true

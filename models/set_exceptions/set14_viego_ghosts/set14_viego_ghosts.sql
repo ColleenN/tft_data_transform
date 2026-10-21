@@ -1,4 +1,4 @@
--- Set 14 Viego ghosts, in the set-mechanic output contract.
+-- Set 14 Viego ghosts, in the set-exception output contract.
 --
 -- Candidates come from trait counts; boards where trait counts point at no one
 -- fall back to champions listed more than once. Of each candidate's copies, the

@@ -62,3 +62,10 @@ seeds:
       +column_types:
         datetime_min: datetime
         datetime_max: datetime
+    seed_unit_overrides:
+      +column_types:
+        set_num: int64
+        api_name: string
+        shop_gold_cost: int64
+        takes_board_slot: bool
+        note: string

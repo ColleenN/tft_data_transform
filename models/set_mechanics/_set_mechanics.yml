@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: unit_adjustments
+    description: >
+      Union of every set mechanic's output. Each row marks one unit instance
+      that must be treated specially when aggregating, and why. Aggregation
+      models join this table instead of knowing about individual mechanics.
+    config:
+      contract:
+        enforced: true
+    columns: &adjustment_contract
+      - name: match_id
+        data_type: string
+        data_tests: [not_null]
+      - name: puuid
+        data_type: string
+        data_tests: [not_null]
+      - name: character_id
+        data_type: string
+        data_tests: [not_null]
+      - name: tier
+        data_type: int64
+      - name: unit_instance_index
+        data_type: int64
+      - name: adjustment
+        description: >
+          What to do with the unit. exclude_from_board = the unit is in the
+          payload but was not really on the board; leave it out of board
+          totals. Add new values only when a real set needs them.
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['exclude_from_board']
+      - name: reason
+        description: Which mechanic produced the row, e.g. set14_viego_ghost.
+        data_type: string
+        data_tests: [not_null]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              [match_id, puuid, character_id, tier, unit_instance_index, adjustment]
+
+  - name: set14_viego_ghosts
+    description: >
+      Set 14 Viego ghost units: copies of units that appear in the match
+      payload but were not on the board. Output of the set14_viego_ghosts
+      mechanic, in the shared adjustment contract.
+    config:
+      contract:
+        enforced: true
+    columns: *adjustment_contract
+
+  - name: set14_viego_ghost_boards
+    description: Set 14 boards with Viego and more units than they can hold.
+
+  - name: set14_viego_ghost_trait_candidates
+    description: >
+      On Set 14 ghost boards, the champions most likely to be ghosts based on
+      trait counts that exceed the API's active trait counts.

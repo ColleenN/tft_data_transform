@@ -1,5 +1,6 @@
 SELECT
     match_id,
+    tft_set_number,
     JSON_VALUE(players, '$.puuid') AS puuid,
     CAST(JSON_VALUE(players, '$.placement') AS INT64) AS placement,
     CAST(JSON_VALUE(players, '$.level') AS INT64) AS level,

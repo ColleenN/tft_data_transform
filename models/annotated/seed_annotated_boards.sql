@@ -1,10 +1,10 @@
-SELECT  match_id, puuid,
+SELECT  match_id, puuid, tft_set_number,
         placement, level, gold_left, last_round, players_eliminated,
         cumulative_level_cost
 FROM
         {{ ref('unpacked_unified') }} AS base
     LEFT JOIN {{ ref('seed_level_costs') }} AS seed USING (level)
 GROUP BY 
-    match_id, puuid,
+    match_id, puuid, tft_set_number,
     placement, level, gold_left, last_round, players_eliminated,
     cumulative_level_cost

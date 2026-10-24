@@ -7,6 +7,7 @@ SELECT
     units.unit_instance_index,
     units.shop_unit,
     units.num_board_slots,
+    units.excluded_from_board,
     units.rarity,
     units.total_unit_cost,
     units.tg_item,

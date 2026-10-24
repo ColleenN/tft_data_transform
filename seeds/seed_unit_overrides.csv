@@ -1,0 +1,8 @@
+set_num,api_name,shop_gold_cost,num_board_slots,note
+16,TFT16_AURELIONSOL,7,,Unlockable 7-cost
+16,TFT16_BROCK,7,,Unlockable 7-cost
+16,TFT16_SYLAS,7,,Unlockable 7-cost
+16,TFT16_RYZE,7,,Unlockable 7-cost
+16,TFT16_BARONNASHOR,7,,Unlockable 7-cost
+16,TFT16_ZAAHEN,7,,Unlockable 7-cost
+16,TFT16_GALIO,,0,Does not occupy a unit slot

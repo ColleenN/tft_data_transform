@@ -6,6 +6,7 @@ SELECT
     units.tier,
     units.unit_instance_index,
     units.shop_unit,
+    units.num_board_slots,
     units.rarity,
     units.total_unit_cost,
     units.tg_item,
@@ -40,6 +41,7 @@ SELECT
     -- board-level aggregates
     boards.num_unit_slots,
     boards.num_units,
+    boards.num_unit_slots_used,
     boards.total_board_unit_cost,
     boards.overall_gold_value,
     boards.num_items           AS board_num_items,
@@ -72,6 +74,7 @@ SELECT
     end_round.avg_cumulative_level_cost AS round_avg_cumulative_level_cost,
     end_round.avg_num_unit_slots       AS round_avg_num_unit_slots,
     end_round.avg_num_units            AS round_avg_num_units,
+    end_round.avg_num_unit_slots_used  AS round_avg_num_unit_slots_used,
     end_round.avg_total_board_unit_cost AS round_avg_total_board_unit_cost,
     end_round.avg_overall_gold_value   AS round_avg_overall_gold_value,
     end_round.avg_num_items            AS round_avg_num_items,

@@ -1,27 +1,22 @@
-SELECT 
+SELECT DISTINCT
     match_id, puuid, character_id, tier, unit_instance_index,
-    cost AS rarity, 
-    CASE 
-        WHEN character_id IN ('TFT16_AURELIONSOL', 'TFT16_BROCK', 'TFT16_SYLAS', 'TFT16_RYZE', 'TFT16_BARONNASHOR', 'TFT16_ZAAHEN') THEN 7
-        ELSE cost
-    END AS shop_gold_cost,
-    role, 
-    CASE 
+    units.cost AS rarity,
+    units.shop_gold_cost,
+    units.role,
+    CASE
         WHEN character_id IS NULL THEN NULL
-        WHEN shop_unit IS NOT NULL THEN shop_unit 
-        ELSE False 
+        ELSE IFNULL(units.shop_unit, FALSE)
     END AS shop_unit,
-    CASE 
+    CASE
         WHEN character_id IS NULL THEN NULL
-        WHEN character_id IN ('TFT16_AURELIONSOL', 'TFT16_BROCK', 'TFT16_SYLAS', 'TFT16_RYZE', 'TFT16_BARONNASHOR', 'TFT16_ZAAHEN') THEN CAST(7*POWER(3, tier-1) AS INT64)
-        WHEN shop_unit = True THEN CAST(cost*POWER(3, tier-1) AS INT64)
-        ELSE 0
+        ELSE IFNULL(units.num_board_slots, 1)
+    END AS num_board_slots,
+    CASE
+        WHEN character_id IS NULL THEN NULL
+        ELSE CAST(IFNULL(units.one_star_gold_value, 0) * POWER(3, tier - 1) AS INT64)
     END AS total_unit_cost
 
 FROM
                 {{ ref('unpacked_unified') }} AS unpacked
-    LEFT JOIN 	{{ ref('seed_units') }} AS seed
-        ON character_id = api_name
-GROUP BY
-    match_id, puuid, character_id, tier, unit_instance_index,
-    cost, role, seed.shop_unit
+    LEFT JOIN   {{ ref('set_units') }} AS units
+        ON unpacked.character_id = units.api_name

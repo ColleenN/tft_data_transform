@@ -6,7 +6,7 @@
 }}
 
 SELECT 
-    boards.match_id, boards.puuid, placement, level, gold_left, last_round, players_eliminated,
+    boards.match_id, boards.puuid, boards.tft_set_number, placement, level, gold_left, last_round, players_eliminated,
     units.character_id, units.tier, units.unit_instance_index, raw_unit_rarity, 
     item_api_name, item_instance_index
 FROM            {{ ref('unpacked_boards') }} AS boards

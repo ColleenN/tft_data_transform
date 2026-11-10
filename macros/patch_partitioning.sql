@@ -1,54 +1,16 @@
-{% macro latest_live(set_num=var('current_set')) %}
-    {% set query %}
-    SELECT patch_major_id, patch_minor_id
-    FROM {{ ref('seed_patch_map') }}
-    WHERE set_num = {{ set_num }} AND is_pbe = FALSE
-    ORDER BY patch_major_id DESC, patch_minor_id DESC
-    LIMIT 1
-    {% endset %}
-
-    {% if execute %}
-    {% set major, minor = run_query(query).rows[0].values() %}
-    {% else %}
-    {% set major, minor = "", "" %}
-    {% endif %} 
-
-    SELECT * FROM dbt_output_current_set_raw.with_patch
-    WHERE 
-            patch_major_id = {{ major }} 
-        AND patch_minor_id = CAST("{{ minor }}" AS STRING)
-        AND tft_set_number = {{ set_num }} 
-        AND NOT server_realm_code = 'PBE1'
-{% endmacro %}
-
-{% macro latest_pbe(set_num=var('current_set')) %}
-    {% set query %}
-    SELECT patch_major_id, patch_minor_id
-    FROM {{ ref('seed_patch_map') }}
-    WHERE set_num = {{ set_num }} AND is_pbe = true
-    ORDER BY patch_major_id DESC, patch_minor_id DESC
-    LIMIT 1
-    {% endset %}
-
-    {% if execute %}
-    {% set major, minor = run_query(query).rows[0].values() %}
-    {% else %}
-    {% set major, minor = "", "" %}
-    {% endif %}
-
-    SELECT * FROM dbt_output_current_set_raw.with_patch
-    WHERE 
-            patch_major_id = {{ major }} 
-        AND patch_minor_id = CAST({{ minor }} AS STRING)
-        AND tft_set_number = {{ set_num }} 
-        AND server_realm_code = 'PBE1'
-{% endmacro %}
-
 {% macro latest_raw_match_detail(set_num=var('current_set'), env=none) %}
-    {% if env|upper == 'PBE' or (env is none and var('use_pbe_data')) %}
-        {{ latest_pbe(set_num) }}
-    {% else %}
-        {{ latest_live(set_num) }}
-    {% endif %}
-{% endmacro %}
+    {% set is_pbe = (env | upper == 'PBE') if env is not none else var('use_pbe_data') %}
 
+    SELECT * EXCEPT (version_major, version_minor)
+    FROM (
+        SELECT
+            *,
+            SAFE_CAST(SPLIT(game_client_version_id, '.')[SAFE_OFFSET(0)] AS INT64) AS version_major,
+            SAFE_CAST(SPLIT(game_client_version_id, '.')[SAFE_OFFSET(1)] AS INT64) AS version_minor
+        FROM {{ ref('unique_matches') }}
+        WHERE tft_set_number = {{ set_num }}
+            AND {{ '' if is_pbe else 'NOT' }} server_realm_code = 'PBE1'
+    )
+    WHERE version_major IS NOT NULL AND version_minor IS NOT NULL
+    QUALIFY RANK() OVER (ORDER BY version_major DESC, version_minor DESC) = 1
+{% endmacro %}

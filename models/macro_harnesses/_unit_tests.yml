@@ -1,0 +1,32 @@
+version: 2
+
+unit_tests:
+  - name: latest_raw_match_detail_live
+    model: harness_latest_raw_match_detail
+    overrides:
+      vars: {harness_env: live}
+    given: &matches
+      - input: ref('unique_matches')
+        rows:
+          - {match_id: NA1_1, server_realm_code: NA1, tft_set_number: 17, game_client_version_id: "16.21.829.8620"}
+          # a later build of the same version
+          - {match_id: NA1_2, server_realm_code: NA1, tft_set_number: 17, game_client_version_id: "16.21.831.0042"}
+          # sorts after 16.21 as a string, before it as a number
+          - {match_id: NA1_3, server_realm_code: NA1, tft_set_number: 17, game_client_version_id: "16.9.799.1234"}
+          - {match_id: NA1_4, server_realm_code: NA1, tft_set_number: 16, game_client_version_id: "16.22.835.0001"}
+          - {match_id: NA1_5, server_realm_code: NA1, tft_set_number: 17, game_client_version_id: null}
+          - {match_id: PBE1_1, server_realm_code: PBE1, tft_set_number: 17, game_client_version_id: "16.22.840.0001"}
+          - {match_id: PBE1_2, server_realm_code: PBE1, tft_set_number: 17, game_client_version_id: "16.21.829.8620"}
+    expect:
+      rows:
+        - {match_id: NA1_1}
+        - {match_id: NA1_2}
+
+  - name: latest_raw_match_detail_pbe
+    model: harness_latest_raw_match_detail
+    overrides:
+      vars: {harness_env: pbe}
+    given: *matches
+    expect:
+      rows:
+        - {match_id: PBE1_1}

@@ -110,27 +110,26 @@ def client():
 
 
 @pytest.fixture
-def prefix():
-    return f"archive_test_{uuid.uuid4().hex[:8]}"
+def sample_dataset(client):
+    """Factory for SampleDatasets that are dropped when the test ends.
 
+    sample_dataset("landing", tables=LANDING_TABLES) creates a dataset named
+    archive_test_<id>_landing with those tables. Datasets made in the same
+    test share the <id>.
+    """
+    prefix = f"archive_test_{uuid.uuid4().hex[:8]}"
+    created = []
 
-@pytest.fixture
-def landing(client, prefix):
-    dataset = SampleDataset(client, f"{prefix}_landing")
-    dataset.create()
+    def make(name, tables=(), schema=LANDING_SCHEMA):
+        dataset = SampleDataset(client, f"{prefix}_{name}")
+        dataset.create()
+        created.append(dataset)
+        for table in tables:
+            dataset.create_table(table, schema=schema)
+        return dataset
+
     try:
-        for table in LANDING_TABLES:
-            dataset.create_table(table)
-        yield dataset
+        yield make
     finally:
-        dataset.drop()
-
-
-@pytest.fixture
-def archive(client, prefix):
-    dataset = SampleDataset(client, f"{prefix}_archive")
-    dataset.create()
-    try:
-        yield dataset
-    finally:
-        dataset.drop()
+        for dataset in created:
+            dataset.drop()

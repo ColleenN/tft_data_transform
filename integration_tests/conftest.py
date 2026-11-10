@@ -1,6 +1,7 @@
 """Sample BigQuery datasets for testing the archive_set macro.
 
-Each test gets its own landing and archive datasets, dropped afterwards.
+Tests create datasets through the sample_dataset factory, which drops
+them when the test ends.
 dbt runs with your normal profile, whose target project must be
 TFT_TEST_PROJECT, and needs permission to create and drop datasets.
 """

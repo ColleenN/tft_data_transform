@@ -7,12 +7,16 @@
 
     Rows are matched on a fingerprint of their payload and Singer sequence.
     The copy only adds rows the archive lacks, and the delete only removes
-    rows the archive already holds, so a row that lands mid-run stays put
-    for the next run and any step can be repeated after a failure. Since the
+    rows the archive already holds, so any step can be repeated after a
+    failure. A row for the set that lands between the copy and the check
+    fails the check, and nothing is deleted until the next run. Since the
     set leaves the landing tables, a --full-refresh can't rebuild it.
+
+    landing_dataset points the macro at copies of the landing tables
+    instead of the riot_tap source, for the integration tests.
 #}
 
-{% macro archive_set(set_num, archive_dataset=var('archive_dataset', 'match_data_archive'), dry_run=false) %}
+{% macro archive_set(set_num, archive_dataset=var('archive_dataset', 'match_data_archive'), dry_run=false, landing_dataset=none) %}
     {% if set_num == var('current_set') %}
         {{ exceptions.raise_compiler_error("Refusing to archive set " ~ set_num ~ ": it is current_set") }}
     {% endif %}
@@ -21,7 +25,11 @@
     {% set row_fp %}FARM_FINGERPRINT(CONCAT(TO_JSON_STRING(data), '|', COALESCE(CAST(_sdc_sequence AS STRING), ''))){% endset %}
 
     {% for table_name in ['tft_player_match_detail', 'apex_ranked_ladder_match_detail', 'normal_ranked_ladder_match_detail'] %}
-        {% set src = source('riot_tap', table_name) %}
+        {% if landing_dataset %}
+            {% set src = api.Relation.create(database=target.database, schema=landing_dataset, identifier=table_name) %}
+        {% else %}
+            {% set src = source('riot_tap', table_name) %}
+        {% endif %}
         {% set dest = adapter.quote(src.database) ~ '.' ~ adapter.quote(archive_dataset) ~ '.' ~ adapter.quote(table_name) %}
 
         {% if dry_run %}

@@ -1,0 +1,13 @@
+.git
+.github
+.idea
+.env
+target
+dbt_packages
+dbt_internal_packages
+logs
+integration_tests
+postgres_archive
+analyses
+**/__pycache__
+.pytest_cache

@@ -1,0 +1,30 @@
+# Builds the tft-data-transform image and pushes it to the project's Docker
+# registry.
+#
+# Run by a Cloud Build trigger on pushes to main (defined in tft_data_infra).
+# The scheduled archive job runs :latest, so a pushed image is used from its
+# next run.
+
+substitutions:
+  _REGION: us-central1
+  _REGISTRY: tft-data-docker-registry
+  _IMAGE: tft-data-transform
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  substitutionOption: ALLOW_LOOSE
+
+steps:
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REGISTRY}/${_IMAGE}:${SHORT_SHA}
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REGISTRY}/${_IMAGE}:latest
+      - .
+
+images:
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REGISTRY}/${_IMAGE}:${SHORT_SHA}
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REGISTRY}/${_IMAGE}:latest

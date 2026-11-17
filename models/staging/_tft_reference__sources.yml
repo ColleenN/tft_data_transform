@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: tft_reference
+    description: >
+      Set reference data that tft_set_info_tools' loader appends from mirrored
+      Community Dragon snapshots. Every row carries the capture it came from
+      (channel, build, captured_at, source_object) and its set_number.
+    schema: "{{ var('reference_dataset', 'tft_reference') }}"
+    tables:
+      - name: units
+        description: Units per set, one copy per loaded capture.
+      - name: loaded_captures
+        description: One row per capture the loader has loaded or skipped.

@@ -10,7 +10,14 @@ RUN pip install "dbt-bigquery~=1.10"
 
 WORKDIR /dbt
 COPY . .
-RUN dbt deps
+# dbt_utils is a git package, so deps needs git; it's removed again in the
+# same layer since nothing needs it at run time.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git \
+    && dbt deps \
+    && apt-get purge -y git \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # The project directory belongs to root, so dbt writes elsewhere at run time.
 ENV DBT_TARGET_PATH=/tmp/dbt/target \

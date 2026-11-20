@@ -1,9 +1,4 @@
-{{
-    config(
-        materialized='incremental',
-        unique_key=['match_id', 'puuid', 'character_id', 'tier', 'unit_instance_index', 'item_api_name', 'item_instance_index']
-    )
-}}
+{{ config(materialized='incremental') }}
 
 SELECT 
     boards.match_id, boards.puuid, boards.tft_set_number, placement, level, gold_left, last_round, players_eliminated,
@@ -14,3 +9,6 @@ FROM            {{ ref('unpacked_boards') }} AS boards
         USING (match_id, puuid)
     LEFT JOIN   {{ ref('unpacked_unit_items') }} AS items 
         USING (match_id, puuid, character_id, tier, unit_instance_index)
+{% if is_incremental() %}
+WHERE boards.match_id NOT IN (SELECT match_id FROM {{ this }})
+{% endif %}

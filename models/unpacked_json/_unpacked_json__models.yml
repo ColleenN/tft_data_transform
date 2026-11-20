@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: unpacked_unified
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - match_id
+              - puuid
+              - character_id
+              - tier
+              - unit_instance_index
+              - item_api_name
+              - item_instance_index
+
+unit_tests:
+  - name: unpacked_unified_adds_only_new_matches
+    model: unpacked_unified
+    overrides:
+      macros:
+        is_incremental: true
+    given:
+      - input: this
+        rows:
+          - {match_id: NA1_1, puuid: p1}
+      - input: ref('unpacked_boards')
+        rows:
+          - {match_id: NA1_1, puuid: p1}
+          - {match_id: NA1_2, puuid: p1}
+          - {match_id: NA1_2, puuid: p2}
+      - input: ref('unpacked_units')
+        rows:
+          - {match_id: NA1_1, puuid: p1, character_id: TFT17_A, tier: 1, unit_instance_index: 1}
+          - {match_id: NA1_2, puuid: p1, character_id: TFT17_A, tier: 2, unit_instance_index: 1}
+      - input: ref('unpacked_unit_items')
+        rows:
+          - {match_id: NA1_1, puuid: p1, character_id: TFT17_A, tier: 1, unit_instance_index: 1, item_api_name: X, item_instance_index: 1}
+    expect:
+      rows:
+        - {match_id: NA1_2, puuid: p1, character_id: TFT17_A, tier: 2, item_api_name: null}
+        - {match_id: NA1_2, puuid: p2, character_id: null, tier: null, item_api_name: null}

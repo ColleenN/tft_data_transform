@@ -52,4 +52,7 @@ FROM all_tables
 WHERE ((SPLIT(match_id, '_')[0] = 'PBE1' and queue_id = '1090') OR (queue_id = '1100'))
     AND JSON_VALUE(info, "$.endOfGameResult") = "GameComplete"
     AND ARRAY_LENGTH(JSON_VALUE_ARRAY(metadata, "$.participants")) = 8
-QUALIFY instance = 1
+{% if is_incremental() %}
+    AND match_id NOT IN (SELECT match_id FROM {{ this }})
+{% endif %}
+QUALIFY instance = 1

@@ -5,7 +5,8 @@
 # dbt_ci_current_set_raw) and read the sources. dbt reads each unit test
 # input's columns from the warehouse, and creates an empty table next to the
 # tested model, so the seeds and every model are first built there, the
-# models empty.
+# models empty. Each build's tables carry a prefix from its build ID, so
+# builds running at the same time don't overwrite each other.
 
 substitutions:
   _REGION: us-central1
@@ -19,6 +20,7 @@ options:
     - DBT_GCP_PROJECT=${PROJECT_ID}
     - DBT_LOCATION=${_REGION}
     - DBT_DATASET=${_DATASET}
+    - CI_BUILD_ID=$BUILD_ID
     - DO_NOT_TRACK=1
     - PIP_DISABLE_PIP_VERSION_CHECK=1
 
@@ -35,25 +37,25 @@ steps:
 
   - id: deps
     name: python:3.12
-    entrypoint: /workspace/.venv/bin/dbt
+    entrypoint: /workspace/ci/dbt.sh
     args: ["deps"]
 
   - id: parse
     name: python:3.12
-    entrypoint: /workspace/.venv/bin/dbt
+    entrypoint: /workspace/ci/dbt.sh
     args: ["parse"]
 
   - id: seed
     name: python:3.12
-    entrypoint: /workspace/.venv/bin/dbt
+    entrypoint: /workspace/ci/dbt.sh
     args: ["seed"]
 
   - id: build-empty
     name: python:3.12
-    entrypoint: /workspace/.venv/bin/dbt
+    entrypoint: /workspace/ci/dbt.sh
     args: ["run", "--empty", "--vars", "{macro_harnesses: true}"]
 
   - id: unit-tests
     name: python:3.12
-    entrypoint: /workspace/.venv/bin/dbt
+    entrypoint: /workspace/ci/dbt.sh
     args: ["test", "--select", "test_type:unit", "--vars", "{macro_harnesses: true}"]

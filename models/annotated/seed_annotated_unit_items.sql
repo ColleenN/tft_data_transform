@@ -1,4 +1,8 @@
-WITH initial AS
+WITH seed_items AS (
+	SELECT * FROM {{ ref('seed_items') }}
+),
+
+initial AS
 (
 	SELECT
 		match_id,
@@ -18,7 +22,7 @@ WITH initial AS
 		seed_items.*
 	FROM
 				    {{ ref('unpacked_unified') }}
-	    LEFT JOIN 	{{ ref('seed_items') }} USING (item_api_name)
+	    LEFT JOIN 	seed_items USING (item_api_name)
 	WHERE item_api_name IS NOT NULL
 )
 

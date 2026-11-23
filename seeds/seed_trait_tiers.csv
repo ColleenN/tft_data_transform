@@ -1,83 +1,31 @@
 name,api_name,type,tier_min_units,tier_max_units,tier_style,tier_variables,desc
 Attuned,DA_ALUNEUNIQUETRAIT18,PRISMATIC,1,300,6,{},"Your strongest Alune cycles to a new phase of the moon after each cast. While the moon is at or below half full, your team gains <TFTCurveTable row=""Durability"" format=""invertedPercent""/> Durabilty. While above, your team gains <TFTCurveTable row=""DamageAmp"" format=""percent""/> Damage Amp.{Set18.Unit.Alune.CombatSpacer}{Set18.Unit.Alune.Phase}"
-Bounty Seeker,DA_DRAVENUNIQUETRAIT18,PRISMATIC,1,300,6,{},"Choose a bounty. Your strongest Draven can progress on the bounty to earn its reward. Upon completing a bounty, choose another.
-
-{TraitTags.DravenUniqueTrait.BountyDescription}{TraitTags.DravenUniqueTrait.Tracker}"
+Bounty Seeker,DA_DRAVENUNIQUETRAIT18,PRISMATIC,1,300,6,{},"Choose a bounty. Your strongest Draven can progress on the bounty to earn its reward. Upon completing a bounty, choose another.\n\n{TraitTags.DravenUniqueTrait.BountyDescription}{TraitTags.DravenUniqueTrait.Tracker}"
 Apex Predator,DA_18_APEXPREDATOR,PRISMATIC,1,300,6,{},Elder Dragon takes up <colorStat>2</> team slots and grants +<colorStat>2</> to the Riftbeast trait.
-Greenfather,DA_18_GREENFATHER,PRISMATIC,1,300,6,{},"Gain <TFTCurveTable row=""SeedsPerCast""/> seed when your strongest Ivern casts, plus <TFTCurveTable row=""CombatStartSeeds""/> every combat. Ivern uses <TFTCurveTable row=""SeedsToGrowHex""/> seeds to grow a hex on your board that grants a bonus to its occupant. 
-
-Seeds: <TFTAttribute attributeID=""TFTTraitAttributes.Stack""/> / <TFTCurveTable row=""SeedsToGrowHex""/>
-
-Current Biome: {Set18.Trait.Greenfather.Tooltip.BiomeName}
-{Set18.Trait.Greenfather.Tooltip.HexType1} 
-{Set18.Trait.Greenfather.Tooltip.HexType2}
-{Set18.Trait.Greenfather.Tooltip.HexType3}"
-Avatar,DA_18_LUXUNIQUETRAIT,PRISMATIC,1,300,6,{},"Having an Avatar on your bench or board transforms all other Avatars in your shop to the Trait of that Avatar.
-
-An Avatar's chosen Trait is counted twice for Trait bonuses."
-Old Growth,DA_18_MAOKAI_UNIQUETRAIT,PRISMATIC,1,300,6,{},"Whenever an enemy within <TFTCurveTable row=""UniqueTraitHexRange""/> hexes dies, your strongest Old Growth champion gains <TFTCurveTable row=""UniqueTraitHealthPerStack""/> permanent max Health.
-
-Current: <TFTAttribute attributeId=""TFTCalculationAttributes.GenericCalc1""/>"
+Greenfather,DA_18_GREENFATHER,PRISMATIC,1,300,6,{},"Gain <TFTCurveTable row=""SeedsPerCast""/> seed when your strongest Ivern casts, plus <TFTCurveTable row=""CombatStartSeeds""/> every combat. Ivern uses <TFTCurveTable row=""SeedsToGrowHex""/> seeds to grow a hex on your board that grants a bonus to its occupant. \n\nSeeds: <TFTAttribute attributeID=""TFTTraitAttributes.Stack""/> / <TFTCurveTable row=""SeedsToGrowHex""/>\n\nCurrent Biome: {Set18.Trait.Greenfather.Tooltip.BiomeName}\n{Set18.Trait.Greenfather.Tooltip.HexType1} \n{Set18.Trait.Greenfather.Tooltip.HexType2}\n{Set18.Trait.Greenfather.Tooltip.HexType3}"
+Avatar,DA_18_LUXUNIQUETRAIT,PRISMATIC,1,300,6,{},Having an Avatar on your bench or board transforms all other Avatars in your shop to the Trait of that Avatar.\n\nAn Avatar's chosen Trait is counted twice for Trait bonuses.
+Old Growth,DA_18_MAOKAI_UNIQUETRAIT,PRISMATIC,1,300,6,{},"Whenever an enemy within <TFTCurveTable row=""UniqueTraitHexRange""/> hexes dies, your strongest Old Growth champion gains <TFTCurveTable row=""UniqueTraitHealthPerStack""/> permanent max Health.\n\nCurrent: <TFTAttribute attributeId=""TFTCalculationAttributes.GenericCalc1""/>"
 Thornmaiden,DA_18_ZYRAUNIQUETRAIT,PRISMATIC,1,300,6,{},"Your team gains <TFTCurveTable row=""BaseDurability"" column=""1"" format=""invertedPercent""/> Durability, increased to <TFTCurveTable row=""IncreasedDurability"" column=""1"" format=""invertedPercent""/> if <TFTCurveTable row=""PlantNumThreshold"" column=""1""/> or more Zyra plants are alive."
-Adaptor,DA_18_ADAPTOR,BRONZE,2,2,1,{},"<bright>Innate:</> Adaptor abilities change depending on if their Attack Damage or Ability Power is higher.
-
-Adaptors gain Ability Power or Attack Damage, depending on which is higher."
-Adaptor,DA_18_ADAPTOR,SILVER,3,3,3,{},"<bright>Innate:</> Adaptor abilities change depending on if their Attack Damage or Ability Power is higher.
-
-Adaptors gain Ability Power or Attack Damage, depending on which is higher."
-Adaptor,DA_18_ADAPTOR,LEGENDARY,4,300,4,{},"<bright>Innate:</> Adaptor abilities change depending on if their Attack Damage or Ability Power is higher.
-
-Adaptors gain Ability Power or Attack Damage, depending on which is higher."
+Adaptor,DA_18_ADAPTOR,BRONZE,2,2,1,{},"<bright>Innate:</> Adaptor abilities change depending on if their Attack Damage or Ability Power is higher.\n\nAdaptors gain Ability Power or Attack Damage, depending on which is higher."
+Adaptor,DA_18_ADAPTOR,SILVER,3,3,3,{},"<bright>Innate:</> Adaptor abilities change depending on if their Attack Damage or Ability Power is higher.\n\nAdaptors gain Ability Power or Attack Damage, depending on which is higher."
+Adaptor,DA_18_ADAPTOR,LEGENDARY,4,300,4,{},"<bright>Innate:</> Adaptor abilities change depending on if their Attack Damage or Ability Power is higher.\n\nAdaptors gain Ability Power or Attack Damage, depending on which is higher."
 Monolith,DA_18_BATTLEMAGE,PRISMATIC,1,300,6,{},"Monoliths gain <TFTCurveTable row=""Resists""/> Armor and Magic Resist for each enemy targeting them."
-Blackthorn,DA_18_BLACKTHORN,BRONZE,2,3,1,{},"The ally on the Blackthorn hex is sacrificed before combat, granting your champions Health. 
-
-Blackthorn champions gain additional stats based on the sacrifice's Role, Star Level, and Cost.
-
-{Set18.Trait.Blackthorn.Tooltip} "
-Blackthorn,DA_18_BLACKTHORN,SILVER,4,5,3,{},"The ally on the Blackthorn hex is sacrificed before combat, granting your champions Health. 
-
-Blackthorn champions gain additional stats based on the sacrifice's Role, Star Level, and Cost.
-
-{Set18.Trait.Blackthorn.Tooltip} "
-Blackthorn,DA_18_BLACKTHORN,LEGENDARY,6,300,4,{},"The ally on the Blackthorn hex is sacrificed before combat, granting your champions Health. 
-
-Blackthorn champions gain additional stats based on the sacrifice's Role, Star Level, and Cost.
-
-{Set18.Trait.Blackthorn.Tooltip} "
-Blossom,DA_18_BLOSSOM,BRONZE,3,4,1,{},"After combat, your Wisps are empowered. 
-
-Blossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
-Blossom,DA_18_BLOSSOM,SILVER,5,6,3,{},"After combat, your Wisps are empowered. 
-
-Blossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
-Blossom,DA_18_BLOSSOM,LEGENDARY,7,8,4,{},"After combat, your Wisps are empowered. 
-
-Blossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
-Blossom,DA_18_BLOSSOM,LEGENDARY,9,10,4,{},"After combat, your Wisps are empowered. 
-
-Blossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
-Blossom,DA_18_BLOSSOM,GOLD,11,100,5,{},"After combat, your Wisps are empowered. 
-
-Blossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
+Blackthorn,DA_18_BLACKTHORN,BRONZE,2,3,1,{},"The ally on the Blackthorn hex is sacrificed before combat, granting your champions Health. \n\nBlackthorn champions gain additional stats based on the sacrifice's Role, Star Level, and Cost.\n\n{Set18.Trait.Blackthorn.Tooltip} "
+Blackthorn,DA_18_BLACKTHORN,SILVER,4,5,3,{},"The ally on the Blackthorn hex is sacrificed before combat, granting your champions Health. \n\nBlackthorn champions gain additional stats based on the sacrifice's Role, Star Level, and Cost.\n\n{Set18.Trait.Blackthorn.Tooltip} "
+Blackthorn,DA_18_BLACKTHORN,LEGENDARY,6,300,4,{},"The ally on the Blackthorn hex is sacrificed before combat, granting your champions Health. \n\nBlackthorn champions gain additional stats based on the sacrifice's Role, Star Level, and Cost.\n\n{Set18.Trait.Blackthorn.Tooltip} "
+Blossom,DA_18_BLOSSOM,BRONZE,3,4,1,{},"After combat, your Wisps are empowered. \n\nBlossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
+Blossom,DA_18_BLOSSOM,SILVER,5,6,3,{},"After combat, your Wisps are empowered. \n\nBlossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
+Blossom,DA_18_BLOSSOM,LEGENDARY,7,8,4,{},"After combat, your Wisps are empowered. \n\nBlossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
+Blossom,DA_18_BLOSSOM,LEGENDARY,9,10,4,{},"After combat, your Wisps are empowered. \n\nBlossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
+Blossom,DA_18_BLOSSOM,GOLD,11,100,5,{},"After combat, your Wisps are empowered. \n\nBlossom champions gain Attack Damage, Ability Power, and <TFTCurveTable row=""BonusHealth"" format=""PercentMinusOne"" column=""1""/> max Health. "
 Brawler,DA_18_BRAWLER,BRONZE,2,3,1,{},"Your team gains <TFTCurveTable row=""BrawlerTeamHealth"" column=""1""/> max Health. Brawlers gain more."
 Brawler,DA_18_BRAWLER,SILVER,4,5,3,{},"Your team gains <TFTCurveTable row=""BrawlerTeamHealth"" column=""1""/> max Health. Brawlers gain more."
 Brawler,DA_18_BRAWLER,LEGENDARY,6,300,4,{},"Your team gains <TFTCurveTable row=""BrawlerTeamHealth"" column=""1""/> max Health. Brawlers gain more."
-Caustic,DA_18_CAUSTIC,PRISMATIC,1,300,6,{},"Caustic damage <TFTCurveTable row=""ShredPercent"" column=""1""/>% Shreds and Sunders enemies for <TFTCurveTable row=""ShredDuration""/> seconds.
-
-<rules>Shred: Reduce Magic Resist</>
-<Rules>Sunder: Reduce Armor</>"
-Coven,DA_18_COVEN,BRONZE,3,3,1,{},"Gather Essence by killing champions, plus more by losing player combat. 
-
-Beginning at <TFTCurveTable row=""EssenceForRitualTooltip"" column=""1""/> Essence, choose to convert Essence to rewards or continue gathering Essence. Each reward requires increasing amounts of Essence."
-Coven,DA_18_COVEN,SILVER,4,4,3,{},"Gather Essence by killing champions, plus more by losing player combat. 
-
-Beginning at <TFTCurveTable row=""EssenceForRitualTooltip"" column=""1""/> Essence, choose to convert Essence to rewards or continue gathering Essence. Each reward requires increasing amounts of Essence."
-Coven,DA_18_COVEN,SILVER,5,6,3,{},"Gather Essence by killing champions, plus more by losing player combat. 
-
-Beginning at <TFTCurveTable row=""EssenceForRitualTooltip"" column=""1""/> Essence, choose to convert Essence to rewards or continue gathering Essence. Each reward requires increasing amounts of Essence."
-Coven,DA_18_COVEN,LEGENDARY,7,300,4,{},"Gather Essence by killing champions, plus more by losing player combat. 
-
-Beginning at <TFTCurveTable row=""EssenceForRitualTooltip"" column=""1""/> Essence, choose to convert Essence to rewards or continue gathering Essence. Each reward requires increasing amounts of Essence."
+Caustic,DA_18_CAUSTIC,PRISMATIC,1,300,6,{},"Caustic damage <TFTCurveTable row=""ShredPercent"" column=""1""/>% Shreds and Sunders enemies for <TFTCurveTable row=""ShredDuration""/> seconds.\n\n<rules>Shred: Reduce Magic Resist</>\n<Rules>Sunder: Reduce Armor</>"
+Coven,DA_18_COVEN,BRONZE,3,3,1,{},"Gather Essence by killing champions, plus more by losing player combat. \n\nBeginning at <TFTCurveTable row=""EssenceForRitualTooltip"" column=""1""/> Essence, choose to convert Essence to rewards or continue gathering Essence. Each reward requires increasing amounts of Essence."
+Coven,DA_18_COVEN,SILVER,4,4,3,{},"Gather Essence by killing champions, plus more by losing player combat. \n\nBeginning at <TFTCurveTable row=""EssenceForRitualTooltip"" column=""1""/> Essence, choose to convert Essence to rewards or continue gathering Essence. Each reward requires increasing amounts of Essence."
+Coven,DA_18_COVEN,SILVER,5,6,3,{},"Gather Essence by killing champions, plus more by losing player combat. \n\nBeginning at <TFTCurveTable row=""EssenceForRitualTooltip"" column=""1""/> Essence, choose to convert Essence to rewards or continue gathering Essence. Each reward requires increasing amounts of Essence."
+Coven,DA_18_COVEN,LEGENDARY,7,300,4,{},"Gather Essence by killing champions, plus more by losing player combat. \n\nBeginning at <TFTCurveTable row=""EssenceForRitualTooltip"" column=""1""/> Essence, choose to convert Essence to rewards or continue gathering Essence. Each reward requires increasing amounts of Essence."
 Defender,DA_18_DEFENDER,BRONZE,2,3,1,{},"Your team gains <TFTCurveTable row=""NonDefenderDefenseGain"" column=""1""/> Armor and Magic Resist. Defenders gain more."
 Defender,DA_18_DEFENDER,SILVER,4,5,3,{},"Your team gains <TFTCurveTable row=""NonDefenderDefenseGain"" column=""1""/> Armor and Magic Resist. Defenders gain more."
 Defender,DA_18_DEFENDER,LEGENDARY,6,300,4,{},"Your team gains <TFTCurveTable row=""NonDefenderDefenseGain"" column=""1""/> Armor and Magic Resist. Defenders gain more."
@@ -91,12 +39,8 @@ Emerald Aspect,DA_EMERALD18,PRISMATIC,1,300,6,{},"Drag an ally onto your stronge
 Executioner,DA_18_EXECUTIONER,BRONZE,2,2,1,{},
 Executioner,DA_18_EXECUTIONER,SILVER,3,3,3,{},
 Executioner,DA_18_EXECUTIONER,LEGENDARY,4,300,4,{},
-Fae,DA_18_FAE,BRONZE,2,3,1,{},"Your team's damage, healing, and shielding attracts Pixies.
-
-Each Pixie grants Fae champions Attack Damage and Ability Power, and after they fall below <TFTCurveTable row=""HealThreshold"" format=""percent""/> Health, they heal for each Pixie."
-Fae,DA_18_FAE,LEGENDARY,4,300,4,{},"Your team's damage, healing, and shielding attracts Pixies.
-
-Each Pixie grants Fae champions Attack Damage and Ability Power, and after they fall below <TFTCurveTable row=""HealThreshold"" format=""percent""/> Health, they heal for each Pixie."
+Fae,DA_18_FAE,BRONZE,2,3,1,{},"Your team's damage, healing, and shielding attracts Pixies.\n\nEach Pixie grants Fae champions Attack Damage and Ability Power, and after they fall below <TFTCurveTable row=""HealThreshold"" format=""percent""/> Health, they heal for each Pixie."
+Fae,DA_18_FAE,LEGENDARY,4,300,4,{},"Your team's damage, healing, and shielding attracts Pixies.\n\nEach Pixie grants Fae champions Attack Damage and Ability Power, and after they fall below <TFTCurveTable row=""HealThreshold"" format=""percent""/> Health, they heal for each Pixie."
 Flora Fatalis,DA_FLORAFATALIS18,BRONZE,1,1,1,{},"Flora Fatalis champions harvest enemies on takedown, gaining:"
 Flora Fatalis,DA_FLORAFATALIS18,LEGENDARY,2,300,4,{},"Flora Fatalis champions harvest enemies on takedown, gaining:"
 Hunter,DA_18_HUNTER,BRONZE,2,2,1,{},"Hunters gain Attack Damage. If a Hunter hasn't swapped targets for <TFTCurveTable row=""HunterDuration"" column=""1""/> seconds, they gain <TFTCurveTable row=""DamageAmp"" column=""1"" format=""percent""/> Damage Amp."
@@ -141,18 +85,8 @@ Spellweaver,DA_18_SPELLWEAVER,LEGENDARY,6,300,4,{},"Your team gains <TFTCurveTab
 Sprykin,DA_18_SPRYKIN,BRONZE,3,4,1,{},Gain the Big Furry Friend. Drop a Sprykin on the BFF to pick its Rider.
 Sprykin,DA_18_SPRYKIN,SILVER,5,6,3,{},Gain the Big Furry Friend. Drop a Sprykin on the BFF to pick its Rider.
 Sprykin,DA_18_SPRYKIN,LEGENDARY,7,300,4,{},Gain the Big Furry Friend. Drop a Sprykin on the BFF to pick its Rider.
-Summoner,DA_18_SUMMONER,BRONZE,2,2,1,{},"Summoners empower their summons in different ways.
-
-Yorick: +<TFTCurveTable row=""HealthMult"" column=""1"" format=""percentMinusOne""/> Health
-Azir: +<TFTCurveTable row=""AzirDamageMult"" column=""1"" format=""percentMinusOne""/> Damage
-Mama Beak: +<TFTCurveTable row=""DamageMult"" column=""1"" format=""percentMinusOne""/> Damage
-Zyra: +<TFTCurveTable row=""NumExtraAttacks"" column=""1""/> Plant Attacks"
-Summoner,DA_18_SUMMONER,LEGENDARY,3,300,4,{},"Summoners empower their summons in different ways.
-
-Yorick: +<TFTCurveTable row=""HealthMult"" column=""1"" format=""percentMinusOne""/> Health
-Azir: +<TFTCurveTable row=""AzirDamageMult"" column=""1"" format=""percentMinusOne""/> Damage
-Mama Beak: +<TFTCurveTable row=""DamageMult"" column=""1"" format=""percentMinusOne""/> Damage
-Zyra: +<TFTCurveTable row=""NumExtraAttacks"" column=""1""/> Plant Attacks"
+Summoner,DA_18_SUMMONER,BRONZE,2,2,1,{},"Summoners empower their summons in different ways.\n\nYorick: +<TFTCurveTable row=""HealthMult"" column=""1"" format=""percentMinusOne""/> Health\nAzir: +<TFTCurveTable row=""AzirDamageMult"" column=""1"" format=""percentMinusOne""/> Damage\nMama Beak: +<TFTCurveTable row=""DamageMult"" column=""1"" format=""percentMinusOne""/> Damage\nZyra: +<TFTCurveTable row=""NumExtraAttacks"" column=""1""/> Plant Attacks"
+Summoner,DA_18_SUMMONER,LEGENDARY,3,300,4,{},"Summoners empower their summons in different ways.\n\nYorick: +<TFTCurveTable row=""HealthMult"" column=""1"" format=""percentMinusOne""/> Health\nAzir: +<TFTCurveTable row=""AzirDamageMult"" column=""1"" format=""percentMinusOne""/> Damage\nMama Beak: +<TFTCurveTable row=""DamageMult"" column=""1"" format=""percentMinusOne""/> Damage\nZyra: +<TFTCurveTable row=""NumExtraAttacks"" column=""1""/> Plant Attacks"
 Vanguard,DA_18_VANGUARD,BRONZE,2,3,1,{},"At Combat Start and after dropping below <TFTCurveTable row=""HealthThreshold"" column=""1"" format=""percent""/> Health, Vanguards gain a max Health Shield for <TFTCurveTable row=""ShieldDuration"" column=""1""/> seconds."
 Vanguard,DA_18_VANGUARD,SILVER,4,5,3,{},"At Combat Start and after dropping below <TFTCurveTable row=""HealthThreshold"" column=""1"" format=""percent""/> Health, Vanguards gain a max Health Shield for <TFTCurveTable row=""ShieldDuration"" column=""1""/> seconds."
 Vanguard,DA_18_VANGUARD,LEGENDARY,6,300,4,{},"At Combat Start and after dropping below <TFTCurveTable row=""HealthThreshold"" column=""1"" format=""percent""/> Health, Vanguards gain a max Health Shield for <TFTCurveTable row=""ShieldDuration"" column=""1""/> seconds."

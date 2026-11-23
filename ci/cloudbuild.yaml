@@ -1,0 +1,47 @@
+# Pull request checks: parse the project and run the unit tests.
+#
+# Run by a Cloud Build trigger on pull requests (defined in tft_data_infra)
+# as a service account that can read the dbt output datasets but not write
+# to them. Unit tests only query, but dbt reads each input's columns from
+# the warehouse, so a unit test's inputs must already exist there.
+
+substitutions:
+  _REGION: us-central1
+  _DATASET: dbt_output
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  substitutionOption: ALLOW_LOOSE
+  env:
+    - DBT_PROFILES_DIR=/workspace/ci
+    - DBT_GCP_PROJECT=${PROJECT_ID}
+    - DBT_LOCATION=${_REGION}
+    - DBT_DATASET=${_DATASET}
+    - DO_NOT_TRACK=1
+    - PIP_DISABLE_PIP_VERSION_CHECK=1
+
+steps:
+  - id: install
+    name: python:3.12
+    entrypoint: sh
+    args:
+      - -c
+      - |
+        set -e
+        python -m venv /workspace/.venv
+        /workspace/.venv/bin/pip install --quiet "dbt-bigquery~=1.10"
+
+  - id: deps
+    name: python:3.12
+    entrypoint: /workspace/.venv/bin/dbt
+    args: ["deps"]
+
+  - id: parse
+    name: python:3.12
+    entrypoint: /workspace/.venv/bin/dbt
+    args: ["parse"]
+
+  - id: unit-tests
+    name: python:3.12
+    entrypoint: /workspace/.venv/bin/dbt
+    args: ["test", "--select", "test_type:unit", "--vars", "{macro_harnesses: true}"]

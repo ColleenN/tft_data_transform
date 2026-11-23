@@ -30,4 +30,4 @@ SELECT *
 FROM initial
 WHERE
     has_generated_items = False
-    OR (has_generated_items = True AND num_tg_items = 1)
+    OR (has_generated_items = True AND num_tg_items = 1)

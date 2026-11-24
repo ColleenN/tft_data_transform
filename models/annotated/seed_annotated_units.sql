@@ -1,5 +1,5 @@
 SELECT DISTINCT
-    match_id, puuid, character_id, tier, unit_instance_index,
+    unpacked.match_id, unpacked.puuid, unpacked.character_id, unpacked.tier, unpacked.unit_instance_index,
     units.cost AS rarity,
     units.shop_gold_cost,
     units.role,
@@ -18,5 +18,8 @@ SELECT DISTINCT
 
 FROM
                 {{ ref('unpacked_unified') }} AS unpacked
+    LEFT JOIN   {{ ref('match_reference_snapshots') }} AS builds USING (match_id)
     LEFT JOIN   {{ ref('set_units') }} AS units
-        ON unpacked.character_id = units.api_name
+        ON units.source_object = builds.reference_source_object
+        AND units.set_num = unpacked.tft_set_number
+        AND units.api_name = unpacked.character_id

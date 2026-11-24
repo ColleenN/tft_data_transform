@@ -1,26 +1,29 @@
--- Unit reference data for the current set: generated values from seed_units,
--- with hand-maintained corrections from seed_unit_overrides applied on top.
--- Downstream models use this instead of seed_units, so no model needs a
--- set-specific literal.
+-- Units per reference capture, with hand-maintained corrections from
+-- seed_unit_overrides applied on top. Downstream models use this instead of
+-- the reference table, so no model needs a set-specific literal.
 --
--- A FULL OUTER JOIN keeps units that exist only in the overrides (for example
--- unlockable units the generated seed doesn't list).
---
--- TODO: once tft_set_info_tools writes a set_num column into seed_units, take
--- set_num from the seed instead of var('current_set').
+-- Overrides are keyed by set, so each applies to every capture of its set. A
+-- FULL OUTER JOIN keeps units that exist only in the overrides (for example
+-- unlockable units the reference data doesn't list).
 
 WITH generated AS (
-    SELECT {{ var('current_set') }} AS set_num, *
-    FROM {{ ref('seed_units') }}
+    SELECT source_object, set_number AS set_num, api_name, name, cost, role, shop_unit
+    FROM {{ source('tft_reference', 'units') }}
+),
+
+captures AS (
+    SELECT DISTINCT source_object, set_num
+    FROM generated
 ),
 
 overrides AS (
-    SELECT *
-    FROM {{ ref('seed_unit_overrides') }}
-    WHERE set_num = {{ var('current_set') }}
+    SELECT captures.source_object, overrides.*
+    FROM            {{ ref('seed_unit_overrides') }} AS overrides
+        INNER JOIN  captures USING (set_num)
 )
 
 SELECT
+    COALESCE(generated.source_object, overrides.source_object) AS source_object,
     COALESCE(generated.set_num, overrides.set_num) AS set_num,
     COALESCE(generated.api_name, overrides.api_name) AS api_name,
     generated.name,
@@ -39,5 +42,6 @@ SELECT
     COALESCE(overrides.num_board_slots, 1) AS num_board_slots
 FROM generated
     FULL OUTER JOIN overrides
-        ON generated.set_num = overrides.set_num
+        ON generated.source_object = overrides.source_object
+        AND generated.set_num = overrides.set_num
         AND generated.api_name = overrides.api_name

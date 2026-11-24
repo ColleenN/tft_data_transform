@@ -10,6 +10,12 @@ sources:
     tables:
       - name: units
         description: Units per set, one copy per loaded capture.
+      - name: items
+        description: Equippable items per set, one copy per loaded capture.
+      - name: item_types
+        description: One row per item and type (artifact, radiant, emblem and so on).
+      - name: item_components
+        description: One row per item and component, with how many of that component it takes.
       - name: loaded_captures
         description: One row per capture the loader has loaded or skipped.
       - name: client_deploys

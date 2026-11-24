@@ -22,6 +22,11 @@ models:
           - unique
           - not_null
 
+  - name: reference_items
+    description: >
+      Items per loaded capture and set, in the shape of the old generated item
+      seed: one row per item with a count column per item type and component.
+
 unit_tests:
   - name: reference_snapshots_revisions
     model: reference_snapshots
@@ -80,3 +85,31 @@ unit_tests:
         - {match_id: PBE1_4, client_revision: 6020000, patch: "19.1", reference_revision: 6018196, reference_source_object: c.gz, reference_match: earlier_build}
         - {match_id: PBE1_5, client_revision: 6014015, patch: "19.1", reference_revision: null, reference_source_object: null, reference_match: null}
         - {match_id: NA1_1, client_revision: 7000000, patch: "18.7", reference_revision: null, reference_source_object: null, reference_match: null}
+
+  - name: reference_items_counts
+    model: reference_items
+    given:
+      - input: source('tft_reference', 'items')
+        rows:
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_PENTAKILL19_EMBLEM, num_craftables: 1}
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_BFSWORD, num_craftables: 0}
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_INFINITYEDGE, num_craftables: 1}
+          - {source_object: b.gz, set_number: 19, item_api_name: DA_INFINITYEDGE, num_craftables: 1}
+      - input: source('tft_reference', 'item_types')
+        rows:
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_PENTAKILL19_EMBLEM, item_type: emblem}
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_BFSWORD, item_type: component}
+      - input: source('tft_reference', 'item_components')
+        rows:
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_PENTAKILL19_EMBLEM, component: spatula, count: 1}
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_PENTAKILL19_EMBLEM, component: sword, count: 1}
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_BFSWORD, component: sword, count: 1}
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_INFINITYEDGE, component: sword, count: 2}
+          - {source_object: b.gz, set_number: 19, item_api_name: DA_INFINITYEDGE, component: sword, count: 1}
+          - {source_object: b.gz, set_number: 19, item_api_name: DA_INFINITYEDGE, component: gloves, count: 1}
+    expect:
+      rows:
+        - {source_object: a.gz, item_api_name: DA_PENTAKILL19_EMBLEM, num_emblems: 1, num_components: 0, num_artifacts: 0, num_spats: 1, num_swords: 1, num_gloves: 0}
+        - {source_object: a.gz, item_api_name: DA_BFSWORD, num_emblems: 0, num_components: 1, num_artifacts: 0, num_spats: 0, num_swords: 1, num_gloves: 0}
+        - {source_object: a.gz, item_api_name: DA_INFINITYEDGE, num_emblems: 0, num_components: 0, num_artifacts: 0, num_spats: 0, num_swords: 2, num_gloves: 0}
+        - {source_object: b.gz, item_api_name: DA_INFINITYEDGE, num_emblems: 0, num_components: 0, num_artifacts: 0, num_spats: 0, num_swords: 1, num_gloves: 1}

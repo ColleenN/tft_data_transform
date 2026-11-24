@@ -12,3 +12,9 @@ sources:
         description: Units per set, one copy per loaded capture.
       - name: loaded_captures
         description: One row per capture the loader has loaded or skipped.
+      - name: client_deploys
+        description: >
+          Client builds published to each version set (live-<region> or
+          pbe-global), from mirrored Patchsieve captures. captured_at is when
+          the capture first saw the build, so it trails the real deploy by up
+          to one polling interval.

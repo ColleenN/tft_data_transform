@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: reference_snapshots
+    description: >
+      One row per loaded reference capture and set, with the Unreal client
+      revision it was extracted from. A revision captured more than once keeps
+      its newest capture.
+
+  - name: match_reference_snapshots
+    description: >
+      The reference capture each match should be annotated with. A match's
+      revision is the newest client build deployed to its version set at or
+      before the game started; its reference is the newest capture of the same
+      channel and set at or before that revision. PBE matches with no such
+      capture fall back to the set's oldest capture. reference_match is exact,
+      earlier_build, oldest_snapshot, or NULL when nothing applies.
+    columns:
+      - name: match_id
+        data_tests:
+          - unique
+          - not_null
+
+unit_tests:
+  - name: reference_snapshots_revisions
+    model: reference_snapshots
+    given:
+      - input: source('tft_reference', 'units')
+        rows:
+          - {channel: pbe, set_number: 19, cdragon_version: "19.1.6014015+rls-19.1.0.6014015", captured_at: "2026-11-22 05:27:06", source_object: a.gz}
+          - {channel: pbe, set_number: 19, cdragon_version: "19.1.6014015+rls-19.1.0.6014015", captured_at: "2026-11-22 05:27:06", source_object: a.gz}
+          # the same revision uploaded again
+          - {channel: pbe, set_number: 19, cdragon_version: "19.1.6014015+rls-19.1.0.6014015", captured_at: "2026-11-22 09:00:00", source_object: b.gz}
+          - {channel: pbe, set_number: 19, cdragon_version: "19.1.6018196+rls-19.1.0.6018196", captured_at: "2026-11-23 23:18:41", source_object: c.gz}
+          - {channel: live, set_number: 17, cdragon_version: "16.22.8348910+branch.releases-16-22.content.release", captured_at: "2026-11-11 02:12:01", source_object: d.gz}
+          - {channel: live, set_number: 17, cdragon_version: "16.22.8348910+branch.releases-16-22.content.release", captured_at: "2026-11-18 08:17:36", source_object: e.gz}
+    expect:
+      rows:
+        - {set_number: 19, revision: 6014015, source_object: b.gz}
+        - {set_number: 19, revision: 6018196, source_object: c.gz}
+        - {set_number: 17, revision: null, source_object: d.gz}
+        - {set_number: 17, revision: null, source_object: e.gz}
+
+  - name: match_reference_snapshots_fallback
+    model: match_reference_snapshots
+    given:
+      - input: ref('unique_matches')
+        rows:
+          # before any deploy was tracked
+          - {match_id: PBE1_1, server_realm_code: PBE1, tft_set_number: 19, server_side_game_start: "2026-11-17 23:00:00"}
+          # on a build older than every capture
+          - {match_id: PBE1_2, server_realm_code: PBE1, tft_set_number: 19, server_side_game_start: "2026-11-19 12:00:00"}
+          - {match_id: PBE1_3, server_realm_code: PBE1, tft_set_number: 19, server_side_game_start: "2026-11-22 12:00:00"}
+          # on a build newer than the latest capture
+          - {match_id: PBE1_4, server_realm_code: PBE1, tft_set_number: 19, server_side_game_start: "2026-11-24 12:00:00"}
+          # no capture for this set at all
+          - {match_id: PBE1_5, server_realm_code: PBE1, tft_set_number: 18, server_side_game_start: "2026-11-22 12:00:00"}
+          # live never falls back
+          - {match_id: NA1_1, server_realm_code: NA1, tft_set_number: 19, server_side_game_start: "2026-11-22 12:00:00"}
+      - input: source('tft_reference', 'client_deploys')
+        rows:
+          - {version_set: pbe-global, platform: windows, artifact_type: client, revision: "5986652", captured_at: "2026-11-18 23:00:00"}
+          - {version_set: pbe-global, platform: windows, artifact_type: client, revision: "6014015", captured_at: "2026-11-22 01:51:36"}
+          - {version_set: pbe-global, platform: windows, artifact_type: client, revision: "6018196", captured_at: "2026-11-23 19:47:03"}
+          - {version_set: pbe-global, platform: windows, artifact_type: client, revision: "6020000", captured_at: "2026-11-24 06:00:00"}
+          - {version_set: pbe-global, platform: macos, artifact_type: client, revision: "6099999", captured_at: "2026-11-17 00:00:00"}
+          - {version_set: live-NA1, platform: windows, artifact_type: client, revision: "7000000", captured_at: "2026-11-21 00:00:00"}
+      - input: ref('reference_snapshots')
+        rows:
+          - {channel: pbe, set_number: 19, revision: 6014015, source_object: a.gz}
+          - {channel: pbe, set_number: 19, revision: 6018196, source_object: c.gz}
+          - {channel: live, set_number: 19, revision: 7500000, source_object: live.gz}
+          - {channel: live, set_number: 17, revision: null, source_object: old.gz}
+    expect:
+      rows:
+        - {match_id: PBE1_1, client_revision: null, reference_revision: 6014015, reference_source_object: a.gz, reference_match: oldest_snapshot}
+        - {match_id: PBE1_2, client_revision: 5986652, reference_revision: 6014015, reference_source_object: a.gz, reference_match: oldest_snapshot}
+        - {match_id: PBE1_3, client_revision: 6014015, reference_revision: 6014015, reference_source_object: a.gz, reference_match: exact}
+        - {match_id: PBE1_4, client_revision: 6020000, reference_revision: 6018196, reference_source_object: c.gz, reference_match: earlier_build}
+        - {match_id: PBE1_5, client_revision: 6014015, reference_revision: null, reference_source_object: null, reference_match: null}
+        - {match_id: NA1_1, client_revision: 7000000, reference_revision: null, reference_source_object: null, reference_match: null}

@@ -9,13 +9,13 @@ WITH matches AS (
 ),
 
 deploys AS (
-    SELECT version_set, SAFE_CAST(revision AS INT64) AS revision, captured_at
+    SELECT version_set, SAFE_CAST(revision AS INT64) AS revision, patch, captured_at
     FROM {{ source('tft_reference', 'client_deploys') }}
     WHERE platform = 'windows' AND artifact_type = 'client'
 ),
 
 match_revisions AS (
-    SELECT matches.*, deploys.revision
+    SELECT matches.*, deploys.revision, deploys.patch
     FROM            matches
         LEFT JOIN   deploys
             ON deploys.version_set = matches.version_set
@@ -24,13 +24,13 @@ match_revisions AS (
 ),
 
 snapshots AS (
-    SELECT channel, set_number, revision, source_object
+    SELECT channel, set_number, revision, patch, source_object
     FROM {{ ref('reference_snapshots') }}
     WHERE revision IS NOT NULL
 ),
 
 latest_at_or_before AS (
-    SELECT match_revisions.match_id, snapshots.revision, snapshots.source_object
+    SELECT match_revisions.match_id, snapshots.revision, snapshots.patch, snapshots.source_object
     FROM            match_revisions
         INNER JOIN  snapshots
             ON snapshots.channel = match_revisions.channel
@@ -43,7 +43,7 @@ latest_at_or_before AS (
 -- before deploys were tracked) use that first snapshot, since the client
 -- can't be re-extracted for builds it no longer has.
 oldest AS (
-    SELECT channel, set_number, revision, source_object
+    SELECT channel, set_number, revision, patch, source_object
     FROM snapshots
     QUALIFY ROW_NUMBER() OVER (PARTITION BY channel, set_number ORDER BY revision) = 1
 )
@@ -54,6 +54,7 @@ SELECT
     matches.channel,
     matches.game_start,
     matches.revision AS client_revision,
+    COALESCE(matches.patch, found.patch, oldest.patch) AS patch,
     COALESCE(found.revision, oldest.revision) AS reference_revision,
     COALESCE(found.source_object, oldest.source_object) AS reference_source_object,
     CASE

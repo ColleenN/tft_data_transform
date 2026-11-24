@@ -8,5 +8,8 @@ SELECT  match_id, puuid, level,
         {{ select_item_category_sums() }},
         {{ select_item_component_sums() }}
 FROM            {{ ref('seed_annotated_boards') }}
-    LEFT JOIN   {{ ref('aggregations_units') }} USING (match_id, puuid)
+    LEFT JOIN   (
+        SELECT * FROM {{ ref('aggregations_units') }}
+        WHERE NOT excluded_from_board
+    ) AS units USING (match_id, puuid)
 GROUP BY match_id, puuid, level, cumulative_level_cost, gold_left

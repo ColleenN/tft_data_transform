@@ -1,33 +1,35 @@
-WITH seed_items AS (
-	SELECT * FROM {{ ref('seed_items') }}
-),
-
-initial AS
+WITH initial AS
 (
 	SELECT
-		match_id,
-		puuid,
-		character_id,
-		tier,
-		CASE WHEN SUM(num_tg_items
+		unpacked.match_id,
+		unpacked.puuid,
+		unpacked.character_id,
+		unpacked.tier,
+		CASE WHEN SUM(items.num_tg_items
 		) OVER (
-			PARTITION BY match_id,
-			puuid,
-			character_id,
-			tier, unit_instance_index
+			PARTITION BY
+			unpacked.match_id,
+			unpacked.puuid,
+			unpacked.character_id,
+			unpacked.tier, unpacked.unit_instance_index
 		) > 0 THEN True ELSE False END
 		AS has_generated_items,
-		unit_instance_index,
-		item_instance_index,
-		seed_items.*
+		unpacked.unit_instance_index,
+		unpacked.item_instance_index,
+		unpacked.item_api_name,
+		items.* EXCEPT (source_object, set_number, item_api_name)
 	FROM
-				    {{ ref('unpacked_unified') }}
-	    LEFT JOIN 	seed_items USING (item_api_name)
-	WHERE item_api_name IS NOT NULL
+				    {{ ref('unpacked_unified') }} AS unpacked
+	    LEFT JOIN 	{{ ref('match_reference_snapshots') }} AS builds USING (match_id)
+	    LEFT JOIN 	{{ ref('reference_items') }} AS items
+	        ON items.source_object = builds.reference_source_object
+	        AND items.set_number = unpacked.tft_set_number
+	        AND items.item_api_name = unpacked.item_api_name
+	WHERE unpacked.item_api_name IS NOT NULL
 )
 
 SELECT *
 FROM initial
 WHERE
     has_generated_items = False
-    OR (has_generated_items = True AND num_tg_items = 1)
+    OR (has_generated_items = True AND num_tg_items = 1)

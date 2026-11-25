@@ -8,15 +8,24 @@ unit_tests:
     given: &matches
       - input: ref('unique_matches')
         rows:
-          - {match_id: NA1_1, server_realm_code: NA1, tft_set_number: 17, game_client_version_id: "16.21.829.8620"}
-          # a later build of the same version
-          - {match_id: NA1_2, server_realm_code: NA1, tft_set_number: 17, game_client_version_id: "16.21.831.0042"}
+          - {match_id: NA1_1, tft_set_number: 17}
+          - {match_id: NA1_2, tft_set_number: 17}
+          - {match_id: NA1_3, tft_set_number: 17}
+          - {match_id: NA1_4, tft_set_number: 16}
+          - {match_id: NA1_5, tft_set_number: 17}
+          - {match_id: PBE1_1, tft_set_number: 17}
+          - {match_id: PBE1_2, tft_set_number: 17}
+      - input: ref('match_reference_snapshots')
+        rows:
+          - {match_id: NA1_1, channel: live, patch: "16.21"}
+          # another build of the same patch
+          - {match_id: NA1_2, channel: live, patch: "16.21"}
           # sorts after 16.21 as a string, before it as a number
-          - {match_id: NA1_3, server_realm_code: NA1, tft_set_number: 17, game_client_version_id: "16.9.799.1234"}
-          - {match_id: NA1_4, server_realm_code: NA1, tft_set_number: 16, game_client_version_id: "16.22.835.0001"}
-          - {match_id: NA1_5, server_realm_code: NA1, tft_set_number: 17, game_client_version_id: null}
-          - {match_id: PBE1_1, server_realm_code: PBE1, tft_set_number: 17, game_client_version_id: "16.22.840.0001"}
-          - {match_id: PBE1_2, server_realm_code: PBE1, tft_set_number: 17, game_client_version_id: "16.21.829.8620"}
+          - {match_id: NA1_3, channel: live, patch: "16.9"}
+          - {match_id: NA1_4, channel: live, patch: "16.22"}
+          - {match_id: NA1_5, channel: live, patch: null}
+          - {match_id: PBE1_1, channel: pbe, patch: "16.22"}
+          - {match_id: PBE1_2, channel: pbe, patch: "16.21"}
     expect:
       rows:
         - {match_id: NA1_1}

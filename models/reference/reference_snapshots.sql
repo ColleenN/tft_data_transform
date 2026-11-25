@@ -7,6 +7,7 @@ SELECT
     channel,
     set_number,
     SAFE_CAST(REGEXP_EXTRACT(cdragon_version, r'\+rls-[\d.]*\.(\d+)$') AS INT64) AS revision,
+    REGEXP_EXTRACT(cdragon_version, r'^(\d+\.\d+)\.') AS patch,
     cdragon_version,
     captured_at,
     source_object

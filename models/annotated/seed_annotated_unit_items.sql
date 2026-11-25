@@ -1,4 +1,19 @@
-WITH initial AS
+-- Match records sometimes name an item differently from the reference data
+-- (seed_item_aliases), so items are matched and reported under the reference
+-- name.
+WITH resolved AS
+(
+	SELECT
+		unpacked.* EXCEPT (item_api_name),
+		COALESCE(aliases.item_api_name, unpacked.item_api_name) AS item_api_name
+	FROM
+				    {{ ref('unpacked_unified') }} AS unpacked
+	    LEFT JOIN 	{{ ref('seed_item_aliases') }} AS aliases
+	        ON aliases.set_num = unpacked.tft_set_number
+	        AND aliases.match_item_api_name = unpacked.item_api_name
+),
+
+initial AS
 (
 	SELECT
 		unpacked.match_id,
@@ -19,7 +34,7 @@ WITH initial AS
 		unpacked.item_api_name,
 		items.* EXCEPT (source_object, set_number, item_api_name)
 	FROM
-				    {{ ref('unpacked_unified') }} AS unpacked
+				    resolved AS unpacked
 	    LEFT JOIN 	{{ ref('match_reference_snapshots') }} AS builds USING (match_id)
 	    LEFT JOIN 	{{ ref('reference_items') }} AS items
 	        ON items.source_object = builds.reference_source_object

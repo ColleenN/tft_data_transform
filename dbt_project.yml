@@ -57,3 +57,9 @@ seeds:
         shop_gold_cost: int64
         num_board_slots: int64
         note: string
+    seed_item_aliases:
+      +column_types:
+        set_num: int64
+        match_item_api_name: string
+        item_api_name: string
+        note: string

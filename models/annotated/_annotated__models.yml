@@ -13,3 +13,29 @@ models:
               - unit_instance_index
               - item_api_name
               - item_instance_index
+
+unit_tests:
+  - name: seed_annotated_unit_items_aliases
+    model: seed_annotated_unit_items
+    given:
+      - input: ref('unpacked_unified')
+        rows:
+          - {match_id: PBE1_1, puuid: p, character_id: DA_YASUO19, tier: 2, unit_instance_index: 1, item_instance_index: 1, item_api_name: TFT_EMBLEM_CHANGEME, tft_set_number: 19}
+          - {match_id: PBE1_1, puuid: p, character_id: DA_YASUO19, tier: 2, unit_instance_index: 1, item_instance_index: 2, item_api_name: DA_STERAKSGAGE, tft_set_number: 19}
+          - {match_id: NA1_1, puuid: q, character_id: TFT18_JINX, tier: 1, unit_instance_index: 1, item_instance_index: 1, item_api_name: TFT_EMBLEM_CHANGEME, tft_set_number: 18}
+      - input: ref('match_reference_snapshots')
+        rows:
+          - {match_id: PBE1_1, reference_source_object: a.gz}
+          - {match_id: NA1_1, reference_source_object: b.gz}
+      - input: ref('reference_items')
+        rows:
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_PRODIGY19_EMBLEM, item_name: Prodigy Emblem, num_tg_items: 0}
+          - {source_object: a.gz, set_number: 19, item_api_name: DA_STERAKSGAGE, item_name: "Sterak's Gage", num_tg_items: 0}
+      - input: ref('seed_item_aliases')
+        rows:
+          - {set_num: 19, match_item_api_name: TFT_EMBLEM_CHANGEME, item_api_name: DA_PRODIGY19_EMBLEM}
+    expect:
+      rows:
+        - {match_id: PBE1_1, item_instance_index: 1, item_api_name: DA_PRODIGY19_EMBLEM, item_name: Prodigy Emblem}
+        - {match_id: PBE1_1, item_instance_index: 2, item_api_name: DA_STERAKSGAGE, item_name: "Sterak's Gage"}
+        - {match_id: NA1_1, item_instance_index: 1, item_api_name: TFT_EMBLEM_CHANGEME, item_name: null}

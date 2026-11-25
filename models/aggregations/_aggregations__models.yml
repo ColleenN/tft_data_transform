@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: aggregations_units
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - match_id
+              - puuid
+              - character_id
+              - tier
+              - unit_instance_index
+
+unit_tests:
+  - name: aggregations_units_one_row_per_unit
+    model: aggregations_units
+    given:
+      - input: ref('seed_annotated_unified')
+        rows:
+          - {match_id: PBE1_1, puuid: p, character_id: DA_YASUO19, tier: 2, unit_instance_index: 1, shop_unit: true, num_board_slots: 1, rarity: 3, total_unit_cost: 12, item_api_name: DA_STERAKSGAGE, num_tg_items: 0}
+          - {match_id: PBE1_1, puuid: p, character_id: DA_YASUO19, tier: 2, unit_instance_index: 1, shop_unit: true, num_board_slots: 1, rarity: 3, total_unit_cost: 12, item_api_name: DA_UNKNOWN_ITEM, num_tg_items: null}
+          - {match_id: PBE1_1, puuid: p, character_id: DA_JINX19, tier: 1, unit_instance_index: 1, shop_unit: true, num_board_slots: 1, rarity: 1, total_unit_cost: 2, item_api_name: DA_THIEFSGLOVES, num_tg_items: 1}
+      - input: ref('unit_adjustments')
+        rows: []
+    expect:
+      rows:
+        - {match_id: PBE1_1, character_id: DA_YASUO19, tg_item: 0, num_items: 2}
+        - {match_id: PBE1_1, character_id: DA_JINX19, tg_item: 1, num_items: 1}

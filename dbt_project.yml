@@ -10,8 +10,8 @@ config-version: 2
 profile: 'tft_data_transform'
 
 vars:
-  use_pbe_data: False
-  current_set: 17
+  use_pbe_data: True
+  current_set: 19
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -46,18 +46,6 @@ models:
 
 seeds:
   tft_data_transformations:
-    seed_units:
-      +column_types:
-        stats_armor: float64
-        stats_attack_speed: float64
-        stats_crit_chance: float64
-        stats_crit_multiplier: float64
-        stats_damage: float64
-        stats_hp: float64
-        stats_initial_mana: float64
-        stats_magic_resist: float64
-        stats_mana: float64
-        stats_range: float64
     seed_patch_map:
       +column_types:
         datetime_min: datetime

@@ -14,9 +14,9 @@ models:
   - name: baseline_rounds
     description: >
       Which elimination round's baseline each round uses, per set, channel and
-      patch. Rounds with fewer than var('baseline_min_boards') boards use the
-      next round that has enough, or the last one before them when none
-      follows.
+      patch. Rounds with fewer boards than var('baseline_min_boards') sets for
+      their channel (200 on PBE, 500 on live by default) use the next round
+      that has enough, or the last one before them when none follows.
     data_tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
@@ -45,7 +45,7 @@ unit_tests:
   - name: baseline_rounds_fold_thin_rounds
     model: baseline_rounds
     overrides:
-      vars: {baseline_min_boards: 2}
+      vars: {baseline_min_boards: {pbe: 2, live: 3}}
     given:
       - input: ref('board_resources')
         rows:
@@ -61,14 +61,22 @@ unit_tests:
           - {match_id: PBE1_3, puuid: g, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 14, resource: level}
           # another patch with no round that has enough
           - {match_id: PBE1_4, puuid: h, tft_set_number: 19, channel: pbe, patch: "19.2", last_round: 20, resource: level}
+          # live needs 3 boards: 2 at round 10 fold, 3 at round 11 don't
+          - {match_id: NA1_1, puuid: a, tft_set_number: 19, channel: live, patch: "19.1", last_round: 10, resource: level}
+          - {match_id: NA1_1, puuid: b, tft_set_number: 19, channel: live, patch: "19.1", last_round: 10, resource: level}
+          - {match_id: NA1_1, puuid: c, tft_set_number: 19, channel: live, patch: "19.1", last_round: 11, resource: level}
+          - {match_id: NA1_2, puuid: d, tft_set_number: 19, channel: live, patch: "19.1", last_round: 11, resource: level}
+          - {match_id: NA1_2, puuid: e, tft_set_number: 19, channel: live, patch: "19.1", last_round: 11, resource: level}
     expect:
       rows:
-        - {patch: "19.1", last_round: 10, num_boards: 1, baseline_round: 11}
-        - {patch: "19.1", last_round: 11, num_boards: 2, baseline_round: 11}
-        - {patch: "19.1", last_round: 12, num_boards: 1, baseline_round: 13}
-        - {patch: "19.1", last_round: 13, num_boards: 2, baseline_round: 13}
-        - {patch: "19.1", last_round: 14, num_boards: 1, baseline_round: 13}
-        - {patch: "19.2", last_round: 20, num_boards: 1, baseline_round: 20}
+        - {channel: pbe, patch: "19.1", last_round: 10, num_boards: 1, baseline_round: 11}
+        - {channel: pbe, patch: "19.1", last_round: 11, num_boards: 2, baseline_round: 11}
+        - {channel: pbe, patch: "19.1", last_round: 12, num_boards: 1, baseline_round: 13}
+        - {channel: pbe, patch: "19.1", last_round: 13, num_boards: 2, baseline_round: 13}
+        - {channel: pbe, patch: "19.1", last_round: 14, num_boards: 1, baseline_round: 13}
+        - {channel: pbe, patch: "19.2", last_round: 20, num_boards: 1, baseline_round: 20}
+        - {channel: live, patch: "19.1", last_round: 10, num_boards: 2, baseline_round: 11}
+        - {channel: live, patch: "19.1", last_round: 11, num_boards: 3, baseline_round: 11}
 
   - name: board_resource_z_scores_against_baseline_round
     model: board_resource_z_scores

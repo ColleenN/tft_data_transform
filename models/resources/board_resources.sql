@@ -13,6 +13,7 @@ WITH boards AS (
         builds.channel,
         builds.patch,
         annotated.last_round,
+        IFNULL(aggregated.num_items, 0) = 0 AS afk_suspected,
         CAST(annotated.level AS FLOAT64) AS level,
         CAST(annotated.gold_left AS FLOAT64) AS gold_left,
         {% for column in board_columns %}
@@ -23,7 +24,7 @@ WITH boards AS (
         INNER JOIN  {{ ref('match_reference_snapshots') }} AS builds USING (match_id)
 )
 
-SELECT match_id, puuid, tft_set_number, channel, patch, last_round, resource, value
+SELECT match_id, puuid, tft_set_number, channel, patch, last_round, afk_suspected, resource, value
 FROM boards
 UNPIVOT INCLUDE NULLS (value FOR resource IN (
     level, gold_left,

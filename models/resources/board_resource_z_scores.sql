@@ -5,6 +5,7 @@ SELECT
     resources.channel,
     resources.patch,
     resources.last_round,
+    resources.afk_suspected,
     rounds.baseline_round,
     baselines.baseline_round_label,
     resources.resource,
@@ -16,7 +17,7 @@ SELECT
 FROM            {{ ref('board_resources') }} AS resources
     INNER JOIN  {{ ref('baseline_rounds') }} AS rounds
         USING (tft_set_number, channel, patch, last_round)
-    INNER JOIN  {{ ref('resource_baselines') }} AS baselines
+    LEFT JOIN   {{ ref('resource_baselines') }} AS baselines
         ON baselines.tft_set_number = resources.tft_set_number
         AND baselines.channel = resources.channel
         AND baselines.patch = resources.patch

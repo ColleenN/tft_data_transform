@@ -14,6 +14,7 @@ FROM            {{ ref('board_resources') }} AS resources
     LEFT JOIN   {{ ref('seed_round_schedule') }} AS schedule
         ON schedule.set_num = resources.tft_set_number
         AND schedule.round_num = rounds.baseline_round
+WHERE NOT resources.afk_suspected
 GROUP BY
     resources.tft_set_number, resources.channel, resources.patch,
     rounds.baseline_round, schedule.round_label, resources.resource

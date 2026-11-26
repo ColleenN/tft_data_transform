@@ -63,3 +63,14 @@ seeds:
         match_item_api_name: string
         item_api_name: string
         note: string
+    seed_round_schedule:
+      +column_types:
+        set_num: int64
+        round_num: int64
+        stage: int64
+        stage_round: int64
+        round_label: string
+        round_type: string
+        is_augment_round: bool
+        passive_gold: int64
+        passive_xp: int64

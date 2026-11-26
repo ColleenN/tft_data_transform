@@ -1,0 +1,19 @@
+version: 2
+
+seeds:
+  - name: seed_round_schedule
+    description: >
+      One row per round of a set's game, keyed by the sequential round number
+      that match records report as last_round. passive_gold and passive_xp are
+      what every player receives at the start of that round, before interest,
+      streak and win gold.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [set_num, round_num]
+    columns:
+      - name: round_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['pvp', 'pve', 'carousel']

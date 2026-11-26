@@ -5,7 +5,8 @@ seeds:
     description: >
       XP needed to reach each level from the one below it (cost) and in total
       (cumulative_level_cost), per set. 4 gold buys 4 XP, so both also read as
-      gold.
+      gold. Every player is level 2 by 1-2, so level 2 counts as a starting
+      level and costs 0.
     data_tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:

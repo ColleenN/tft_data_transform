@@ -1,0 +1,30 @@
+version: 2
+
+seeds:
+  - name: seed_level_costs
+    description: >
+      XP needed to reach each level from the one below it (cost) and in total
+      (cumulative_level_cost), per set. 4 gold buys 4 XP, so both also read as
+      gold. Every player is level 2 by 1-2, so level 2 counts as a starting
+      level and costs 0.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [set_num, level]
+
+  - name: seed_round_schedule
+    description: >
+      One row per round of a set's game, keyed by the sequential round number
+      that match records report as last_round. passive_gold and passive_xp are
+      what every player receives at the start of that round, before interest,
+      streak and win gold.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [set_num, round_num]
+    columns:
+      - name: round_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['pvp', 'pve', 'carousel']

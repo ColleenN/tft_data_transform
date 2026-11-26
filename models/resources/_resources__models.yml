@@ -1,0 +1,91 @@
+version: 2
+
+models:
+  - name: board_resources
+    description: >
+      One row per board and resource (level, gold left, unit slots and value,
+      item categories, components), from the current patch's aggregated
+      boards.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [match_id, puuid, resource]
+
+  - name: baseline_rounds
+    description: >
+      Which elimination round's baseline each round uses, per set, channel and
+      patch. Rounds with fewer than var('baseline_min_boards') boards use the
+      next round that has enough, or the last one before them when none
+      follows.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [tft_set_number, channel, patch, last_round]
+
+  - name: resource_baselines
+    description: >
+      Mean, sample standard deviation and board count of each resource per
+      set, channel, patch and baseline round.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [tft_set_number, channel, patch, baseline_round, resource]
+
+  - name: board_resource_z_scores
+    description: >
+      Each board's resources as z-scores against boards eliminated in the
+      same baseline round on the same set, channel and patch. z_score is NULL
+      when the baseline has no spread.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [match_id, puuid, resource]
+
+unit_tests:
+  - name: baseline_rounds_fold_thin_rounds
+    model: baseline_rounds
+    overrides:
+      vars: {baseline_min_boards: 2}
+    given:
+      - input: ref('board_resources')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 10, resource: level}
+          - {match_id: PBE1_1, puuid: b, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 11, resource: level}
+          - {match_id: PBE1_2, puuid: c, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 11, resource: level}
+          # one board, but two resources: still one board
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, resource: level}
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, resource: gold_left}
+          - {match_id: PBE1_2, puuid: e, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 13, resource: level}
+          - {match_id: PBE1_3, puuid: f, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 13, resource: level}
+          # past the last round with enough boards
+          - {match_id: PBE1_3, puuid: g, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 14, resource: level}
+          # another patch with no round that has enough
+          - {match_id: PBE1_4, puuid: h, tft_set_number: 19, channel: pbe, patch: "19.2", last_round: 20, resource: level}
+    expect:
+      rows:
+        - {patch: "19.1", last_round: 10, num_boards: 1, baseline_round: 11}
+        - {patch: "19.1", last_round: 11, num_boards: 2, baseline_round: 11}
+        - {patch: "19.1", last_round: 12, num_boards: 1, baseline_round: 13}
+        - {patch: "19.1", last_round: 13, num_boards: 2, baseline_round: 13}
+        - {patch: "19.1", last_round: 14, num_boards: 1, baseline_round: 13}
+        - {patch: "19.2", last_round: 20, num_boards: 1, baseline_round: 20}
+
+  - name: board_resource_z_scores_against_baseline_round
+    model: board_resource_z_scores
+    given:
+      - input: ref('board_resources')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, resource: num_items, value: 5}
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, resource: num_pans, value: 0}
+      - input: ref('baseline_rounds')
+        rows:
+          - {tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, baseline_round: 13}
+      - input: ref('resource_baselines')
+        rows:
+          - {tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 13, baseline_round_label: "3-2", resource: num_items, baseline_mean: 4, baseline_stddev: 0.5, baseline_boards: 600}
+          # no spread
+          - {tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 13, baseline_round_label: "3-2", resource: num_pans, baseline_mean: 0, baseline_stddev: 0, baseline_boards: 600}
+    expect:
+      rows:
+        - {resource: num_items, baseline_round: 13, baseline_round_label: "3-2", z_score: 2.0}
+        - {resource: num_pans, baseline_round: 13, baseline_round_label: "3-2", z_score: null}

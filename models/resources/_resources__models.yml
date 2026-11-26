@@ -1,0 +1,140 @@
+version: 2
+
+models:
+  - name: board_resources
+    description: >
+      One row per board and resource (level, gold left, unit slots and value,
+      item categories, components), from the current patch's aggregated
+      boards. afk_suspected marks boards with no items or components at all,
+      which players still in the game almost never have.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [match_id, puuid, resource]
+
+  - name: baseline_rounds
+    description: >
+      Which baseline round each elimination round is compared with, per set,
+      channel and patch. PvE rounds are compared with the round before them.
+      Rounds with fewer
+      boards than var('baseline_min_boards') sets for their channel (200 on
+      PBE, 500 on live by default) use the next round that has enough, or the
+      last one before them when none follows. AFK-suspected boards don't
+      count.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [tft_set_number, channel, patch, last_round]
+
+  - name: resource_baselines
+    description: >
+      Mean, sample standard deviation and board count of each resource per
+      set, channel, patch and baseline round, leaving out AFK-suspected
+      boards.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [tft_set_number, channel, patch, baseline_round, resource]
+
+  - name: board_resource_z_scores
+    description: >
+      Each board's resources as z-scores against its baseline round on the
+      same set, channel and patch. AFK-suspected boards keep their z-scores
+      but aren't part of any baseline. z_score is NULL when the baseline has
+      no spread or no boards.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [match_id, puuid, resource]
+
+unit_tests:
+  - name: baseline_rounds_fold_thin_and_pve_rounds
+    model: baseline_rounds
+    overrides:
+      vars: {baseline_min_boards: {pbe: 2, live: 3}}
+    given:
+      - input: ref('board_resources')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 10, afk_suspected: false, resource: level}
+          - {match_id: PBE1_1, puuid: b, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 11, afk_suspected: false, resource: level}
+          - {match_id: PBE1_2, puuid: c, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 11, afk_suspected: false, resource: level}
+          # one board, but two resources: still one board
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, afk_suspected: false, resource: level}
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, afk_suspected: false, resource: gold_left}
+          # AFK boards don't count toward the round
+          - {match_id: PBE1_2, puuid: x, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, afk_suspected: true, resource: level}
+          - {match_id: PBE1_2, puuid: e, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 13, afk_suspected: false, resource: level}
+          - {match_id: PBE1_3, puuid: f, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 13, afk_suspected: false, resource: level}
+          # past the last round with enough boards
+          - {match_id: PBE1_3, puuid: g, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 14, afk_suspected: false, resource: level}
+          # another patch with no round that has enough
+          - {match_id: PBE1_4, puuid: h, tft_set_number: 19, channel: pbe, patch: "19.2", last_round: 20, afk_suspected: false, resource: level}
+          # a PvE round joins the round before it
+          - {match_id: PBE1_5, puuid: i, tft_set_number: 19, channel: pbe, patch: "19.3", last_round: 24, afk_suspected: false, resource: level}
+          - {match_id: PBE1_5, puuid: j, tft_set_number: 19, channel: pbe, patch: "19.3", last_round: 25, afk_suspected: false, resource: level}
+          # live needs 3 boards: 2 at round 10 fold, 3 at round 11 don't
+          - {match_id: NA1_1, puuid: a, tft_set_number: 19, channel: live, patch: "19.1", last_round: 10, afk_suspected: false, resource: level}
+          - {match_id: NA1_1, puuid: b, tft_set_number: 19, channel: live, patch: "19.1", last_round: 10, afk_suspected: false, resource: level}
+          - {match_id: NA1_1, puuid: c, tft_set_number: 19, channel: live, patch: "19.1", last_round: 11, afk_suspected: false, resource: level}
+          - {match_id: NA1_2, puuid: d, tft_set_number: 19, channel: live, patch: "19.1", last_round: 11, afk_suspected: false, resource: level}
+          - {match_id: NA1_2, puuid: e, tft_set_number: 19, channel: live, patch: "19.1", last_round: 11, afk_suspected: false, resource: level}
+      - input: ref('seed_round_schedule')
+        rows:
+          - {set_num: 19, round_num: 10, stage: 2, round_type: pvp}
+          - {set_num: 19, round_num: 11, stage: 2, round_type: pvp}
+          - {set_num: 19, round_num: 24, stage: 4, round_type: pvp}
+          - {set_num: 19, round_num: 25, stage: 4, round_type: pve}
+    expect:
+      rows:
+        - {channel: pbe, patch: "19.1", last_round: 10, comparison_round: 10, num_boards: 1, baseline_round: 11}
+        - {channel: pbe, patch: "19.1", last_round: 11, comparison_round: 11, num_boards: 2, baseline_round: 11}
+        - {channel: pbe, patch: "19.1", last_round: 12, comparison_round: 12, num_boards: 1, baseline_round: 13}
+        - {channel: pbe, patch: "19.1", last_round: 13, comparison_round: 13, num_boards: 2, baseline_round: 13}
+        - {channel: pbe, patch: "19.1", last_round: 14, comparison_round: 14, num_boards: 1, baseline_round: 13}
+        - {channel: pbe, patch: "19.2", last_round: 20, comparison_round: 20, num_boards: 1, baseline_round: 20}
+        - {channel: pbe, patch: "19.3", last_round: 24, comparison_round: 24, num_boards: 2, baseline_round: 24}
+        - {channel: pbe, patch: "19.3", last_round: 25, comparison_round: 24, num_boards: 2, baseline_round: 24}
+        - {channel: live, patch: "19.1", last_round: 10, comparison_round: 10, num_boards: 2, baseline_round: 11}
+        - {channel: live, patch: "19.1", last_round: 11, comparison_round: 11, num_boards: 3, baseline_round: 11}
+
+  - name: resource_baselines_leave_out_afk_boards
+    model: resource_baselines
+    given:
+      - input: ref('board_resources')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 18, afk_suspected: false, resource: gold_left, value: 2}
+          - {match_id: PBE1_1, puuid: b, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 18, afk_suspected: false, resource: gold_left, value: 4}
+          - {match_id: PBE1_1, puuid: c, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 18, afk_suspected: true, resource: gold_left, value: 120}
+      - input: ref('baseline_rounds')
+        rows:
+          - {tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 18, baseline_round: 18}
+      - input: ref('seed_round_schedule')
+        rows:
+          - {set_num: 19, round_num: 18, round_label: "3-7"}
+    expect:
+      rows:
+        - {baseline_round: 18, baseline_round_label: "3-7", resource: gold_left, baseline_mean: 3, baseline_boards: 2}
+
+  - name: board_resource_z_scores_against_baseline_round
+    model: board_resource_z_scores
+    given:
+      - input: ref('board_resources')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, afk_suspected: false, resource: num_items, value: 5}
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, afk_suspected: false, resource: num_pans, value: 0}
+          # a round whose baseline has no boards keeps its rows
+          - {match_id: PBE1_2, puuid: b, tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 40, afk_suspected: true, resource: num_items, value: 0}
+      - input: ref('baseline_rounds')
+        rows:
+          - {tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 12, baseline_round: 13}
+          - {tft_set_number: 19, channel: pbe, patch: "19.1", last_round: 40, baseline_round: 40}
+      - input: ref('resource_baselines')
+        rows:
+          - {tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 13, baseline_round_label: "3-2", resource: num_items, baseline_mean: 4, baseline_stddev: 0.5, baseline_boards: 600}
+          # no spread
+          - {tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 13, baseline_round_label: "3-2", resource: num_pans, baseline_mean: 0, baseline_stddev: 0, baseline_boards: 600}
+    expect:
+      rows:
+        - {puuid: a, resource: num_items, afk_suspected: false, baseline_round: 13, baseline_round_label: "3-2", z_score: 2.0}
+        - {puuid: a, resource: num_pans, afk_suspected: false, baseline_round: 13, baseline_round_label: "3-2", z_score: null}
+        - {puuid: b, resource: num_items, afk_suspected: true, baseline_round: 40, baseline_round_label: null, z_score: null}

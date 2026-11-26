@@ -1,6 +1,16 @@
 version: 2
 
 seeds:
+  - name: seed_level_costs
+    description: >
+      XP needed to reach each level from the one below it (cost) and in total
+      (cumulative_level_cost), per set. 4 gold buys 4 XP, so both also read as
+      gold.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [set_num, level]
+
   - name: seed_round_schedule
     description: >
       One row per round of a set's game, keyed by the sequential round number

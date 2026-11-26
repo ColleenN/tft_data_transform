@@ -63,6 +63,12 @@ seeds:
         match_item_api_name: string
         item_api_name: string
         note: string
+    seed_level_costs:
+      +column_types:
+        set_num: int64
+        level: int64
+        cost: int64
+        cumulative_level_cost: int64
     seed_round_schedule:
       +column_types:
         set_num: int64

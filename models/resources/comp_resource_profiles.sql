@@ -1,10 +1,10 @@
 WITH boards AS (
     SELECT
         z.tft_set_number, z.channel, z.patch, schedule.stage,
-        carries.leveling_pattern, carries.carry_character_id,
+        cores.leveling_pattern, cores.main_carry_character_id, cores.main_tank_character_id,
         z.resource, z.z_score
     FROM            {{ ref('board_resource_z_scores') }} AS z
-        INNER JOIN  {{ ref('board_carries') }} AS carries USING (match_id, puuid)
+        INNER JOIN  {{ ref('board_cores') }} AS cores USING (match_id, puuid)
         LEFT JOIN   {{ ref('seed_round_schedule') }} AS schedule
             ON schedule.set_num = z.tft_set_number
             AND schedule.round_num = z.baseline_round
@@ -15,9 +15,15 @@ grouped AS (
     SELECT *, 'leveling_pattern' AS group_level, leveling_pattern AS group_key
     FROM boards
     UNION ALL
-    SELECT *, 'carry' AS group_level, carry_character_id AS group_key
+    SELECT *, 'carry' AS group_level, main_carry_character_id AS group_key
     FROM boards
-    WHERE carry_character_id IS NOT NULL
+    WHERE main_carry_character_id IS NOT NULL
+    UNION ALL
+    SELECT
+        *, 'family' AS group_level,
+        FORMAT('%s + %s', main_carry_character_id, IFNULL(main_tank_character_id, 'no tank')) AS group_key
+    FROM boards
+    WHERE main_carry_character_id IS NOT NULL
 )
 
 SELECT

@@ -59,6 +59,18 @@ models:
           arguments:
             combination_of_columns: [match_id, puuid]
 
+  - name: comp_resource_profiles
+    description: >
+      How much of each resource a comp typically holds compared with the
+      field: the mean z-score per set, channel, patch, stage and resource, for
+      each leveling pattern (group_level = leveling_pattern) and each carry
+      (group_level = carry). AFK-suspected boards are left out. Use
+      num_boards and standard_error to tell thin groups apart.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [tft_set_number, channel, patch, group_level, group_key, leveling_pattern, stage, resource]
+
 unit_tests:
   - name: baseline_rounds_fold_thin_and_pve_rounds
     model: baseline_rounds
@@ -210,3 +222,30 @@ unit_tests:
         - {puuid: c, carry_character_id: W, carry_cost: 2, carry_tier: 2, carry_num_items: 1, leveling_pattern: undetermined}
         - {puuid: d, carry_character_id: null, carry_cost: null, carry_tier: null, carry_num_items: null, leveling_pattern: no_carry}
         - {puuid: e, carry_character_id: V, carry_cost: 6, carry_tier: 1, carry_num_items: 1, leveling_pattern: unclassified}
+
+  - name: comp_resource_profiles_by_pattern_and_carry
+    model: comp_resource_profiles
+    given:
+      - input: ref('board_resource_z_scores')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 26, afk_suspected: false, resource: num_items, z_score: 1.0}
+          - {match_id: PBE1_1, puuid: b, tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 26, afk_suspected: false, resource: num_items, z_score: 0.0}
+          - {match_id: PBE1_1, puuid: c, tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 26, afk_suspected: false, resource: num_items, z_score: -0.25}
+          # left out: AFK, and no z-score
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 26, afk_suspected: true, resource: num_items, z_score: -3.0}
+          - {match_id: PBE1_1, puuid: e, tft_set_number: 19, channel: pbe, patch: "19.1", baseline_round: 26, afk_suspected: false, resource: num_items, z_score: null}
+      - input: ref('board_carries')
+        rows:
+          - {match_id: PBE1_1, puuid: a, leveling_pattern: reroll_7, carry_character_id: X}
+          - {match_id: PBE1_1, puuid: b, leveling_pattern: reroll_7, carry_character_id: X}
+          - {match_id: PBE1_1, puuid: c, leveling_pattern: reroll_7, carry_character_id: Y}
+          - {match_id: PBE1_1, puuid: d, leveling_pattern: no_carry, carry_character_id: null}
+          - {match_id: PBE1_1, puuid: e, leveling_pattern: reroll_7, carry_character_id: Y}
+      - input: ref('seed_round_schedule')
+        rows:
+          - {set_num: 19, round_num: 26, stage: 5}
+    expect:
+      rows:
+        - {group_level: leveling_pattern, group_key: reroll_7, leveling_pattern: reroll_7, stage: 5, resource: num_items, num_boards: 3, mean_z_score: 0.25}
+        - {group_level: carry, group_key: X, leveling_pattern: reroll_7, stage: 5, resource: num_items, num_boards: 2, mean_z_score: 0.5}
+        - {group_level: carry, group_key: Y, leveling_pattern: reroll_7, stage: 5, resource: num_items, num_boards: 1, mean_z_score: -0.25}

@@ -84,6 +84,23 @@ models:
           arguments:
             combination_of_columns: [tft_set_number, channel, patch, group_level, group_key, leveling_pattern]
 
+  - name: comp_resource_sensitivity
+    description: >
+      How much a resource lead goes with finishing ahead of a lobbymate, per
+      set, channel, patch, resource, and leveling pattern (group_level =
+      leveling_pattern) or carry (group_level = carry). Each board is paired
+      with every non-AFK lobbymate from its own side. placed_better_rate is
+      how often the group finishes ahead of a lobbymate at all, the
+      comparison point for placed_better_rate_when_ahead (how often it did
+      when its z-score was higher). placed_better_per_z_lead is the linear
+      slope per 1 SD of lead, and r_squared how much of finishing ahead the
+      lead explains. Boards are recorded when eliminated, so the two sides of
+      a pair come from different points in the game.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [tft_set_number, channel, patch, group_level, group_key, leveling_pattern, resource]
+
 unit_tests:
   - name: baseline_rounds_fold_thin_and_pve_rounds
     model: baseline_rounds
@@ -286,3 +303,31 @@ unit_tests:
         - {group_level: leveling_pattern, group_key: reroll_7, num_boards: 4, avg_placement: 4.0, top_4_rate: 0.75, placement_1_share: 0.25, placement_2_share: 0.0, placement_8_share: 0.25, avg_last_round: 29.0}
         - {group_level: carry, group_key: X, num_boards: 2, avg_placement: 2.0, top_4_rate: 1.0, placement_1_share: 0.5, placement_2_share: 0.0, placement_8_share: 0.0, avg_last_round: 33.0}
         - {group_level: carry, group_key: Y, num_boards: 2, avg_placement: 6.0, top_4_rate: 0.5, placement_1_share: 0.0, placement_2_share: 0.0, placement_8_share: 0.5, avg_last_round: 25.0}
+
+  - name: comp_resource_sensitivity_pairs
+    model: comp_resource_sensitivity
+    given:
+      - input: ref('board_resource_z_scores')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, channel: pbe, patch: "19.1", afk_suspected: false, resource: level, z_score: 1.0}
+          - {match_id: PBE1_1, puuid: b, tft_set_number: 19, channel: pbe, patch: "19.1", afk_suspected: false, resource: level, z_score: 0.0}
+          - {match_id: PBE1_1, puuid: c, tft_set_number: 19, channel: pbe, patch: "19.1", afk_suspected: false, resource: level, z_score: -1.0}
+          # AFK boards aren't paired
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, channel: pbe, patch: "19.1", afk_suspected: true, resource: level, z_score: -5.0}
+      - input: ref('seed_annotated_boards')
+        rows:
+          - {match_id: PBE1_1, puuid: a, placement: 1}
+          - {match_id: PBE1_1, puuid: b, placement: 2}
+          - {match_id: PBE1_1, puuid: c, placement: 3}
+          - {match_id: PBE1_1, puuid: d, placement: 8}
+      - input: ref('board_carries')
+        rows:
+          - {match_id: PBE1_1, puuid: a, leveling_pattern: reroll_7, carry_character_id: X}
+          - {match_id: PBE1_1, puuid: b, leveling_pattern: reroll_7, carry_character_id: X}
+          - {match_id: PBE1_1, puuid: c, leveling_pattern: reroll_7, carry_character_id: Y}
+          - {match_id: PBE1_1, puuid: d, leveling_pattern: no_carry, carry_character_id: null}
+    expect:
+      rows:
+        - {group_level: leveling_pattern, group_key: reroll_7, resource: level, num_pairs: 6, num_pairs_ahead: 3, placed_better_rate: 0.5, placed_better_rate_when_ahead: 1.0}
+        - {group_level: carry, group_key: X, resource: level, num_pairs: 4, num_pairs_ahead: 3, placed_better_rate: 0.75, placed_better_rate_when_ahead: 1.0}
+        - {group_level: carry, group_key: Y, resource: level, num_pairs: 2, num_pairs_ahead: 0, placed_better_rate: 0.0, placed_better_rate_when_ahead: null}

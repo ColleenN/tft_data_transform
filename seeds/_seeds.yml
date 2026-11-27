@@ -38,3 +38,13 @@ seeds:
           - accepted_values:
               arguments:
                 values: ['pvp', 'pve', 'carousel']
+
+  - name: seed_unit_aliases
+    description: >
+      Unit IDs that match records report differently from the reference data,
+      per set, mapped to the reference api_name. unpacked_units swaps them in
+      so every downstream model sees the reference ID.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [set_num, match_character_id]

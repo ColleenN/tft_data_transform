@@ -1,12 +1,24 @@
--- A board's core units are its most itemized carries and tanks, counting
--- full items only (everything but loose components; emblems count). A unit
--- is a tank when its role is a tank role, and a carry otherwise, fighters
--- included. The main unit on each side holds the most full items; a second
--- unit on that side with 2 or more is its secondary. The main carry's cost
--- sets the leveling pattern (seed_leveling_patterns), from cost alone, so
--- reroll attempts that never hit their 3-star stay in their pattern. Before
--- var('leveling_pattern_from_stage'), nearly every board itemizes cheap
--- units, so the pattern is undetermined.
+-- A board's units split into its core and its cap, counting full items only
+-- (everything but loose components; emblems count). A unit is a tank when its
+-- role is a tank role, and a carry otherwise, fighters included.
+--
+-- Comps have a core, plus carries they cap with when they have the resources
+-- to spare. Caps cost more than the core, so the cheapest carry with at least
+-- var('core_min_full_items') full items sets the core's cost, and any carry
+-- with that many items costing more (and at least var('cap_min_cost')) is a
+-- cap. Pricier units holding a single item are usually item holders or
+-- utility, not caps.
+-- The cost floor keeps reroll boards that also reroll a slightly pricier
+-- carry (a 1-cost with a 2-cost, say) in one core. Tanks are always core.
+--
+-- Within the core, the main unit on each side holds the most full items, and
+-- a second unit on that side with var('core_min_full_items') or more is its
+-- secondary. The main core carry's cost sets the leveling pattern
+-- (seed_leveling_patterns), so a capped board stays in its core's pattern.
+-- Before var('leveling_pattern_from_stage'), nearly every board itemizes
+-- cheap units, so the pattern is undetermined.
+
+{% set core_min_full_items = var('core_min_full_items', 2) %}
 
 WITH unit_items AS (
     SELECT
@@ -26,20 +38,52 @@ itemized_units AS (
     WHERE units.shop_unit AND unit_items.full_items > 0
 ),
 
+core_costs AS (
+    SELECT match_id, puuid, MIN(cost) AS core_cost
+    FROM itemized_units
+    WHERE side = 'carry' AND full_items >= {{ core_min_full_items }}
+    GROUP BY match_id, puuid
+),
+
+slotted_units AS (
+    SELECT
+        itemized_units.*,
+        CASE
+            WHEN itemized_units.side = 'carry'
+                AND itemized_units.full_items >= {{ core_min_full_items }}
+                AND itemized_units.cost > core_costs.core_cost
+                AND itemized_units.cost >= {{ var('cap_min_cost', 4) }}
+            THEN 'cap'
+            ELSE itemized_units.side
+        END AS slot
+    FROM            itemized_units
+        LEFT JOIN   core_costs USING (match_id, puuid)
+),
+
 ranked AS (
     SELECT
-        match_id, puuid, side,
+        match_id, puuid, slot,
         ARRAY_AGG(
             STRUCT(character_id, cost, tier, full_items)
             ORDER BY full_items DESC, tier DESC, cost DESC, character_id
             LIMIT 2
         ) AS top_units
-    FROM itemized_units
-    GROUP BY match_id, puuid, side
+    FROM slotted_units
+    GROUP BY match_id, puuid, slot
 ),
 
-carries AS (SELECT match_id, puuid, top_units FROM ranked WHERE side = 'carry'),
-tanks AS (SELECT match_id, puuid, top_units FROM ranked WHERE side = 'tank')
+core_units AS (
+    SELECT
+        match_id, puuid,
+        ARRAY_AGG(character_id ORDER BY character_id) AS core_character_ids
+    FROM slotted_units
+    WHERE slot != 'cap' AND full_items >= {{ core_min_full_items }}
+    GROUP BY match_id, puuid
+),
+
+carries AS (SELECT match_id, puuid, top_units FROM ranked WHERE slot = 'carry'),
+tanks AS (SELECT match_id, puuid, top_units FROM ranked WHERE slot = 'tank'),
+caps AS (SELECT match_id, puuid, top_units FROM ranked WHERE slot = 'cap')
 
 SELECT
     boards.match_id,
@@ -50,11 +94,17 @@ SELECT
     {{ side }}_units.top_units[SAFE_OFFSET(0)].cost AS main_{{ side }}_cost,
     {{ side }}_units.top_units[SAFE_OFFSET(0)].tier AS main_{{ side }}_tier,
     {{ side }}_units.top_units[SAFE_OFFSET(0)].full_items AS main_{{ side }}_full_items,
-    IF({{ side }}_units.top_units[SAFE_OFFSET(1)].full_items >= 2,
+    IF({{ side }}_units.top_units[SAFE_OFFSET(1)].full_items >= {{ core_min_full_items }},
         {{ side }}_units.top_units[SAFE_OFFSET(1)].character_id, NULL) AS secondary_{{ side }}_character_id,
-    IF({{ side }}_units.top_units[SAFE_OFFSET(1)].full_items >= 2,
+    IF({{ side }}_units.top_units[SAFE_OFFSET(1)].full_items >= {{ core_min_full_items }},
         {{ side }}_units.top_units[SAFE_OFFSET(1)].full_items, NULL) AS secondary_{{ side }}_full_items,
     {% endfor %}
+    IFNULL(core_units.core_character_ids, []) AS core_character_ids,
+    ARRAY_TO_STRING(IFNULL(core_units.core_character_ids, []), ' + ') AS core_set,
+    cap_units.top_units[SAFE_OFFSET(0)].character_id AS cap_character_id,
+    cap_units.top_units[SAFE_OFFSET(0)].cost AS cap_cost,
+    cap_units.top_units[SAFE_OFFSET(0)].tier AS cap_tier,
+    cap_units.top_units[SAFE_OFFSET(0)].full_items AS cap_full_items,
     CASE
         WHEN schedule.stage < {{ var('leveling_pattern_from_stage', 4) }} THEN 'undetermined'
         WHEN carry_units.top_units IS NULL THEN 'no_carry'
@@ -63,6 +113,8 @@ SELECT
 FROM            {{ ref('seed_annotated_boards') }} AS boards
     LEFT JOIN   carries AS carry_units USING (match_id, puuid)
     LEFT JOIN   tanks AS tank_units USING (match_id, puuid)
+    LEFT JOIN   caps AS cap_units USING (match_id, puuid)
+    LEFT JOIN   core_units USING (match_id, puuid)
     LEFT JOIN   {{ ref('seed_round_schedule') }} AS schedule
         ON schedule.set_num = boards.tft_set_number
         AND schedule.round_num = boards.last_round

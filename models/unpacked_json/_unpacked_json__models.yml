@@ -40,3 +40,23 @@ unit_tests:
       rows:
         - {match_id: NA1_2, puuid: p1, character_id: TFT17_A, tier: 2, item_api_name: null}
         - {match_id: NA1_2, puuid: p2, character_id: null, tier: null, item_api_name: null}
+
+  - name: unpacked_units_aliases
+    model: unpacked_units
+    given:
+      - input: ref('unpacked_boards')
+        format: sql
+        rows: |
+          SELECT 'PBE1_1' AS match_id, 'p' AS puuid, 19 AS tft_set_number,
+            '[{"character_id": "DA_19_Ahri", "tier": 2, "rarity": 6, "itemNames": []}, {"character_id": "DA_Jinx19", "tier": 1, "rarity": 4, "itemNames": []}]' AS unit_list
+          UNION ALL
+          SELECT 'NA1_1', 'q', 18,
+            '[{"character_id": "DA_19_Ahri", "tier": 1, "rarity": 6, "itemNames": []}]'
+      - input: ref('seed_unit_aliases')
+        rows:
+          - {set_num: 19, match_character_id: DA_19_AHRI, character_id: DA_AHRI19}
+    expect:
+      rows:
+        - {match_id: PBE1_1, character_id: DA_AHRI19, tier: 2}
+        - {match_id: PBE1_1, character_id: DA_JINX19, tier: 1}
+        - {match_id: NA1_1, character_id: DA_19_AHRI, tier: 1}

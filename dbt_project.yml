@@ -63,6 +63,12 @@ seeds:
         match_item_api_name: string
         item_api_name: string
         note: string
+    seed_unit_aliases:
+      +column_types:
+        set_num: int64
+        match_character_id: string
+        character_id: string
+        note: string
     seed_level_costs:
       +column_types:
         set_num: int64

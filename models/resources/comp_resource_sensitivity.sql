@@ -8,17 +8,17 @@
 WITH boards AS (
     SELECT
         z.match_id, z.puuid, z.tft_set_number, z.channel, z.patch, z.resource, z.z_score,
-        boards.placement, carries.leveling_pattern, carries.carry_character_id
+        boards.placement, cores.leveling_pattern, cores.main_carry_character_id, cores.main_tank_character_id
     FROM            {{ ref('board_resource_z_scores') }} AS z
         INNER JOIN  {{ ref('seed_annotated_boards') }} AS boards USING (match_id, puuid)
-        INNER JOIN  {{ ref('board_carries') }} AS carries USING (match_id, puuid)
+        INNER JOIN  {{ ref('board_cores') }} AS cores USING (match_id, puuid)
     WHERE NOT z.afk_suspected AND z.z_score IS NOT NULL
 ),
 
 pairs AS (
     SELECT
         board.tft_set_number, board.channel, board.patch, board.resource,
-        board.leveling_pattern, board.carry_character_id,
+        board.leveling_pattern, board.main_carry_character_id, board.main_tank_character_id,
         board.z_score - lobbymate.z_score AS z_lead,
         IF(board.placement < lobbymate.placement, 1, 0) AS placed_better
     FROM            boards AS board
@@ -32,9 +32,15 @@ grouped AS (
     SELECT *, 'leveling_pattern' AS group_level, leveling_pattern AS group_key
     FROM pairs
     UNION ALL
-    SELECT *, 'carry' AS group_level, carry_character_id AS group_key
+    SELECT *, 'carry' AS group_level, main_carry_character_id AS group_key
     FROM pairs
-    WHERE carry_character_id IS NOT NULL
+    WHERE main_carry_character_id IS NOT NULL
+    UNION ALL
+    SELECT
+        *, 'family' AS group_level,
+        FORMAT('%s + %s', main_carry_character_id, IFNULL(main_tank_character_id, 'no tank')) AS group_key
+    FROM pairs
+    WHERE main_carry_character_id IS NOT NULL
 )
 
 SELECT

@@ -1,10 +1,10 @@
 WITH boards AS (
     SELECT
         boards.tft_set_number, builds.channel, builds.patch,
-        carries.leveling_pattern, carries.carry_character_id,
+        cores.leveling_pattern, cores.main_carry_character_id, cores.main_tank_character_id,
         boards.placement, boards.last_round
     FROM            {{ ref('seed_annotated_boards') }} AS boards
-        INNER JOIN  {{ ref('board_carries') }} AS carries USING (match_id, puuid)
+        INNER JOIN  {{ ref('board_cores') }} AS cores USING (match_id, puuid)
         INNER JOIN  {{ ref('match_reference_snapshots') }} AS builds USING (match_id)
 ),
 
@@ -12,9 +12,15 @@ grouped AS (
     SELECT *, 'leveling_pattern' AS group_level, leveling_pattern AS group_key
     FROM boards
     UNION ALL
-    SELECT *, 'carry' AS group_level, carry_character_id AS group_key
+    SELECT *, 'carry' AS group_level, main_carry_character_id AS group_key
     FROM boards
-    WHERE carry_character_id IS NOT NULL
+    WHERE main_carry_character_id IS NOT NULL
+    UNION ALL
+    SELECT
+        *, 'family' AS group_level,
+        FORMAT('%s + %s', main_carry_character_id, IFNULL(main_tank_character_id, 'no tank')) AS group_key
+    FROM boards
+    WHERE main_carry_character_id IS NOT NULL
 )
 
 SELECT

@@ -14,6 +14,8 @@ sources:
         description: Equippable items per set, one copy per loaded capture.
       - name: item_types
         description: One row per item and type (artifact, radiant, emblem and so on).
+      - name: unit_innate_traits
+        description: One row per unit and trait it has on its own, without emblems.
       - name: trait_tiers
         description: One row per trait and tier.
       - name: item_components

@@ -1,6 +1,22 @@
 version: 2
 
 unit_tests:
+  - name: set_unit_traits_count_trait_units
+    model: set_unit_traits
+    given:
+      - input: source('tft_reference', 'unit_innate_traits')
+        rows:
+          - {source_object: a.gz, set_number: 19, api_name: DA_ZIGGS19, trait_api_name: DA_YORDLE19, trait_name: Yordle}
+          - {source_object: a.gz, set_number: 19, api_name: DA_TEEMO19, trait_api_name: DA_YORDLE19, trait_name: Yordle}
+          - {source_object: a.gz, set_number: 19, api_name: DA_TEEMO19, trait_api_name: DA_TEEMO19_UNIQUETRAIT, trait_name: Unique}
+          - {source_object: b.gz, set_number: 19, api_name: DA_ZIGGS19, trait_api_name: DA_YORDLE19, trait_name: Yordle}
+    expect:
+      rows:
+        - {source_object: a.gz, api_name: DA_ZIGGS19, trait_api_name: DA_YORDLE19, num_trait_units: 2}
+        - {source_object: a.gz, api_name: DA_TEEMO19, trait_api_name: DA_YORDLE19, num_trait_units: 2}
+        - {source_object: a.gz, api_name: DA_TEEMO19, trait_api_name: DA_TEEMO19_UNIQUETRAIT, num_trait_units: 1}
+        - {source_object: b.gz, api_name: DA_ZIGGS19, trait_api_name: DA_YORDLE19, num_trait_units: 1}
+
   - name: set_units_overrides_per_capture
     model: set_units
     given:

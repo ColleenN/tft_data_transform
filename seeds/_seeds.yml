@@ -12,6 +12,16 @@ seeds:
           arguments:
             combination_of_columns: [set_num, level]
 
+  - name: seed_leveling_patterns
+    description: >
+      The leveling pattern a board's carry cost implies, per set: reroll at
+      5, 6 or 7 for 1-, 2- and 3-cost carries, fast 8 or 9 for 4- and
+      5-costs. Costs with no row leave the board unclassified.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [set_num, carry_cost]
+
   - name: seed_round_schedule
     description: >
       One row per round of a set's game, keyed by the sequential round number

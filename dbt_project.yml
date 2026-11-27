@@ -69,6 +69,11 @@ seeds:
         level: int64
         cost: int64
         cumulative_level_cost: int64
+    seed_leveling_patterns:
+      +column_types:
+        set_num: int64
+        carry_cost: int64
+        leveling_pattern: string
     seed_round_schedule:
       +column_types:
         set_num: int64

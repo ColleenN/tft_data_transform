@@ -47,6 +47,22 @@ models:
           arguments:
             combination_of_columns: [match_id, puuid, resource]
 
+  - name: board_cores
+    description: >
+      Each board's core units: its main and secondary carry and tank,
+      counting full items only (everything but loose components; emblems
+      count). Tanks are units with a tank role; every other unit, fighters
+      included, is a carry. The main unit on each side holds the most full
+      items (ties go to star level, then cost); a second unit with 2 or more
+      is the secondary. leveling_pattern comes from the main carry's cost:
+      undetermined before var('leveling_pattern_from_stage') (4 by default),
+      no_carry when no carry holds a full item, and unclassified when
+      seed_leveling_patterns has no row for the cost.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [match_id, puuid]
+
 unit_tests:
   - name: baseline_rounds_fold_thin_and_pve_rounds
     model: baseline_rounds
@@ -138,3 +154,69 @@ unit_tests:
         - {puuid: a, resource: num_items, afk_suspected: false, baseline_round: 13, baseline_round_label: "3-2", z_score: 2.0}
         - {puuid: a, resource: num_pans, afk_suspected: false, baseline_round: 13, baseline_round_label: "3-2", z_score: null}
         - {puuid: b, resource: num_items, afk_suspected: true, baseline_round: 40, baseline_round_label: null, z_score: null}
+
+  - name: board_cores_pick_main_and_secondary_units
+    model: board_cores
+    given:
+      - input: ref('seed_annotated_unit_items')
+        rows:
+          # a: carry X has 3 full items, carry Y 2 (secondary), carry W 1 plus a component;
+          # tank T 2 full items, a summon with more is skipped
+          - {match_id: PBE1_1, puuid: a, character_id: X, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: X, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: X, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: Y, tier: 2, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: Y, tier: 2, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: W, tier: 2, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: W, tier: 2, unit_instance_index: 1, num_components: 1}
+          - {match_id: PBE1_1, puuid: a, character_id: T, tier: 2, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: T, tier: 2, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: S, tier: 1, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: S, tier: 1, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: S, tier: 1, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: a, character_id: S, tier: 1, unit_instance_index: 1, num_components: 0}
+          # b: second carry holds only 1 full item, so no secondary; no tank
+          - {match_id: PBE1_1, puuid: b, character_id: Y, tier: 2, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: b, character_id: Y, tier: 2, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: b, character_id: Z, tier: 2, unit_instance_index: 1, num_components: 0}
+          # c: eliminated in stage 3
+          - {match_id: PBE1_1, puuid: c, character_id: W, tier: 2, unit_instance_index: 1, num_components: 0}
+          # d: only loose components
+          - {match_id: PBE1_1, puuid: d, character_id: W, tier: 1, unit_instance_index: 1, num_components: 1}
+          # e: a cost the seed doesn't map
+          - {match_id: PBE1_1, puuid: e, character_id: V, tier: 1, unit_instance_index: 1, num_components: 0}
+      - input: ref('seed_annotated_units')
+        rows:
+          - {match_id: PBE1_1, puuid: a, character_id: X, tier: 3, unit_instance_index: 1, rarity: 3, role: DA_Role_MagicCaster, shop_unit: true}
+          - {match_id: PBE1_1, puuid: a, character_id: Y, tier: 2, unit_instance_index: 1, rarity: 4, role: DA_Role_AttackFighter, shop_unit: true}
+          - {match_id: PBE1_1, puuid: a, character_id: W, tier: 2, unit_instance_index: 1, rarity: 2, role: DA_Role_AttackMarksman, shop_unit: true}
+          - {match_id: PBE1_1, puuid: a, character_id: T, tier: 2, unit_instance_index: 1, rarity: 4, role: DA_Role_MagicTank, shop_unit: true}
+          - {match_id: PBE1_1, puuid: a, character_id: S, tier: 1, unit_instance_index: 1, rarity: 5, role: DA_Role_MagicCaster, shop_unit: false}
+          - {match_id: PBE1_1, puuid: b, character_id: Y, tier: 2, unit_instance_index: 1, rarity: 4, role: DA_Role_AttackFighter, shop_unit: true}
+          - {match_id: PBE1_1, puuid: b, character_id: Z, tier: 2, unit_instance_index: 1, rarity: 5, role: DA_Role_MagicCaster, shop_unit: true}
+          - {match_id: PBE1_1, puuid: c, character_id: W, tier: 2, unit_instance_index: 1, rarity: 2, role: DA_Role_AttackMarksman, shop_unit: true}
+          - {match_id: PBE1_1, puuid: d, character_id: W, tier: 1, unit_instance_index: 1, rarity: 2, role: DA_Role_AttackMarksman, shop_unit: true}
+          - {match_id: PBE1_1, puuid: e, character_id: V, tier: 1, unit_instance_index: 1, rarity: 6, role: DA_Role_MagicCaster, shop_unit: true}
+      - input: ref('seed_annotated_boards')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, last_round: 26}
+          - {match_id: PBE1_1, puuid: b, tft_set_number: 19, last_round: 26}
+          - {match_id: PBE1_1, puuid: c, tft_set_number: 19, last_round: 14}
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, last_round: 26}
+          - {match_id: PBE1_1, puuid: e, tft_set_number: 19, last_round: 26}
+      - input: ref('seed_round_schedule')
+        rows:
+          - {set_num: 19, round_num: 14, stage: 3}
+          - {set_num: 19, round_num: 26, stage: 5}
+      - input: ref('seed_leveling_patterns')
+        rows:
+          - {set_num: 19, carry_cost: 2, leveling_pattern: reroll_6}
+          - {set_num: 19, carry_cost: 3, leveling_pattern: reroll_7}
+          - {set_num: 19, carry_cost: 4, leveling_pattern: fast_8}
+    expect:
+      rows:
+        - {puuid: a, main_carry_character_id: X, main_carry_full_items: 3, secondary_carry_character_id: Y, secondary_carry_full_items: 2, main_tank_character_id: T, main_tank_full_items: 2, secondary_tank_character_id: null, leveling_pattern: reroll_7}
+        - {puuid: b, main_carry_character_id: Y, main_carry_full_items: 2, secondary_carry_character_id: null, secondary_carry_full_items: null, main_tank_character_id: null, main_tank_full_items: null, secondary_tank_character_id: null, leveling_pattern: fast_8}
+        - {puuid: c, main_carry_character_id: W, main_carry_full_items: 1, secondary_carry_character_id: null, secondary_carry_full_items: null, main_tank_character_id: null, main_tank_full_items: null, secondary_tank_character_id: null, leveling_pattern: undetermined}
+        - {puuid: d, main_carry_character_id: null, main_carry_full_items: null, secondary_carry_character_id: null, secondary_carry_full_items: null, main_tank_character_id: null, main_tank_full_items: null, secondary_tank_character_id: null, leveling_pattern: no_carry}
+        - {puuid: e, main_carry_character_id: V, main_carry_full_items: 1, secondary_carry_character_id: null, secondary_carry_full_items: null, main_tank_character_id: null, main_tank_full_items: null, secondary_tank_character_id: null, leveling_pattern: unclassified}

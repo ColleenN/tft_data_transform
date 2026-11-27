@@ -76,6 +76,20 @@ models:
           arguments:
             combination_of_columns: [tft_set_number, channel, patch, group_level, group_key, leveling_pattern, stage, resource]
 
+  - name: comp_placement_profiles
+    description: >
+      How each comp's games end: the share at each placement (placement 1 is
+      the win rate), average, spread, top-4 rate and average elimination
+      round, per set, channel, patch, and leveling pattern (group_level =
+      leveling_pattern), main carry (group_level = carry) or family, the main
+      carry plus main tank (group_level = family). The pattern comes from
+      the final board, so a comp that dies before it comes together counts
+      toward a cheaper pattern or undetermined.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [tft_set_number, channel, patch, group_level, group_key, leveling_pattern]
+
 unit_tests:
   - name: baseline_rounds_fold_thin_and_pve_rounds
     model: baseline_rounds
@@ -263,3 +277,30 @@ unit_tests:
         - {group_level: family, group_key: X + T, leveling_pattern: reroll_7, stage: 5, resource: num_items, num_boards: 1, mean_z_score: 1.0}
         - {group_level: family, group_key: X + no tank, leveling_pattern: reroll_7, stage: 5, resource: num_items, num_boards: 1, mean_z_score: 0.0}
         - {group_level: family, group_key: Y + T, leveling_pattern: reroll_7, stage: 5, resource: num_items, num_boards: 1, mean_z_score: -0.25}
+
+  - name: comp_placement_profiles_shares
+    model: comp_placement_profiles
+    given:
+      - input: ref('seed_annotated_boards')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, placement: 1, last_round: 34}
+          - {match_id: PBE1_1, puuid: b, tft_set_number: 19, placement: 3, last_round: 32}
+          - {match_id: PBE1_1, puuid: c, tft_set_number: 19, placement: 4, last_round: 30}
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, placement: 8, last_round: 20}
+      - input: ref('board_cores')
+        rows:
+          - {match_id: PBE1_1, puuid: a, leveling_pattern: reroll_7, main_carry_character_id: X, main_tank_character_id: T}
+          - {match_id: PBE1_1, puuid: b, leveling_pattern: reroll_7, main_carry_character_id: X, main_tank_character_id: T}
+          - {match_id: PBE1_1, puuid: c, leveling_pattern: reroll_7, main_carry_character_id: Y, main_tank_character_id: T}
+          - {match_id: PBE1_1, puuid: d, leveling_pattern: reroll_7, main_carry_character_id: Y, main_tank_character_id: U}
+      - input: ref('match_reference_snapshots')
+        rows:
+          - {match_id: PBE1_1, channel: pbe, patch: "19.1"}
+    expect:
+      rows:
+        - {group_level: leveling_pattern, group_key: reroll_7, num_boards: 4, avg_placement: 4.0, top_4_rate: 0.75, placement_1_share: 0.25, placement_2_share: 0.0, placement_8_share: 0.25, avg_last_round: 29.0}
+        - {group_level: carry, group_key: X, num_boards: 2, avg_placement: 2.0, top_4_rate: 1.0, placement_1_share: 0.5, placement_2_share: 0.0, placement_8_share: 0.0, avg_last_round: 33.0}
+        - {group_level: carry, group_key: Y, num_boards: 2, avg_placement: 6.0, top_4_rate: 0.5, placement_1_share: 0.0, placement_2_share: 0.0, placement_8_share: 0.5, avg_last_round: 25.0}
+        - {group_level: family, group_key: X + T, num_boards: 2, avg_placement: 2.0, top_4_rate: 1.0, placement_1_share: 0.5, placement_2_share: 0.0, placement_8_share: 0.0, avg_last_round: 33.0}
+        - {group_level: family, group_key: Y + T, num_boards: 1, avg_placement: 4.0, top_4_rate: 1.0, placement_1_share: 0.0, placement_2_share: 0.0, placement_8_share: 0.0, avg_last_round: 30.0}
+        - {group_level: family, group_key: Y + U, num_boards: 1, avg_placement: 8.0, top_4_rate: 0.0, placement_1_share: 0.0, placement_2_share: 0.0, placement_8_share: 1.0, avg_last_round: 20.0}

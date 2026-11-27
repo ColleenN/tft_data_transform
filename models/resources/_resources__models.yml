@@ -83,6 +83,20 @@ models:
           arguments:
             combination_of_columns: [tft_set_number, channel, patch, leveling_pattern, family, core_set]
 
+  - name: comp_cap_supports
+    description: >
+      For each family, cap and unit outside the core, per set, channel, patch
+      and leveling pattern: how often the unit is on boards with that cap
+      (rate_with_cap) against how often it's on the family's other boards at
+      the same level (expected_rate), and whether it shares a trait with the
+      cap (unique traits don't count). A support shares a trait, has a
+      rate_with_cap of var('cap_support_min_rate') (0.5) or more, and a lift
+      of var('cap_support_min_lift') (0.25) or more.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [tft_set_number, channel, patch, leveling_pattern, family, cap_character_id, character_id]
+
   - name: comp_resource_profiles
     description: >
       How much of each resource a comp typically holds compared with the
@@ -343,6 +357,51 @@ unit_tests:
         - {family: X + T, core_set: T + W + X, core_set_rank: 2, variant_type: swap, units_added: W, units_dropped: Y, num_boards: 2, family_share: 0.25, avg_placement: 6.0, cap_rate: 0.0}
         - {family: X + T, core_set: T + W + X + Y, core_set_rank: 3, variant_type: extra, units_added: W, units_dropped: "", num_boards: 1, family_share: 0.125, avg_placement: 4.0, cap_rate: 0.0}
         - {family: X + T, core_set: T + X, core_set_rank: 4, variant_type: missing, units_added: "", units_dropped: Y, num_boards: 1, family_share: 0.125, avg_placement: 8.0, cap_rate: 0.0}
+
+  - name: comp_cap_supports_lift_at_same_level
+    model: comp_cap_supports
+    given:
+      - input: ref('seed_annotated_boards')
+        rows:
+          - {match_id: PBE1_1, puuid: a, tft_set_number: 19, level: 8}
+          - {match_id: PBE1_1, puuid: b, tft_set_number: 19, level: 8}
+          - {match_id: PBE1_1, puuid: c, tft_set_number: 19, level: 7}
+          - {match_id: PBE1_1, puuid: d, tft_set_number: 19, level: 8}
+      - input: ref('board_cores')
+        rows:
+          - {match_id: PBE1_1, puuid: a, leveling_pattern: fast_8, main_carry_character_id: X, main_tank_character_id: T, core_set: T + X, cap_character_id: C}
+          - {match_id: PBE1_1, puuid: b, leveling_pattern: fast_8, main_carry_character_id: X, main_tank_character_id: T, core_set: T + X, cap_character_id: C}
+          # level 7 has no capped boards, so its S doesn't count against the cap
+          - {match_id: PBE1_1, puuid: c, leveling_pattern: fast_8, main_carry_character_id: X, main_tank_character_id: T, core_set: T + X, cap_character_id: null}
+          - {match_id: PBE1_1, puuid: d, leveling_pattern: fast_8, main_carry_character_id: X, main_tank_character_id: T, core_set: T + X, cap_character_id: null}
+      - input: ref('match_reference_snapshots')
+        rows:
+          - {match_id: PBE1_1, channel: pbe, patch: "19.1"}
+      - input: ref('seed_annotated_units')
+        rows:
+          - {match_id: PBE1_1, puuid: a, character_id: X, shop_unit: true}
+          - {match_id: PBE1_1, puuid: a, character_id: T, shop_unit: true}
+          - {match_id: PBE1_1, puuid: a, character_id: C, shop_unit: true}
+          - {match_id: PBE1_1, puuid: a, character_id: S, shop_unit: true}
+          - {match_id: PBE1_1, puuid: a, character_id: F, shop_unit: true}
+          - {match_id: PBE1_1, puuid: b, character_id: X, shop_unit: true}
+          - {match_id: PBE1_1, puuid: b, character_id: T, shop_unit: true}
+          - {match_id: PBE1_1, puuid: b, character_id: C, shop_unit: true}
+          - {match_id: PBE1_1, puuid: b, character_id: S, shop_unit: true}
+          - {match_id: PBE1_1, puuid: c, character_id: X, shop_unit: true}
+          - {match_id: PBE1_1, puuid: c, character_id: S, shop_unit: true}
+          - {match_id: PBE1_1, puuid: d, character_id: X, shop_unit: true}
+          - {match_id: PBE1_1, puuid: d, character_id: T, shop_unit: true}
+      - input: ref('set_unit_traits')
+        rows:
+          - {source_object: a.gz, set_num: 19, api_name: C, trait_api_name: TR, num_trait_units: 2}
+          - {source_object: a.gz, set_num: 19, api_name: S, trait_api_name: TR, num_trait_units: 2}
+          - {source_object: a.gz, set_num: 19, api_name: F, trait_api_name: FU, num_trait_units: 1}
+    expect:
+      rows:
+        - {family: X + T, cap_character_id: C, character_id: S, num_capped_boards: 2, rate_with_cap: 1.0, expected_rate: 0.0, shares_trait: true, is_support: true}
+        # lifted but shares no trait with the cap
+        - {family: X + T, cap_character_id: C, character_id: F, num_capped_boards: 2, rate_with_cap: 0.5, expected_rate: 0.0, shares_trait: false, is_support: false}
 
   - name: comp_resource_profiles_by_pattern_carry_and_family
     model: comp_resource_profiles

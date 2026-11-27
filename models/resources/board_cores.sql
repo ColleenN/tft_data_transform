@@ -15,6 +15,10 @@
 -- a second unit on that side with var('core_min_full_items') or more is its
 -- secondary. The main core carry's cost sets the leveling pattern
 -- (seed_leveling_patterns), so a capped board stays in its core's pattern.
+-- Reroll boards are the exception. Their carries all aim for 3 stars, and
+-- whichever gets there first takes the items, so a 1-cost reroll can end with
+-- a 2-cost carry holding the most. When a cheaper core carry also reached 3
+-- stars (costs up to var('reroll_max_cost')), its cost sets the pattern.
 -- Before var('leveling_pattern_from_stage'), nearly every board itemizes
 -- cheap units, so the pattern is undetermined.
 
@@ -39,7 +43,10 @@ itemized_units AS (
 ),
 
 core_costs AS (
-    SELECT match_id, puuid, MIN(cost) AS core_cost
+    SELECT
+        match_id, puuid,
+        MIN(cost) AS core_cost,
+        MIN(IF(cost <= {{ var('reroll_max_cost', 3) }} AND tier >= 3, cost, NULL)) AS reroll_cost
     FROM itemized_units
     WHERE side = 'carry' AND full_items >= {{ core_min_full_items }}
     GROUP BY match_id, puuid
@@ -115,9 +122,13 @@ FROM            {{ ref('seed_annotated_boards') }} AS boards
     LEFT JOIN   tanks AS tank_units USING (match_id, puuid)
     LEFT JOIN   caps AS cap_units USING (match_id, puuid)
     LEFT JOIN   core_units USING (match_id, puuid)
+    LEFT JOIN   core_costs USING (match_id, puuid)
     LEFT JOIN   {{ ref('seed_round_schedule') }} AS schedule
         ON schedule.set_num = boards.tft_set_number
         AND schedule.round_num = boards.last_round
     LEFT JOIN   {{ ref('seed_leveling_patterns') }} AS patterns
         ON patterns.set_num = boards.tft_set_number
-        AND patterns.carry_cost = carry_units.top_units[SAFE_OFFSET(0)].cost
+        AND patterns.carry_cost = LEAST(
+            carry_units.top_units[SAFE_OFFSET(0)].cost,
+            IFNULL(core_costs.reroll_cost, carry_units.top_units[SAFE_OFFSET(0)].cost)
+        )

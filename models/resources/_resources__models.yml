@@ -60,7 +60,9 @@ models:
       with var('core_min_full_items') or more is the secondary.
       core_character_ids lists every core unit with that many items, and
       core_set joins them into one key.
-      leveling_pattern comes from the main core carry's cost: undetermined
+      leveling_pattern comes from the main core carry's cost, or from a
+      cheaper core carry at 3 stars costing up to var('reroll_max_cost') (3),
+      since a reroll's items go to whichever carry reached 3 stars first: undetermined
       before var('leveling_pattern_from_stage') (4 by default), no_carry when
       no carry holds a full item, and unclassified when
       seed_leveling_patterns has no row for the cost.
@@ -275,6 +277,21 @@ unit_tests:
           - {match_id: PBE1_1, puuid: f, character_id: Q, tier: 2, unit_instance_index: 1, num_components: 0}
           - {match_id: PBE1_1, puuid: f, character_id: K, tier: 2, unit_instance_index: 1, num_components: 0}
           - {match_id: PBE1_1, puuid: f, character_id: K, tier: 2, unit_instance_index: 1, num_components: 0}
+          # g: 2-cost P holds the most items, but 1-cost O is also 3 stars with 2 items, so it's a 1-cost reroll
+          - {match_id: PBE1_1, puuid: g, character_id: P, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: g, character_id: P, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: g, character_id: P, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: g, character_id: O, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: g, character_id: O, tier: 3, unit_instance_index: 1, num_components: 0}
+          # h: O is 3 stars but holds 1 item, so P's cost stands
+          - {match_id: PBE1_1, puuid: h, character_id: P, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: h, character_id: P, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: h, character_id: O, tier: 3, unit_instance_index: 1, num_components: 0}
+          # i: O holds 2 items but is 2 stars, so P's cost stands
+          - {match_id: PBE1_1, puuid: i, character_id: P, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: i, character_id: P, tier: 3, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: i, character_id: O, tier: 2, unit_instance_index: 1, num_components: 0}
+          - {match_id: PBE1_1, puuid: i, character_id: O, tier: 2, unit_instance_index: 1, num_components: 0}
       - input: ref('seed_annotated_units')
         rows:
           - {match_id: PBE1_1, puuid: a, character_id: X, tier: 3, unit_instance_index: 1, rarity: 3, role: DA_Role_MagicCaster, shop_unit: true}
@@ -291,6 +308,12 @@ unit_tests:
           - {match_id: PBE1_1, puuid: f, character_id: R, tier: 3, unit_instance_index: 1, rarity: 1, role: DA_Role_MagicCaster, shop_unit: true}
           - {match_id: PBE1_1, puuid: f, character_id: Q, tier: 2, unit_instance_index: 1, rarity: 2, role: DA_Role_AttackMarksman, shop_unit: true}
           - {match_id: PBE1_1, puuid: f, character_id: K, tier: 2, unit_instance_index: 1, rarity: 5, role: DA_Role_MagicTank, shop_unit: true}
+          - {match_id: PBE1_1, puuid: g, character_id: P, tier: 3, unit_instance_index: 1, rarity: 2, role: DA_Role_MagicCaster, shop_unit: true}
+          - {match_id: PBE1_1, puuid: g, character_id: O, tier: 3, unit_instance_index: 1, rarity: 1, role: DA_Role_MagicCaster, shop_unit: true}
+          - {match_id: PBE1_1, puuid: h, character_id: P, tier: 3, unit_instance_index: 1, rarity: 2, role: DA_Role_MagicCaster, shop_unit: true}
+          - {match_id: PBE1_1, puuid: h, character_id: O, tier: 3, unit_instance_index: 1, rarity: 1, role: DA_Role_MagicCaster, shop_unit: true}
+          - {match_id: PBE1_1, puuid: i, character_id: P, tier: 3, unit_instance_index: 1, rarity: 2, role: DA_Role_MagicCaster, shop_unit: true}
+          - {match_id: PBE1_1, puuid: i, character_id: O, tier: 2, unit_instance_index: 1, rarity: 1, role: DA_Role_MagicCaster, shop_unit: true}
       - input: ref('seed_annotated_boards')
         rows:
           - {match_id: PBE1_1, puuid: a, tft_set_number: 19, last_round: 26}
@@ -299,6 +322,9 @@ unit_tests:
           - {match_id: PBE1_1, puuid: d, tft_set_number: 19, last_round: 26}
           - {match_id: PBE1_1, puuid: e, tft_set_number: 19, last_round: 26}
           - {match_id: PBE1_1, puuid: f, tft_set_number: 19, last_round: 26}
+          - {match_id: PBE1_1, puuid: g, tft_set_number: 19, last_round: 26}
+          - {match_id: PBE1_1, puuid: h, tft_set_number: 19, last_round: 26}
+          - {match_id: PBE1_1, puuid: i, tft_set_number: 19, last_round: 26}
       - input: ref('seed_round_schedule')
         rows:
           - {set_num: 19, round_num: 14, stage: 3}
@@ -317,6 +343,9 @@ unit_tests:
         - {puuid: d, main_carry_character_id: null, secondary_carry_character_id: null, main_tank_character_id: null, core_set: "", cap_character_id: null, cap_full_items: null, leveling_pattern: no_carry}
         - {puuid: e, main_carry_character_id: V, secondary_carry_character_id: null, main_tank_character_id: null, core_set: "", cap_character_id: null, cap_full_items: null, leveling_pattern: unclassified}
         - {puuid: f, main_carry_character_id: R, secondary_carry_character_id: Q, main_tank_character_id: K, core_set: K + Q + R, cap_character_id: null, cap_full_items: null, leveling_pattern: reroll_5}
+        - {puuid: g, main_carry_character_id: P, secondary_carry_character_id: O, main_tank_character_id: null, core_set: O + P, cap_character_id: null, cap_full_items: null, leveling_pattern: reroll_5}
+        - {puuid: h, main_carry_character_id: P, secondary_carry_character_id: null, main_tank_character_id: null, core_set: P, cap_character_id: null, cap_full_items: null, leveling_pattern: reroll_6}
+        - {puuid: i, main_carry_character_id: P, secondary_carry_character_id: O, main_tank_character_id: null, core_set: O + P, cap_character_id: null, cap_full_items: null, leveling_pattern: reroll_6}
 
   - name: comp_cores_standard_and_variants
     model: comp_cores

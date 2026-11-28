@@ -7,7 +7,7 @@
 -- unlockable units the reference data doesn't list).
 
 WITH generated AS (
-    SELECT source_object, set_number AS set_num, api_name, name, cost, role, shop_unit
+    SELECT source_object, set_number AS set_num, api_name, name, cost, role, shop_unit, unlockable, unlock_condition
     FROM {{ source('tft_reference', 'units') }}
 ),
 
@@ -30,6 +30,9 @@ SELECT
     generated.cost,
     generated.role,
     IFNULL(generated.shop_unit, FALSE) AS shop_unit,
+    -- NULL for captures loaded before the reference table had these columns.
+    generated.unlockable,
+    generated.unlock_condition,
     -- Cost as shown in the shop.
     COALESCE(overrides.shop_gold_cost, generated.cost) AS shop_gold_cost,
     -- Gold value of a 1-star copy: only units bought from the shop (or given

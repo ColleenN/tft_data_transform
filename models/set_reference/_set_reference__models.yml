@@ -25,7 +25,7 @@ unit_tests:
           - {source_object: a.gz, set_number: 16, api_name: TFT16_GALIO, cost: 5, shop_unit: false}
           - {source_object: a.gz, set_number: 16, api_name: TFT16_JINX, cost: 3, shop_unit: true}
           - {source_object: b.gz, set_number: 16, api_name: TFT16_GALIO, cost: 5, shop_unit: false}
-          - {source_object: c.gz, set_number: 19, api_name: DA_JINX19, cost: 2, shop_unit: true}
+          - {source_object: c.gz, set_number: 19, api_name: DA_JINX19, cost: 2, shop_unit: true, unlockable: true, unlock_condition: 3 items on an Ionic Spark or Hitmaker champion}
       - input: ref('seed_unit_overrides')
         rows:
           - {set_num: 16, api_name: TFT16_GALIO, shop_gold_cost: null, num_board_slots: 0}
@@ -37,4 +37,4 @@ unit_tests:
         - {source_object: a.gz, set_num: 16, api_name: TFT16_BROCK, shop_gold_cost: 7, one_star_gold_value: 7, num_board_slots: 1}
         - {source_object: b.gz, set_num: 16, api_name: TFT16_GALIO, shop_gold_cost: 5, one_star_gold_value: 0, num_board_slots: 0}
         - {source_object: b.gz, set_num: 16, api_name: TFT16_BROCK, shop_gold_cost: 7, one_star_gold_value: 7, num_board_slots: 1}
-        - {source_object: c.gz, set_num: 19, api_name: DA_JINX19, shop_gold_cost: 2, one_star_gold_value: 2, num_board_slots: 1}
+        - {source_object: c.gz, set_num: 19, api_name: DA_JINX19, shop_gold_cost: 2, one_star_gold_value: 2, num_board_slots: 1, unlockable: true, unlock_condition: 3 items on an Ionic Spark or Hitmaker champion}
